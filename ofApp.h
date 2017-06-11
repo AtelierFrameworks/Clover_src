@@ -4,6 +4,7 @@
 #include <vector>
 #include "BaseScene.hpp"
 #include "P_Scene.hpp"
+#include "M_Scene.hpp"
 class ofApp : public ofBaseApp{
 
 	public:

@@ -4,7 +4,7 @@
 void ofApp::setup(){
     //各自のシーンにP_SceneかM_Sceneか置き換える
     mScenes.clear();
-    mScenes.push_back(*new P_Scene());
+    mScenes.push_back(*new M_Scene());
     mScenes.at(0).setup();
 }
 
