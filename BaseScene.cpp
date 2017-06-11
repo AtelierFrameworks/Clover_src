@@ -76,3 +76,19 @@ void BaseScene::gotMessage(ofMessage msg){
 void BaseScene::dragEvent(ofDragInfo dragInfo){ 
     
 }
+
+void BaseScene::actionDesk(){
+    
+}
+
+void BaseScene::actionChair(){
+    
+}
+
+void BaseScene::actionBed(){
+    
+}
+
+void BaseScene::actionShelf(){
+    
+}

@@ -74,3 +74,20 @@ void P_Scene::gotMessage(ofMessage msg){
 void P_Scene::dragEvent(ofDragInfo dragInfo){
     
 }
+
+void P_Scene::actionDesk(){
+    
+}
+
+void P_Scene::actionChair(){
+    
+}
+
+void P_Scene::actionBed(){
+    
+}
+
+void P_Scene::actionShelf(){
+    
+}
+
