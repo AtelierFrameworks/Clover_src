@@ -4,7 +4,7 @@
 void ofApp::setup(){
     //各自のシーンにP_SceneかM_Sceneか置き換える
     mScenes.clear();
-    BaseScene * scene = new P_Scene();
+    BaseScene * scene = new M_Scene();
     mScenes.push_back(scene);
     mScenes[0]->setup();
 }
