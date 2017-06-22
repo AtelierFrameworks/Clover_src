@@ -17,7 +17,8 @@ void P_Scene::update(){
 
 //--------------------------------------------------------------
 void P_Scene::draw(){
-    
+    ofSetColor(0,127,127);
+    ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);
 }
 
 //--------------------------------------------------------------
@@ -74,3 +75,20 @@ void P_Scene::gotMessage(ofMessage msg){
 void P_Scene::dragEvent(ofDragInfo dragInfo){
     
 }
+
+void P_Scene::actionDesk(){
+    
+}
+
+void P_Scene::actionChair(){
+    
+}
+
+void P_Scene::actionBed(){
+    
+}
+
+void P_Scene::actionShelf(){
+    
+}
+

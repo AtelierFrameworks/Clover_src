@@ -8,19 +8,6 @@
 
 #include "BaseScene.hpp"
 //--------------------------------------------------------------
-void BaseScene::setup(){
-    
-}
-
-//--------------------------------------------------------------
-void BaseScene::update(){
-    
-}
-
-//--------------------------------------------------------------
-void BaseScene::draw(){
-    
-}
 
 //--------------------------------------------------------------
 void BaseScene::keyPressed(int key){
@@ -74,5 +61,21 @@ void BaseScene::gotMessage(ofMessage msg){
 
 //--------------------------------------------------------------
 void BaseScene::dragEvent(ofDragInfo dragInfo){ 
+    
+}
+
+void BaseScene::actionDesk(){
+    
+}
+
+void BaseScene::actionChair(){
+    
+}
+
+void BaseScene::actionBed(){
+    
+}
+
+void BaseScene::actionShelf(){
     
 }

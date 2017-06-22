@@ -17,8 +17,7 @@ void M_Scene::update(){
 
 //--------------------------------------------------------------
 void M_Scene::draw(){
-    
-}
+    }
 
 //--------------------------------------------------------------
 void M_Scene::keyPressed(int key){
@@ -74,3 +73,20 @@ void M_Scene::gotMessage(ofMessage msg){
 void M_Scene::dragEvent(ofDragInfo dragInfo){
     
 }
+
+void M_Scene::actionDesk(){
+    
+}
+
+void M_Scene::actionChair(){
+    
+}
+
+void M_Scene::actionBed(){
+    
+}
+
+void M_Scene::actionShelf(){
+    
+}
+
