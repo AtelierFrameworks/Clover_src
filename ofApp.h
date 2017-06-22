@@ -4,6 +4,7 @@
 #include <vector>
 #include "BaseScene.hpp"
 #include "P_Scene.hpp"
+#include "M_Scene.hpp"
 class ofApp : public ofBaseApp{
 
 	public:
@@ -23,5 +24,5 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
-    std::vector<BaseScene> mScenes;
+    std::vector<BaseScene *> mScenes;
 };

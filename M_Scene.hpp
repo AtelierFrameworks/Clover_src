@@ -13,6 +13,7 @@
 
 #endif /* M_Scene_hpp */
 class M_Scene : public BaseScene{
+public:
     void setup();
     void update();
     void draw();
