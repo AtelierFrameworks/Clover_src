@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "ofMain.h"
+#include "ofApp.h"
 #endif /* BaseScene_hpp */
 //親クラス
 class BaseScene{

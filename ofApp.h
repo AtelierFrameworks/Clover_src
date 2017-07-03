@@ -11,7 +11,6 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -23,6 +22,14 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
-    std::vector<BaseScene *> mScenes;
+        void exit();
+        void actionCurtain();
+        void closeCurtain();
+        static string getLogDay();
+    
+        std::vector<BaseScene *> mScenes;
+        ofFile mLogDataFile;
+        static int logNumber;
+        static bool isStartScene;
+        ofArduino mArduino;
 };
