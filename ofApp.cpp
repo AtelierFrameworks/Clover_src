@@ -1,27 +1,52 @@
 #include "ofApp.h"
 
+static int logNumber;
+static bool isStartScene;
+static bool isSetupArduino;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
-    //ログデータ保存用csvファイルの準備
+    //„É≠„Ç∞„Éï„Ç°„Ç§„É´‰ΩúÊàê
+    mCam.setOrientation(ofPoint(-20, 0, 0));
+
     mLogDataFile.open("LogData.csv",ofFile::Append);
     isStartScene=false;
-    //各自のシーンにP_SceneかM_Sceneか置き換える
+    //„Ç∑„Éº„É≥ÂàùÊúüÂåñ
     mScenes.clear();
+    //TODO:ArduinoÈÄ£Êê∫
+    isSetupArduino= false;
+    mArduino.connect("/dev/cu.usbmodem1421",57600);
+    ofAddListener(mArduino.EInitialized, this, &ofApp::setupArduino);
+    setupLeapMotion();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    updateLeapMotion();
     if(isStartScene){
-        mScenes.at(0)->update();
+            mScenes.at(0)->update();
     }
+    if(isSetupArduino){
+        updateArduino();
+    }
+    mLeap.markFrameAsOld();
+
 }
 
 //-----------------------
 
 void ofApp::draw(){
+    if(simpleHands.size() ){
+        mCam.begin();
+        ofVec2f p = simpleHands.at(0).fingers.at(INDEX).pos;
+        ofSetColor(0);
+        ofDrawSphere( simpleHands.at(0).fingers.at(INDEX).pos, 10);
+        mCam.end();
+    }
     if(isStartScene){
         mScenes.at(0)->draw();
     }
+    
 }
 
 //--------------------------------------------------------------
@@ -105,11 +130,11 @@ void ofApp::exit(){
     isStartScene = false;
 }
 
-//カーテンが開いた時
+//„Ç´„Éº„ÉÜ„É≥
 void ofApp::actionCurtain(){
     logNumber = 0;
-    mLogDataFile << ofToString(logNumber) + "setup," + getLogDay() + "," + "ofApp," + "NO" <<endl;
-    //TODO: シーン選択
+    mLogDataFile << ofToString(logNumber) + "setup," + getLogDay() + "," + "curtain," + "NO" <<endl;
+    //TODO: ‚Äû√á‚àë‚Äû√â¬∫‚Äû√â‚â•√à√Ö‚àè√ä√§√ª
     BaseScene * scene = new M_Scene();
     mScenes.push_back(scene);
     mScenes[0]->setup();
@@ -119,6 +144,35 @@ void ofApp::actionCurtain(){
 void ofApp::closeCurtain(){
     isStartScene = false;
     mScenes.clear();
+}
+
+void ofApp::setupArduino(const int & version){
+    ofRemoveListener(mArduino.EInitialized,this,&ofApp::setupArduino);
+    //TODO: „Éî„É≥Áï™Âè∑ËÅû„ÅèArduino
+    mArduino.sendDigitalPinMode(2,ARD_INPUT);
+    isSetupArduino = true;
+}
+
+void ofApp::updateArduino(){
+    mArduino.update();
+}
+
+void ofApp::setupLeapMotion(){
+    mLeap.open();
+    
+}
+
+void ofApp::updateLeapMotion(){
+    simpleHands = mLeap.getSimpleHands();
+    if( mLeap.isFrameNew() && simpleHands.size() ){
+        // 画面の大きさにあわせて、スケールをマッピング
+        mLeap.setMappingX(-230, 230, -ofGetWidth()/2, ofGetWidth()/2);
+        mLeap.setMappingY(90, 490, -ofGetHeight()/2, ofGetHeight()/2);
+        mLeap.setMappingZ(-150, 150, -200, 200);
+    }
+    if(isStartScene){
+        mScenes.at(0)->setLeapData(simpleHands);
+    }
 }
 
 string ofApp::getLogDay(){

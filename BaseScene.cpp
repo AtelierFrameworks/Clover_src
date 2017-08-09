@@ -79,3 +79,7 @@ void BaseScene::actionBed(){
 void BaseScene::actionShelf(){
     
 }
+
+void BaseScene::setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands){
+    mSimpleHands = simpleHands;
+}

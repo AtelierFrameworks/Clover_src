@@ -5,6 +5,7 @@
 #include "BaseScene.hpp"
 #include "P_Scene.hpp"
 #include "M_Scene.hpp"
+#include "ofxLeapMotion2.h"
 class ofApp : public ofBaseApp{
 
 	public:
@@ -25,11 +26,17 @@ class ofApp : public ofBaseApp{
         void exit();
         void actionCurtain();
         void closeCurtain();
+        void setupArduino(const int & version);
+        void updateArduino();
+        void setupLeapMotion();
+        void updateLeapMotion();
         static string getLogDay();
     
         std::vector<BaseScene *> mScenes;
         ofFile mLogDataFile;
-        static int logNumber;
-        static bool isStartScene;
         ofArduino mArduino;
+        ofxLeapMotion mLeap; // Leap Motionのメインクラスをインスタンス化
+        std::vector <ofxLeapMotionSimpleHand> simpleHands; // シンプルな手のモデルのvector配列
+        ofEasyCam mCam;
+
 };

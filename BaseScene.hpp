@@ -11,9 +11,11 @@
 
 #include <stdio.h>
 #include "ofMain.h"
-#include "ofApp.h"
+#include "ofxLeapMotion2.h"
+#include <vector>
 #endif /* BaseScene_hpp */
 //親クラス
+class ofApp;
 class BaseScene{
 public:
     virtual void setup(){};
@@ -32,10 +34,13 @@ public:
     virtual void dragEvent(ofDragInfo dragInfo);
     virtual void gotMessage(ofMessage msg);
     
-    
+    virtual void setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands);
     virtual void actionDesk();
     virtual void actionChair();
     virtual void actionBed();
     virtual void actionShelf();
+    
+    std::vector <ofxLeapMotionSimpleHand> mSimpleHands;
+    
 
 };
