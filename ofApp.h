@@ -6,8 +6,12 @@
 #include "P_Scene.hpp"
 #include "M_Scene.hpp"
 #include "ofxLeapMotion2.h"
-class ofApp : public ofBaseApp{
+#include "B_BedApp.hpp"
+#include "B_DeskApp.hpp"
+#include "B_FloorApp.hpp"
 
+class ofApp : public ofBaseApp{
+    
 	public:
 		void setup();
 		void update();
@@ -38,5 +42,10 @@ class ofApp : public ofBaseApp{
         ofxLeapMotion mLeap; // Leap Motionのメインクラスをインスタンス化
         std::vector <ofxLeapMotionSimpleHand> simpleHands; // シンプルな手のモデルのvector配列
         ofEasyCam mCam;
+        shared_ptr<B_BedApp> mBedApp;
+        shared_ptr<B_DeskApp> mDeskApp;
+        shared_ptr<B_FloorApp> mFloorApp;
+    enum E_SCENE {MAGIC,PRISON};
+    E_SCENE mNowScene;
 
 };

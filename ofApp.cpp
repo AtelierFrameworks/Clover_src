@@ -1,14 +1,16 @@
 #include "ofApp.h"
-
+//カーテンゾーン
 static int logNumber;
 static bool isStartScene;
 static bool isSetupArduino;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
+    mNowScene = MAGIC;
+    
     //„É≠„Ç∞„Éï„Ç°„Ç§„É´‰ΩúÊàê
     mCam.setOrientation(ofPoint(-20, 0, 0));
-
     mLogDataFile.open("LogData.csv",ofFile::Append);
     isStartScene=false;
     //„Ç∑„Éº„É≥ÂàùÊúüÂåñ
@@ -24,7 +26,7 @@ void ofApp::setup(){
 void ofApp::update(){
     updateLeapMotion();
     if(isStartScene){
-            mScenes.at(0)->update();
+        mScenes.at(0)->update();
     }
     if(isSetupArduino){
         updateArduino();
