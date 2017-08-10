@@ -16,9 +16,10 @@ void ofApp::setup(){
     //„Ç∑„Éº„É≥ÂàùÊúüÂåñ
     mScenes.clear();
     //TODO:ArduinoÈÄ£Êê∫
-    isSetupArduino= false;
-    mArduino.connect("/dev/cu.usbmodem1421",57600);
+    isSetupArduino= true;
+    mArduino.connect("/dev/cu.usbmodem1411",57600);
     ofAddListener(mArduino.EInitialized, this, &ofApp::setupArduino);
+ 
     setupLeapMotion();
 }
 
@@ -31,6 +32,7 @@ void ofApp::update(){
     if(isSetupArduino){
         updateArduino();
     }
+    
     mLeap.markFrameAsOld();
 
 }
@@ -38,6 +40,10 @@ void ofApp::update(){
 //-----------------------
 
 void ofApp::draw(){
+    if(isSetupArduino){
+    float value = mArduino.getAnalog(0);
+    ofLogNotice() << "value: " << value;
+    }
     if(simpleHands.size() ){
         mCam.begin();
         ofVec2f p = simpleHands.at(0).fingers.at(INDEX).pos;
@@ -151,7 +157,7 @@ void ofApp::closeCurtain(){
 void ofApp::setupArduino(const int & version){
     ofRemoveListener(mArduino.EInitialized,this,&ofApp::setupArduino);
     //TODO: „Éî„É≥Áï™Âè∑ËÅû„ÅèArduino
-    mArduino.sendDigitalPinMode(2,ARD_INPUT);
+    mArduino.sendAnalogPinReporting(0, ARD_ANALOG);
     isSetupArduino = true;
 }
 
