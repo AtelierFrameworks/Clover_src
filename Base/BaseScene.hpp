@@ -8,7 +8,7 @@
 #pragma once
 #ifndef BaseScene_hpp
 #define BaseScene_hpp
-
+#include "BaseScene.hpp"
 #include <stdio.h>
 #include "ofMain.h"
 #include "ofxLeapMotion2.h"

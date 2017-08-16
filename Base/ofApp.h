@@ -1,10 +1,10 @@
 #pragma once
 
-#include "BaseScene.hpp"
+
 #include "Prison/P_Scene.hpp"
 #include "M_BedScene.hpp"
-#include "ofxLeapMotion2.h"
-class B_BedApp;
+
+#include "B_BedApp.hpp"
 class B_DeskApp;
 class B_FloorApp;
 #include "BaseApp.hpp"
@@ -29,18 +29,9 @@ class ofApp : public BaseApp{
         void exit();
         void actionCurtain();
         void closeCurtain();
-      
-        void setupLeapMotion();
-        void updateLeapMotion();
-        
-
-    
-        std::vector<BaseScene *> mScenes;
+    void changeScene();
         ofFile mLogDataFile;
         ofArduino mArduino;
-        ofxLeapMotion mLeap; // Leap Motionのメインクラスをインスタンス化
-        std::vector <ofxLeapMotionSimpleHand> simpleHands; // シンプルな手のモデルのvector配列
-        ofEasyCam mCam;
         shared_ptr<B_BedApp> mBedApp;
         shared_ptr<B_DeskApp> mDeskApp;
         shared_ptr<B_FloorApp> mFloorApp;

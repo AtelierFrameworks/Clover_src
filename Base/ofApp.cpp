@@ -6,123 +6,85 @@ static bool isStartScene;
 void ofApp::setup(){
     BaseApp::setup();
     mArduinoManager.setup();
+    mBedApp -> setArduinoManager(mArduinoManager);
     setNowScene(BaseApp::NONE);
     ofSetBackgroundColor(0);
     //„É≠„Ç∞„Éï„Ç°„Ç§„É´‰ΩúÊàê
-    mCam.setOrientation(ofPoint(-20, 0, 0));
-    isStartScene=false;
+        isStartScene=false;
     //„Ç∑„Éº„É≥ÂàùÊúüÂåñ
     mScenes.clear();
-    setupLeapMotion();
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    updateLeapMotion();
+   
+    mArduinoManager.update();
     
-    //if(isSetupArduino){
-        if(isStartScene){
-            mScenes.at(0)->update();
-        }
-        
-   // }
-    
-    mLeap.markFrameAsOld();
-
+    BaseApp::update();
 }
 
 //-----------------------
 
 void ofApp::draw(){
-    
-    if(simpleHands.size() ){
-        mCam.begin();
-        ofVec2f p = simpleHands.at(0).fingers.at(INDEX).pos;
-        ofSetColor(0);
-        ofDrawSphere( simpleHands.at(0).fingers.at(INDEX).pos, 10);
-        mCam.end();
-    }
-    if(isStartScene){
-        mScenes.at(0)->draw();
-    }
+    BaseApp::draw();
     
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    if(isStartScene){
-        mScenes.at(0)->keyPressed(key);
-    }
+    
+    BaseApp::keyPressed(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-    if(isStartScene){
-        mScenes.at(0)->keyReleased(key);
-    }
+    BaseApp::keyReleased(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-    if(isStartScene){
-        mScenes.at(0)->mouseMoved(x, y);
-    }
+    BaseApp::mouseMoved(x, y);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-    if(isStartScene){
-        mScenes.at(0)->mouseDragged(x, y, button);
-    }
+    BaseApp::mouseDragged(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if(isStartScene){
-        mScenes.at(0)->mousePressed(x, y, button);
-    }
+    BaseApp::mousePressed(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if(isStartScene){
-        mScenes.at(0)->mouseReleased(x, y, button);
-    }
+    BaseApp::mouseReleased(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-    if(isStartScene){
-        mScenes.at(0)->mouseEntered(x, y);
-    }
+    BaseApp::mouseEntered(x, y);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-    if(isStartScene){
-        mScenes.at(0)->mouseExited(x, y);
-    }
+    BaseApp::mouseExited(x, y);
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    if(isStartScene){
-        mScenes.at(0)->windowResized(w, h);
-    }
+    BaseApp::windowResized(w, h);
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-    if(isStartScene){
-        mScenes.at(0)->gotMessage(msg);
-    }
+    BaseApp::gotMessage(msg);
 }
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
-    if(isStartScene){
-        mScenes.at(0)->dragEvent(dragInfo);
-    }
+    BaseApp::dragEvent(dragInfo);
 }
 
 void ofApp::exit(){
@@ -134,10 +96,9 @@ void ofApp::actionCurtain(){
     setLogNumber(0);
     mLogDataFile << ofToString(getLogNumber()) + "setup," + getLogDay() + "," + "curtain," + "NO" <<endl;
     //TODO: ‚Äû√á‚àë‚Äû√â¬∫‚Äû√â‚â•√à√Ö‚àè√ä√§√ª
-    BaseScene * scene = new P_Scene();
-    mScenes.push_back(scene);
-    mScenes[0]->setup();
-    isStartScene = true;
+    int sceneNum = ofRandom(2)+1;
+    setNowScene((BaseApp::E_SCENE)sceneNum);
+    changeScene();
 }
 
 void ofApp::closeCurtain(){
@@ -146,22 +107,24 @@ void ofApp::closeCurtain(){
 }
 
 
-void ofApp::setupLeapMotion(){
-    mLeap.open();
-    
-}
-
-void ofApp::updateLeapMotion(){
-    simpleHands = mLeap.getSimpleHands();
-    if( mLeap.isFrameNew() && simpleHands.size() ){
-        // 画面の大きさにあわせて、スケールをマッピング
-        mLeap.setMappingX(-230, 230, -ofGetWidth()/2, ofGetWidth()/2);
-        mLeap.setMappingY(90, 490, -ofGetHeight()/2, ofGetHeight()/2);
-        mLeap.setMappingZ(-150, 150, -200, 200);
+void ofApp::changeScene(){
+    BaseScene *newScene;
+    switch (getNowScene()) {
+        case BaseApp::PRISON:
+            newScene = new P_Scene();
+            break;
+        case BaseApp::MAGIC:
+            newScene = new M_BedScene();
+        case BaseApp::NONE:
+            break;
+        default:
+            break;
     }
-    if(isStartScene){
-        mScenes.at(0)->setLeapData(simpleHands);
-    }
+    mScenes.push_back(newScene);
+    mScenes[0]->setup();
+    mBedApp -> changeScene();
+    //    mDeskApp -> changeScene();
+    //    mFloorApp -> changeScene();
 }
 
 

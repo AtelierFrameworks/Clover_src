@@ -37,8 +37,6 @@ int main( ){
 //    }
     
     mainApp -> mBedApp = bedApp;
-    
-    
     ofRunApp(mainWindow,mainApp);
     ofRunApp(bedWindow,bedApp);
     
