@@ -1,21 +1,19 @@
 //
-//  B_BedApp.hpp
+//  P_BedScene.hpp
 //  Atelier_Room
 //
-//  Created by 池上綾乃 on 2017/08/10.
+//  Created by 池上綾乃 on 2017/08/17.
 //
 //
-#pragma once
-#ifndef B_BedApp_hpp
-#define B_BedApp_hpp
-#include "ofMain.h"
-#endif /* B_BedApp_hpp */
-#include "BaseApp.hpp"
-#include "Magic/M_BedScene.hpp"
-#include "Prison/P_BedScene.hpp"
-class B_BedApp : public BaseApp{
-    
-public:
+
+#ifndef P_BedScene_hpp
+#define P_BedScene_hpp
+
+#include <stdio.h>
+
+#endif /* P_BedScene_hpp */
+#include "BaseScene.hpp"
+class P_BedScene : public BaseScene{
     void setup();
     void update();
     void draw();
@@ -30,5 +28,9 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    void changeScene();
+    void actionDesk();
+    void actionChair();
+    void actionBed();
+    void actionShelf();
+    
 };

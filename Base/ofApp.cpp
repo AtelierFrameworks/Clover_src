@@ -102,8 +102,7 @@ void ofApp::actionCurtain(){
 }
 
 void ofApp::closeCurtain(){
-    isStartScene = false;
-    mScenes.clear();
+    setNowScene(BaseApp::NONE);
 }
 
 
@@ -112,20 +111,25 @@ void ofApp::changeScene(){
     switch (getNowScene()) {
         case BaseApp::PRISON:
             newScene = new P_Scene();
+            mScenes.push_back(newScene);
+            mScenes[0]->setup();
             break;
         case BaseApp::MAGIC:
-            newScene = new M_BedScene();
+            newScene = new M_Scene();
+            mScenes.push_back(newScene);
+            mScenes[0]->setup();
+            break;
         case BaseApp::NONE:
+            mScenes.clear();
             break;
         default:
             break;
     }
-    mScenes.push_back(newScene);
-    mScenes[0]->setup();
-    mBedApp -> changeScene();
+       mBedApp -> changeScene();
     //    mDeskApp -> changeScene();
     //    mFloorApp -> changeScene();
 }
+
 
 
 

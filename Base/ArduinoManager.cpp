@@ -20,6 +20,7 @@ void ArduinoManager::setup(){
 void ArduinoManager::update(){
     mArduino.update();
     if(isSetupArduino){
+        //テスト用ログ吐き出し
         float value = mArduino.getAnalog(0);
         ofLogNotice() << "value: " << value;
     }
@@ -38,7 +39,7 @@ void ArduinoManager::setupArduino(const int & version){
 ArduinoDataModel ArduinoManager::getArduinoData(ArduinoDataModel::E_PARTS parts){
     ArduinoDataModel model = *new ArduinoDataModel();
     switch(parts){
-        case ArduinoDataModel::CURTAIN :
+        case ArduinoDataModel::CURTAIN:
             break;
         case ArduinoDataModel::CHAIR:
             break;

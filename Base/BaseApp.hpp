@@ -14,6 +14,7 @@
 #include <vector>
 #include "BaseScene.hpp"
 #endif /* BaseApp_hpp */
+class ofApp;
 class BaseApp : public ofBaseApp{
     
 public:
@@ -41,6 +42,8 @@ public:
     static void setLogNumber(int num);
     ArduinoManager getArduinoManager();
     void setArduinoManager(ArduinoManager manager);
+    shared_ptr<ofApp> getOfApp();
+    shared_ptr<ofApp> mApp;
    protected:
     static string getLogDay();
     std::vector<BaseScene *> mScenes;

@@ -130,3 +130,5 @@ int BaseApp::getLogNumber(){return logNumber;}
 void BaseApp::setLogNumber(int num){logNumber = num;}
 ArduinoManager BaseApp::getArduinoManager(){return mArduinoManager;}
 void BaseApp::setArduinoManager(ArduinoManager manager){mArduinoManager = manager;}
+shared_ptr<ofApp> BaseApp::getOfApp(){return mApp;}
+

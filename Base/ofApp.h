@@ -2,12 +2,12 @@
 
 
 #include "Prison/P_Scene.hpp"
-#include "M_BedScene.hpp"
-
+#include "Magic/M_Scene.hpp"
 #include "B_BedApp.hpp"
-class B_DeskApp;
-class B_FloorApp;
 #include "BaseApp.hpp"
+#include "B_DeskApp.hpp"
+#include "B_FloorApp.hpp"
+
 class ofApp : public BaseApp{
     
 	public:
@@ -29,6 +29,7 @@ class ofApp : public BaseApp{
         void exit();
         void actionCurtain();
         void closeCurtain();
+    
     void changeScene();
         ofFile mLogDataFile;
         ofArduino mArduino;

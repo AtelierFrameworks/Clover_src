@@ -100,6 +100,7 @@ void B_DeskApp::changeScene(){
 //            newScene = new M_BedScene();
             break;
         case BaseApp::NONE:
+              mScenes.clear();
             break;
         default:
             break;

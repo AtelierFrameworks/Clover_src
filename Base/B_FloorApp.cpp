@@ -25,7 +25,6 @@ void B_FloorApp::draw(){
 //--------------------------------------------------------------
 void B_FloorApp::keyPressed(int key){
     BaseApp::keyPressed(key);
-    
 }
 
 //--------------------------------------------------------------
@@ -88,6 +87,7 @@ void B_FloorApp::changeScene(){
 //            newScene = new M_BedScene();
             break;
         case BaseApp::NONE:
+              mScenes.clear();
             break;
         default:
             break;

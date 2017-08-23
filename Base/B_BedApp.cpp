@@ -82,18 +82,22 @@ void B_BedApp::changeScene(){
     BaseScene *newScene;
     switch (getNowScene()) {
         case BaseApp::PRISON:
-//            newScene = new P_Scene();
+            newScene = new P_BedScene();
+            mScenes.push_back(newScene);
+            mScenes[0]->setup();
             break;
         case BaseApp::MAGIC:
-//            newScene = new M_BedScene();
+            newScene = new M_BedScene();
+            mScenes.push_back(newScene);
+            mScenes[0]->setup();
+
             break;
         case BaseApp::NONE:
+              mScenes.clear();
             break;
         default:
             break;
     }
-    mScenes.push_back(newScene);
-    mScenes[0]->setup();
 }
 
 

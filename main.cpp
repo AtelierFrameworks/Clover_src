@@ -29,14 +29,11 @@ int main( ){
     
    
     
-    BaseApp::E_SCENE scene = mainApp -> getNowScene();
+    BaseApp::E_SCENE scene = BaseApp::NONE;
     shared_ptr<B_BedApp> bedApp(new B_BedApp);
-//    if(scene == ofApp::MAGIC){
-//    }else{
-//   //     shared_ptr<B_BedApp> bedApp(new B_BedApp);
-//    }
     
     mainApp -> mBedApp = bedApp;
+    bedApp -> mApp = mainApp;
     ofRunApp(mainWindow,mainApp);
     ofRunApp(bedWindow,bedApp);
     
