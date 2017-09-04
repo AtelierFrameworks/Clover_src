@@ -13,37 +13,48 @@ static bool isSetupArduino;
 void ArduinoManager::setup(){
     //TODO:ArduinoÈÄ£Êê∫
     isSetupArduino= true;
-    mArduino.connect("/dev/cu.usbmodem1411",57600);
-    ofAddListener(mArduino.EInitialized, this, &ArduinoManager::setupArduino);
+    mSerial.listDevices();
+    vector <ofSerialDeviceInfo> deviceList = mSerial.getDeviceList();
+    // シリアル通信開始
+    mSerial.setup(1,9600);
 }
 
 void ArduinoManager::update(){
-    mArduino.update();
-    if(isSetupArduino){
-        //テスト用ログ吐き出し
-        float value = mArduino.getAnalog(0);
-        ofLogNotice() << "value: " << value;
+    int nRead = 0;
+    char bytesRead[50];
+    unsigned char bytesReturned[50];
+    
+    memset(bytesReturned, 0, 50);
+    memset(bytesReadString, 0, 50);
+    
+    if(mSerial.isInitialized()){
+        if(mSerial.available()){
+            // シリアル通信で受け取ったデータを読み込む
+            while ((nRead = mSerial.readBytes(bytesReturned, 50)) > 0) {
+                nBytesRead = nRead;
+            };
+            
+            if (nBytesRead > 0) {
+                memcpy(bytesReadString, bytesReturned, 50);
+                string x = bytesReadString;
+                ofLogNotice() << "value" << x;
+            }
+        }
     }
+
 }
 
 
-
-void ArduinoManager::setupArduino(const int & version){
-    ofRemoveListener(mArduino.EInitialized,this,&ArduinoManager::setupArduino);
-    //TODO: To check used Arduino's pin
-    //Pressure
-    mArduino.sendAnalogPinReporting(0, ARD_ANALOG);
-    isSetupArduino = true;
-}
-
-ArduinoDataModel ArduinoManager::getArduinoData(ArduinoDataModel::E_PARTS parts){
+ArduinoDataModel ArduinoManager::getArduinoData(CONST::E_PARTS parts){
     ArduinoDataModel model = *new ArduinoDataModel();
     switch(parts){
-        case ArduinoDataModel::CURTAIN:
+        case CONST::P_CURTAIN:
             break;
-        case ArduinoDataModel::CHAIR:
+        case CONST::P_CHAIR:
             break;
-        case ArduinoDataModel::BED:
+        case CONST::P_BED:
+            break;
+        case CONST::P_SHELF:
             break;
         default:break;
     }
@@ -53,3 +64,5 @@ ArduinoDataModel ArduinoManager::getArduinoData(ArduinoDataModel::E_PARTS parts)
 bool ArduinoManager::getIsSetup(){
     return isSetupArduino;
 }
+
+

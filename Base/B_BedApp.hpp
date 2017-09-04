@@ -31,4 +31,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void changeScene();
+    void actionBed();
+    void endMovie(CONST::E_APP & app);
+    ofEvent<CONST::E_APP> mMovieEndEvent;
 };

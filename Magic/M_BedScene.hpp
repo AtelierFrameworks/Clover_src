@@ -6,6 +6,7 @@
 //
 //
 //魔法図書館シーン
+#pragma once
 #ifndef M_BedScene_hpp
 #define M_BedScene_hpp
 #include "BaseScene.hpp"
@@ -31,5 +32,6 @@ public:
     void gotMessage(ofMessage msg);
     void startBed();
     void endBed();
-
+    void actionBed();
+    void endMovieEvent(CONST::E_APP & App);
 };

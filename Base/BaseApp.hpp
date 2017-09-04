@@ -10,17 +10,14 @@
 #define BaseApp_hpp
 
 #include <stdio.h>
-#include "ArduinoManager.hpp"
 #include <vector>
 #include "BaseScene.hpp"
+#include "CONST.h"
 #endif /* BaseApp_hpp */
-class ofApp;
 class BaseApp : public ofBaseApp{
     
 public:
-    enum E_SCENE {NONE,MAGIC,PRISON};
-
-    virtual void setup();
+       virtual void setup();
     virtual void update();
     virtual void draw();
     virtual void keyPressed(int key);
@@ -36,18 +33,17 @@ public:
     virtual void gotMessage(ofMessage msg);
     virtual void exit();
     virtual void changeScene(){};
-    static E_SCENE getNowScene();
-    static void setNowScene(E_SCENE);
+    virtual void endMovie(CONST::E_APP & app){};
+    virtual void freeToSceneMemory();
+    static CONST::E_SCENE getNowScene();
+    static void setNowScene(CONST::E_SCENE);
     static int getLogNumber();
     static void setLogNumber(int num);
-    ArduinoManager getArduinoManager();
-    void setArduinoManager(ArduinoManager manager);
-    shared_ptr<ofApp> getOfApp();
-    shared_ptr<ofApp> mApp;
-   protected:
-    static string getLogDay();
+    
+    //void setArduinoManager(shared_ptr<ArduinoManager> manager);
     std::vector<BaseScene *> mScenes;
+protected:
+    static string getLogDay();
     ofFile mLogDataFile;
-    ArduinoManager mArduinoManager;
     
 };

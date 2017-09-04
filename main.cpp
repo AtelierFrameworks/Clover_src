@@ -2,10 +2,13 @@
 #include "Base/BaseApp.hpp"
 #include "Base/ofApp.h"
 #include "Base/B_BedApp.hpp"
+#include "Base/B_DeskApp.hpp"
+#include "Base/B_FloorApp.hpp"
+
 //========================================================================
 int main( ){
 	//ofSetupOpenGL(1024,768,OF_WINDOW);			// <-------- setup the GL context
-    
+  
     ofGLFWWindowSettings settings;
     
     settings.width = 1440;
@@ -15,25 +18,30 @@ int main( ){
     settings.decorated = false;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
     
-    settings.width = 1280;
+    settings.width = 1000;
     settings.height = 800;
-    settings.setPosition(ofVec2f(1440,0));
+    settings.setPosition(ofVec2f(500,0));
     settings.resizable = true;
     settings.shareContextWith = mainWindow;
     settings.multiMonitorFullScreen = true;
+    
     //メニューバーの非表示
     settings.decorated = false;
     shared_ptr<ofAppBaseWindow> bedWindow = ofCreateWindow(settings);
+//    settings.setPosition(ofVec2f(2720,0));
+//    shared_ptr<ofAppBaseWindow> deskWindow = ofCreateWindow(settings);
+//    settings.setPosition(ofVec2f(4000,0));
+//    shared_ptr<ofAppBaseWindow> floorWindow = ofCreateWindow(settings);
     
     shared_ptr<ofApp> mainApp(new ofApp);
-    
-   
-    
-    BaseApp::E_SCENE scene = BaseApp::NONE;
+    CONST::E_SCENE scene = CONST::NONE;
     shared_ptr<B_BedApp> bedApp(new B_BedApp);
-    
+//    shared_ptr<B_DeskApp> deskApp(new B_DeskApp);
+//    shared_ptr<B_FloorApp> floorApp(new B_FloorApp);
+
     mainApp -> mBedApp = bedApp;
-    bedApp -> mApp = mainApp;
+//    mainApp -> mDeskApp = deskApp;
+//    mainApp -> mFloorApp = floorApp;
     ofRunApp(mainWindow,mainApp);
     ofRunApp(bedWindow,bedApp);
     
