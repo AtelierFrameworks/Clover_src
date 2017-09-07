@@ -25,7 +25,6 @@ void B_FloorApp::draw(){
 //--------------------------------------------------------------
 void B_FloorApp::keyPressed(int key){
     BaseApp::keyPressed(key);
-    
 }
 
 //--------------------------------------------------------------
@@ -81,13 +80,14 @@ void B_FloorApp::dragEvent(ofDragInfo dragInfo){
 void B_FloorApp::changeScene(){
     BaseScene *newScene;
     switch (getNowScene()) {
-        case BaseApp::PRISON:
+        case CONST::PRISON:
 //            newScene = new P_Scene();
             break;
-        case BaseApp::MAGIC:
+        case CONST::MAGIC:
 //            newScene = new M_BedScene();
             break;
-        case BaseApp::NONE:
+        case CONST::NONE:
+              mScenes.clear();
             break;
         default:
             break;

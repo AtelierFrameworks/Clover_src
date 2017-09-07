@@ -10,13 +10,12 @@
 #define ArduinoDataModel_hpp
 
 #include <stdio.h>
-
+#include "CONST.h"
 #endif /* ArduinoDataModel_hpp */
 class ArduinoDataModel{
     
 public:
-    enum E_PARTS{CURTAIN,CHAIR,SHELF,BED};
     //どの家具からのデータか
-    E_PARTS mParts;
-    float mValue;
+    
+    float mValue[4];
 };

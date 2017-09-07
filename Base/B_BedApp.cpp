@@ -8,12 +8,14 @@
 
 #include "B_BedApp.hpp"
 void B_BedApp::setup(){
-   BaseApp::setup();
+    ofAddListener(mScenes[0]->mEndMovieEvent,this,&B_BedApp::endMovie);
+    BaseApp::setup();
 }
 
 //--------------------------------------------------------------
 void B_BedApp::update(){
     BaseApp::update();
+    
 }
 
 //--------------------------------------------------------------
@@ -81,19 +83,31 @@ void B_BedApp::dragEvent(ofDragInfo dragInfo){
 void B_BedApp::changeScene(){
     BaseScene *newScene;
     switch (getNowScene()) {
-        case BaseApp::PRISON:
-//            newScene = new P_Scene();
+        case CONST::PRISON:
+            newScene = new P_BedScene();
+            mScenes.push_back(newScene);
+            mScenes[0]->setup();
             break;
-        case BaseApp::MAGIC:
-//            newScene = new M_BedScene();
+        case CONST::MAGIC:
+            newScene = new M_BedScene();
+            mScenes.push_back(newScene);
+            mScenes[0]->setup();
             break;
-        case BaseApp::NONE:
+        case CONST::NONE:
+              mScenes.clear();
             break;
         default:
             break;
     }
-    mScenes.push_back(newScene);
-    mScenes[0]->setup();
+}
+
+void B_BedApp::actionBed(){
+    mScenes[0] -> actionBed();
+}
+
+void B_BedApp::endMovie(CONST::E_APP & app){
+    CONST::E_APP e_app = CONST::A_BED;
+    ofNotifyEvent(mMovieEndEvent, e_app);
 }
 
 

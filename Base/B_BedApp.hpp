@@ -11,6 +11,8 @@
 #include "ofMain.h"
 #endif /* B_BedApp_hpp */
 #include "BaseApp.hpp"
+#include "Magic/M_BedScene.hpp"
+#include "Prison/P_BedScene.hpp"
 class B_BedApp : public BaseApp{
     
 public:
@@ -29,4 +31,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void changeScene();
+    void actionBed();
+    void endMovie(CONST::E_APP & app);
+    ofEvent<CONST::E_APP> mMovieEndEvent;
 };

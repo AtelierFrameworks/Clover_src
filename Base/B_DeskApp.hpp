@@ -17,7 +17,6 @@
 #endif /* B_DeskApp_hpp */
 
 class B_DeskApp : public BaseApp{
-    
 public:
     void setup();
     void update();
@@ -33,11 +32,5 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    void setupLeapMotion();
-    void updateLeapMotion();
     void changeScene();
-    ofxLeapMotion mLeap; // Leap Motionのメインクラスをインスタンス化
-    std::vector <ofxLeapMotionSimpleHand> simpleHands; // シンプルな手のモデルのvector配列
-    ofEasyCam mCam;
-
 };

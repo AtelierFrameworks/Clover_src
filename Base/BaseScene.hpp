@@ -8,14 +8,15 @@
 #pragma once
 #ifndef BaseScene_hpp
 #define BaseScene_hpp
-#include "BaseScene.hpp"
 #include <stdio.h>
 #include "ofMain.h"
 #include "ofxLeapMotion2.h"
 #include <vector>
+#include "EventVideo.hpp"
+#include "CONST.h"
 #endif /* BaseScene_hpp */
 //親クラス
-class ofApp;
+class BaseApp;
 class BaseScene{
 public:
     virtual void setup(){};
@@ -39,8 +40,10 @@ public:
     virtual void actionChair();
     virtual void actionBed();
     virtual void actionShelf();
-    
+    virtual void endMovieEvent(CONST::E_APP & App){};
+    EventVideo mVideo;
+    ofEvent<CONST::E_APP> mEndMovieEvent;
+    bool isAction = false;
     std::vector <ofxLeapMotionSimpleHand> mSimpleHands;
-    
 
 };

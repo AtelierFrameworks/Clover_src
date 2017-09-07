@@ -12,16 +12,18 @@
 #include <stdio.h>
 #include "ofMain.h"
 #include "ArduinoDataModel.hpp"
+#include "CONST.h"
 #endif /* ArduinoManager_hpp */
 class ArduinoManager{
 public:
     void setup();
     void update();
     void draw();
-    void setupArduino(const int & version);
-    static bool getIsSetup();
-    ArduinoDataModel getArduinoData(ArduinoDataModel::E_PARTS);
-    ofArduino mArduino;
-   
 
+    static bool getIsSetup();
+    ArduinoDataModel getArduinoData(CONST::E_PARTS);
+    ofSerial mSerial;
+    int nBytesRead = 0;
+    char bytesReadString[50];
+//    int getArduinoDatas();
 };

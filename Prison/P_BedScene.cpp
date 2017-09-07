@@ -2,7 +2,7 @@
 //  P_BedScene.cpp
 //  Atelier_Room
 //
-//  Created by USER1 on 2017/08/31.
+//  Created by 池上綾乃 on 2017/08/17.
 //
 //
 
@@ -18,14 +18,11 @@ void P_BedScene::setup(){
     
     //背景
     myImage.loadImage("P_side.png");
-
-    
 }
 
 //--------------------------------------------------------------
 void P_BedScene::update(){
     fingersMovie.update();
-    
 }
 
 //--------------------------------------------------------------
@@ -37,8 +34,6 @@ void P_BedScene::draw(){
     //背景
     myImage.draw(0,0);
 
-   // ofSetColor(0,127,127);
-   // ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);
 }
 
 //--------------------------------------------------------------
