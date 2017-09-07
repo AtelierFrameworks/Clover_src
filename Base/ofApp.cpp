@@ -108,7 +108,7 @@ void ofApp::exit(){
 //„Ç´„Éº„ÉÜ„É≥
 void ofApp::actionCurtain(){
     setLogNumber(0);
-    mLogDataFile << ofToString(getLogNumber()) + "setup," + getLogDay() + "," + "curtain," + "NO" <<endl;
+    mLogDataFile << ofToString(getLogNumber()) + ",setup," + getLogDay() + "," + "curtain," + "NO" <<endl;
     //TODO: ‚Äû√á‚àë‚Äû√â¬∫‚Äû√â‚â•√à√Ö‚àè√ä√§√ª
     int sceneNum = ofRandom(2)+1;
     //setNowScene((BaseApp::E_SCENE)sceneNum);
@@ -117,13 +117,12 @@ void ofApp::actionCurtain(){
 }
 
 void ofApp::closeCurtain(){
-    mLogDataFile << ofToString(getLogNumber()) + "exit," + getLogDay() + "," + "curtain," + "NO" <<endl;
+    mLogDataFile << ofToString(getLogNumber()) + ",exit," + getLogDay() + "," + "curtain," + "NO" <<endl;
     setNowScene(CONST::NONE);
     freeToSceneMemory();
     mBedApp -> freeToSceneMemory();
     mDeskApp -> freeToSceneMemory();
     mFloorApp -> freeToSceneMemory();
-    
 }
 
 void ofApp::sendAction(CONST::E_APP app){

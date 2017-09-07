@@ -18,7 +18,6 @@ void B_FloorApp::update(){
 
 //--------------------------------------------------------------
 void B_FloorApp::draw(){
-    ofDrawBitmapString("ofBedApp", ofGetWidth()/2, ofGetHeight()/2);
     BaseApp::draw();
 }
 

@@ -20,7 +20,7 @@ public:
     void update();
     void draw();
 
-    static bool getIsSetup();
+    bool getIsSetup();
     ArduinoDataModel getArduinoData(CONST::E_PARTS);
     ofSerial mSerial;
     int nBytesRead = 0;

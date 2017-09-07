@@ -22,5 +22,6 @@ class EventVideo{
     void draw(float x,float y,float width,float height);
     void play();
     void stop();
+    void pause();
     bool mIsPlayed;
 };

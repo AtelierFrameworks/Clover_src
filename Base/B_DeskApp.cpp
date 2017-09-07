@@ -16,8 +16,6 @@ void B_DeskApp::setup(){
 
 //--------------------------------------------------------------
 void B_DeskApp::update(){
-    
- 
     BaseApp::update();
 }
 
@@ -30,7 +28,6 @@ void B_DeskApp::draw(){
 //        ofDrawSphere( simpleHands.at(0).fingers.at(INDEX).pos, 10);
 //        mCam.end();
 //    }
-
     BaseApp::draw();
 }
 

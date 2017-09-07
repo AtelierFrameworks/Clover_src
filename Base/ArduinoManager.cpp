@@ -9,10 +9,9 @@
 #include "ArduinoManager.hpp"
 
 
-static bool isSetupArduino;
+
 void ArduinoManager::setup(){
     //TODO:ArduinoÈÄ£Êê∫
-    isSetupArduino= true;
     mSerial.listDevices();
     vector <ofSerialDeviceInfo> deviceList = mSerial.getDeviceList();
     // シリアル通信開始
@@ -62,7 +61,7 @@ ArduinoDataModel ArduinoManager::getArduinoData(CONST::E_PARTS parts){
 }
 
 bool ArduinoManager::getIsSetup(){
-    return isSetupArduino;
+    return mSerial.isInitialized();
 }
 
 

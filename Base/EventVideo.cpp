@@ -37,3 +37,6 @@ void EventVideo::stop(){
     mIsPlayed = true;
 }
 
+void EventVideo::pause(){
+    mPlayer.setPaused(true);
+}
