@@ -16,6 +16,9 @@ ofImage sprite;
 
 ofxSPK::Modifier rot;
 void P_DeskScene::setup(){
+    //背景
+    myImage.loadImage("P_side.png");
+    
     //人影
     ofBackground(0,0,0);
     ofSetVerticalSync(true);
@@ -156,6 +159,9 @@ void P_DeskScene::update(){
 void P_DeskScene::draw(){
     //ofSetColor(0,127,127);
     //ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);
+    //背景
+    myImage.draw(0,0);
+    
     ofSetColor(0xFFFFFF);
     fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     ofSetHexColor(0x000000);
@@ -165,8 +171,7 @@ void P_DeskScene::draw(){
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     sprite.bind();
     ofEnablePointSprites();
-    if (mPosition.x > 30)
-    {
+    if (mPosition.x > 30){
         sys.draw();
     }
     sys.draw();

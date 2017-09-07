@@ -33,6 +33,7 @@ class P_DeskScene : public BaseScene{
     ofVideoPlayer fingersMovie;
     ofSoundPlayer mySound;
     bool                frameByframe;
+    ofImage myImage;
     
     //火の玉
     ofVec2f mPosition;

@@ -32,5 +32,5 @@ public:
     void gotMessage(ofMessage msg);
     ofVideoPlayer fingersMovie;
     bool                frameByframe;
-    
+    ofImage myImage;
 };

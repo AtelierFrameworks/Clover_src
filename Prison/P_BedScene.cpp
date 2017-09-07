@@ -16,6 +16,10 @@ void P_BedScene::setup(){
     fingersMovie.setLoopState(OF_LOOP_NONE);
     fingersMovie.play();
     
+    //背景
+    myImage.loadImage("P_side.png");
+
+    
 }
 
 //--------------------------------------------------------------
@@ -29,6 +33,9 @@ void P_BedScene::draw(){
     ofSetColor(0xFFFFFF);
     fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     ofSetHexColor(0x000000);
+    
+    //背景
+    myImage.draw(0,0);
 
    // ofSetColor(0,127,127);
    // ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);

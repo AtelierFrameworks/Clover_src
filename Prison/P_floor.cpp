@@ -8,6 +8,7 @@
 
 #include "P_floor.hpp"
 void P_floor::setup(){
+    //床のひび割れ
     ofBackground(0,0,0);
     ofSetVerticalSync(true);
     frameByframe = false;
@@ -15,6 +16,8 @@ void P_floor::setup(){
     fingersMovie.loadMovie("yuka.mov");
     fingersMovie.setLoopState(OF_LOOP_NONE);
     fingersMovie.play();
+    //背景
+    myImage.loadImage("P_floor.png");
 }
 
 //--------------------------------------------------------------
@@ -25,6 +28,9 @@ void P_floor::update(){
 
 //--------------------------------------------------------------
 void P_floor::draw(){
+    //背景
+    myImage.draw(0,0);
+    //ひび割れ
     ofSetColor(0,127,127);
     ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);
     ofSetColor(0xFFFFFF);
