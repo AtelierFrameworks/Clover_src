@@ -10,9 +10,9 @@
 #define P_floor_hpp
 
 #include <stdio.h>
-
+#include "BaseScene.hpp"
 #endif /* P_floor_hpp */
-class P_Scene : public BaseScene{
+class P_floor : public BaseScene{
     void setup();
     void update();
     void draw();
@@ -28,13 +28,22 @@ class P_Scene : public BaseScene{
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    
     void actionDesk();
     void actionChair();
     void actionBed();
     void actionShelf();
+    void setupFire();
     ofVideoPlayer fingersMovie;
     bool                frameByframe;
     ofImage myImage;
+    
+    //火の玉
+    ofVec2f mPosition;
+    ofVec2f mVelocity;
+    float x;
+    float y;
+    float vx;
+    float vy;
+
 };
 

@@ -35,11 +35,4 @@ class P_DeskScene : public BaseScene{
     bool                frameByframe;
     ofImage myImage;
     
-    //火の玉
-    ofVec2f mPosition;
-    ofVec2f mVelocity;
-    float x;
-    float y;
-    float vx;
-    float vy;
-};
+    };
