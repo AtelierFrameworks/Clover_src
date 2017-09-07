@@ -35,6 +35,6 @@ class P_Scene : public BaseScene{
     void actionBed();
     void actionShelf();
     ofVideoPlayer fingersMovie;
-    bool                frameByframe;
+    bool frameByframe;
 
 };

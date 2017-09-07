@@ -12,12 +12,12 @@ void P_BedScene::setup(){
     ofSetVerticalSync(true);
     frameByframe = false;
     ofEnableSmoothing();
-    fingersMovie.loadMovie("P_bedshadow.mp4");
+    fingersMovie.load("P_bedshadow.mp4");
     fingersMovie.setLoopState(OF_LOOP_NONE);
     fingersMovie.play();
     
     //背景
-    myImage.loadImage("P_side.png");
+    myImage.load("P_side.png");
 }
 
 //--------------------------------------------------------------
@@ -91,19 +91,4 @@ void P_BedScene::dragEvent(ofDragInfo dragInfo){
     
 }
 
-void P_BedScene::actionDesk(){
-    
-}
-
-void P_BedScene::actionChair(){
-    
-}
-
-void P_BedScene::actionBed(){
-    
-}
-
-void P_BedScene::actionShelf(){
-    
-}
 
