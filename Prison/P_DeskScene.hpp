@@ -1,23 +1,23 @@
 //
-//  P_BedScene.hpp
+//  P_DeskScene.hpp
 //  Atelier_Room
 //
-//  Created by 池上綾乃 on 2017/08/17.
+//  Created by USER1 on 2017/08/21.
 //
 //
-
-#ifndef P_BedScene_hpp
-#define P_BedScene_hpp
-
-#include <stdio.h>
-
-#endif /* P_BedScene_hpp */
+#pragma once
+#ifndef P_DeskScene_hpp
+#define P_DeskScene_hpp
 
 #include "BaseScene.hpp"
-class P_BedScene : public BaseScene{
+#include <stdio.h>
+
+#endif /* P_DeskScene_hpp */
+class P_DeskScene : public BaseScene{
     void setup();
     void update();
     void draw();
+    
     void keyPressed(int key);
     void keyReleased(int key);
     void mouseMoved(int x, int y );
@@ -29,7 +29,17 @@ class P_BedScene : public BaseScene{
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+    
     ofVideoPlayer fingersMovie;
+    ofSoundPlayer mySound;
     bool                frameByframe;
     ofImage myImage;
+    
+    //火の玉
+    ofVec2f mPosition;
+    ofVec2f mVelocity;
+    float x;
+    float y;
+    float vx;
+    float vy;
 };
