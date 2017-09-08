@@ -1,12 +1,12 @@
 # Room_src
 「部屋」コードコミット用
 
-###使用しているAddon
+### 使用しているAddon
 ・ofxTrueTypeFontUC
 ・ofxSPK
 ・ofxLeapMotion2
 
-###Arduinoデータ配列内容(ArduinoManager Class)
+### Arduinoデータ配列内容(ArduinoManager Class)
 ０：ベッド照度センサ１
 １：ベッド照度センサ２
 2:ベッド照度センサ3
