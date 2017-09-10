@@ -13,7 +13,7 @@ void P_floor::setup(){
     ofSetVerticalSync(true);
     frameByframe = false;
     ofEnableSmoothing();
-    fingersMovie.loadMovie("yuka.mov");
+    fingersMovie.load("yuka.mov");
     fingersMovie.setLoopState(OF_LOOP_NONE);
     fingersMovie.play();
     //背景

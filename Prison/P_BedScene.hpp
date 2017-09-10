@@ -32,4 +32,5 @@ class P_BedScene : public BaseScene{
     ofVideoPlayer fingersMovie;
     bool                frameByframe;
     ofImage myImage;
+    void endMovieEvent(CONST::E_APP & App);
 };
