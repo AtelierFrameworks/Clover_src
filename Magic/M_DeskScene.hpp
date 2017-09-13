@@ -11,6 +11,8 @@
 #define M_DeskScene_hpp
 #include <stdio.h>
 #include "BaseScene.hpp"
+#include "ofxSPK.h"
+
 #endif /* M_DeskScene_hpp */
 
 class M_DeskScene : public BaseScene{
@@ -35,7 +37,7 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    void endMovieEvent(CONST::E_APP & App);
+    void endMovieEvent(CONST::E_GIMMICK & gimmick);
     ofVideoPlayer ofMovie;
     ofImage magic_kabe;
     float px;
@@ -53,4 +55,9 @@ public:
     float BatPosition1h = 0;
     ofSoundPlayer BatSound;
     
+    //spk
+    ofxSPK::System sys;
+    ofxSPK::Group group;
+    ofImage sprite;
+    ofxSPK::Modifier rot;
 };

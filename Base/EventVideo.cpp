@@ -8,18 +8,18 @@
 
 #include "EventVideo.hpp"
 
-void EventVideo::setup(string path,ofLoopType state,CONST::E_APP app){
+void EventVideo::setup(string path,ofLoopType state,CONST::E_GIMMICK gimmick){
     mIsPlayed = false;
     mPlayer.load(path);
     mPlayer.setLoopState(state);
-    mApp = app;
+    mGimmick = gimmick;
 }
 
 void EventVideo::update(){
     mPlayer.update();
     bool isPlaying = mPlayer.isPlaying();
     if(mPlayer.isInitialized() && !mIsPlayed && !mPlayer.isPlaying()){
-        ofNotifyEvent(mEndEvent,mApp);
+        ofNotifyEvent(mEndEvent,mGimmick);
         mIsPlayed = true;
     }
 }

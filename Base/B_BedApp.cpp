@@ -8,7 +8,7 @@
 
 #include "B_BedApp.hpp"
 void B_BedApp::setup(){
-    ofAddListener(mScenes[0]->mEndMovieEvent,this,&B_BedApp::endMovie);
+    
     BaseApp::setup();
 }
 
@@ -20,7 +20,6 @@ void B_BedApp::update(){
 
 //--------------------------------------------------------------
 void B_BedApp::draw(){
-    ofDrawBitmapString("ofBedApp", ofGetWidth()/2, ofGetHeight()/2);
     BaseApp::draw();
 }
 
@@ -87,11 +86,13 @@ void B_BedApp::changeScene(){
             newScene = new P_BedScene();
             mScenes.push_back(newScene);
             mScenes[0]->setup();
+            ofAddListener(mScenes[0]->mEndMovieEvent,this,&B_BedApp::endMovie);
             break;
         case CONST::MAGIC:
             newScene = new M_BedScene();
             mScenes.push_back(newScene);
             mScenes[0]->setup();
+            ofAddListener(mScenes[0]->mEndMovieEvent,this,&B_BedApp::endMovie);
             break;
         case CONST::NONE:
               mScenes.clear();
@@ -105,10 +106,12 @@ void B_BedApp::actionBed(){
     mScenes[0] -> actionBed();
 }
 
-void B_BedApp::endMovie(CONST::E_APP & app){
-    CONST::E_APP e_app = CONST::A_BED;
-    ofNotifyEvent(mMovieEndEvent, e_app);
+void B_BedApp::endMovie(CONST::E_GIMMICK & gimmick){
+//    ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_BedApp::endMovie);
+    CONST::E_GIMMICK e_gimmick = gimmick;
+    ofNotifyEvent(mMovieEndEvent, e_gimmick);
 }
 
-
-
+void B_BedApp::setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands){
+    mScenes[0] -> setLeapData(simpleHands);
+}

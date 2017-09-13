@@ -9,11 +9,11 @@
 #include "M_FloorScene.hpp"
 
 void M_FloorScene::setup(){
-    mVideo.setup("Magic/mahojin.mp4", OF_LOOP_NONE, CONST::A_BED);
+    mVideo.setup("Magic/mahojin.mp4", OF_LOOP_NONE, CONST::G_M_CHAIR);
     ofAddListener(mVideo.mEndEvent,this,&M_FloorScene::endMovieEvent);
     mVideo.play();
     mVideo.pause();
-    magic_kabe.load("Magic/M_front.png");
+    magic_floor.load("Magic/M_floor.png");
 }
 
 //--------------------------------------------------------------
@@ -24,7 +24,7 @@ void M_FloorScene::update(){
 //--------------------------------------------------------------
 void M_FloorScene::draw(){
     magic_floor.draw(0, 0, ofGetWidth(), ofGetHeight());
-      mVideo.draw(0,0,400,300);
+    mVideo.draw(0,0,400,300);
 }
 
 //--------------------------------------------------------------
@@ -82,10 +82,9 @@ void M_FloorScene::dragEvent(ofDragInfo dragInfo){
     
 }
 
-void M_FloorScene::endMovieEvent(CONST::E_APP & App){
-    CONST::E_APP e_app = CONST::A_FLOOR;
+void M_FloorScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
     mVideo.stop();
-    ofNotifyEvent(mEndMovieEvent,e_app);
-    
+    CONST::E_GIMMICK e_gimmick = gimmick;
+    ofNotifyEvent(mEndMovieEvent, e_gimmick);
 }
 

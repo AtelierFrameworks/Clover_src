@@ -80,19 +80,35 @@ void B_FloorApp::changeScene(){
     BaseScene *newScene;
     switch (getNowScene()) {
         case CONST::PRISON:
-//            newScene = new P_Scene();
+            newScene = new P_floor();
+            mScenes.push_back(newScene);
+
+            mScenes[0]->setup();
+
             break;
         case CONST::MAGIC:
-//            newScene = new M_BedScene();
+            newScene = new M_FloorScene();
+            mScenes.push_back(newScene);
+            mScenes[0]->setup();
+            ofAddListener(mScenes[0]->mEndMovieEvent,this,&B_FloorApp::endMovie);
             break;
         case CONST::NONE:
-              mScenes.clear();
+
+            mScenes.clear();
             break;
         default:
             break;
     }
-    mScenes.push_back(newScene);
-    mScenes[0]->setup();
+    }
+
+void B_FloorApp::setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands){
+    mScenes[0] -> setLeapData(simpleHands);
+}
+
+void B_FloorApp::endMovie(CONST::E_GIMMICK & gimmick){
+    CONST::E_GIMMICK e_gimmick = gimmick;
+    ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_FloorApp::endMovie);
+    ofNotifyEvent(mMovieEndEvent, e_gimmick);
 }
 
 

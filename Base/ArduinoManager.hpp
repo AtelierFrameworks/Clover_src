@@ -11,19 +11,22 @@
 
 #include <stdio.h>
 #include "ofMain.h"
-#include "ArduinoDataModel.hpp"
 #include "CONST.h"
+#include <vector>
+#include <array>
 #endif /* ArduinoManager_hpp */
 class ArduinoManager{
 public:
     void setup();
     void update();
     void draw();
-
     bool getIsSetup();
-    ArduinoDataModel getArduinoData(CONST::E_PARTS);
+    std::vector<int> getArduinoData();
+    void separateBytes();
     ofSerial mSerial;
     int nBytesRead = 0;
-    char bytesReadString[50];
-//    int getArduinoDatas();
+    char mBytesReadString[30];
+    std::vector<int> mData;
+    std::array<int,4> mPastTimeData{0,0,0,0};
+    std::vector<CONST::E_PARTS> judgeData();
 };

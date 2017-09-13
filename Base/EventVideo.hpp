@@ -14,10 +14,10 @@
 #include "CONST.h"
 class EventVideo{
     public:
-    CONST::E_APP mApp;
-    ofEvent <CONST::E_APP> mEndEvent;
+    CONST::E_GIMMICK mGimmick;
+    ofEvent <CONST::E_GIMMICK> mEndEvent;
     ofVideoPlayer mPlayer;
-    void setup(string path,ofLoopType type,CONST::E_APP app);
+    void setup(string path,ofLoopType type,CONST::E_GIMMICK app);
     void update();
     void draw(float x,float y,float width,float height);
     void play();

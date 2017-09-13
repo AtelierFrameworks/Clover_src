@@ -7,14 +7,6 @@
 //
 
 #include "M_DeskScene.hpp"
-#include "ofxSPK.h"
-
-
-ofxSPK::System sys;
-ofxSPK::Group group;
-
-ofImage sprite;
-ofxSPK::Modifier rot;
 void M_DeskScene::setup(){
     magic_kabe.load("Magic/M_front.png");
     setupCurse();
@@ -24,7 +16,7 @@ void M_DeskScene::setupBat(){
     //Movie1.load("M_bat1.mp4");
     //Movie1.play();
     
-    BatSound.load("batSound.mp3");
+    BatSound.load("Magic/batSound.mp3");
     BatSound.setLoop(true);
     BatSound.play();
 }
@@ -96,7 +88,7 @@ void M_DeskScene::updateCurse(){
 
 //--------------------------------------------------------------
 void M_DeskScene::draw(){
-    
+    magic_kabe.draw(0,0,ofGetWidth(),ofGetHeight());
     ofMovie.draw(0,0,400,300);
     
     drawCurse();
@@ -174,10 +166,9 @@ void M_DeskScene::dragEvent(ofDragInfo dragInfo){
     
 }
 
-void M_DeskScene::endMovieEvent(CONST::E_APP & App){
-    CONST::E_APP e_app = CONST::A_DESK;
+void M_DeskScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
     mVideo.stop();
-    ofNotifyEvent(mEndMovieEvent,e_app);
-    
+    CONST::E_GIMMICK e_gimmick = gimmick;
+    ofNotifyEvent(mEndMovieEvent, e_gimmick);
 }
 

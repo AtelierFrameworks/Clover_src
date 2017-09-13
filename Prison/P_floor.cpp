@@ -7,25 +7,31 @@
 //
 
 #include "P_floor.hpp"
+
 void P_floor::setup(){
     //床のひび割れ
     ofBackground(0,0,0);
     ofSetVerticalSync(true);
     frameByframe = false;
     ofEnableSmoothing();
-    fingersMovie.loadMovie("yuka.mov");
+    fingersMovie.load("yuka.mov");
     fingersMovie.setLoopState(OF_LOOP_NONE);
     fingersMovie.play();
     //背景
-    myImage.loadImage("P_floor.png");
+    myImage.load("P_floor.png");
     setupFire();
+    
     
 }
 
 //--------------------------------------------------------------
 void P_floor::update(){
     fingersMovie.update();
-    //火の玉
+    updateFire();
+}
+
+void P_floor::updateFire(){
+    //ÁÅ´„ÅÆÁéâ
     group.emitRandom(20, mPosition);//(ofGetMouseX(), ofGetMouseY()));
     mPosition += mVelocity;
     
@@ -81,16 +87,20 @@ void P_floor::update(){
 
 //--------------------------------------------------------------
 void P_floor::draw(){
-    //背景
+    //ËÉåÊôØ
     myImage.draw(0,0);
-    //ひび割れ
+    //„Å≤„Å≥Ââ≤„Çå
     ofSetColor(0,127,127);
     ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);
     ofSetColor(0xFFFFFF);
     fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     ofSetHexColor(0x000000);
     
-    //火の玉
+   
+}
+
+void P_floor::drawFire(){
+    //FireBall
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     sprite.bind();
     ofEnablePointSprites();
@@ -158,26 +168,10 @@ void P_floor::dragEvent(ofDragInfo dragInfo){
     
 }
 
-void P_floor::actionDesk(){
-    
-}
-
-void P_floor::actionChair(){
-    
-}
-
-void P_floor::actionBed(){
-    
-}
-
-void P_floor::actionShelf(){
-    
-}
-
 void P_floor::setupFire(){
-    //火の玉
+    //ÁÅ´„ÅÆÁéâ
     ofDisableArbTex();
-    sprite.loadImage("image.png");
+    sprite.load("image.png");
     ofEnableArbTex();
     
     ofSetFrameRate(60);

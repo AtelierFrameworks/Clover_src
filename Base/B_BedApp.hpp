@@ -32,6 +32,7 @@ public:
     void gotMessage(ofMessage msg);
     void changeScene();
     void actionBed();
-    void endMovie(CONST::E_APP & app);
-    ofEvent<CONST::E_APP> mMovieEndEvent;
+    void endMovie(CONST::E_GIMMICK & gimmick);
+    void setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands);
+    ofEvent<CONST::E_GIMMICK> mMovieEndEvent;
 };

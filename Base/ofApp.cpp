@@ -28,15 +28,22 @@ void ofApp::update(){
     int data = 0;
 //    int data = mArduinoManager.getArduinoDatas();
     if(mArduinoManager.getIsSetup()){
-        if(data < 600 /*&& data > 0*/){
-            if(!mIsAction[0]){
-                //TODO::データの分解
-                mBedApp -> actionBed();
-            }
-        }
+//        if(data < 600 /*&& data > 0*/){
+//            if(!mIsAction[0]){
+//                //TODO::データの分解
+//                mBedApp -> actionBed();
+//            }
+//        }
+    
+        
     }
     BaseApp::update();
 }
+
+//bool ofApp::judgeGimmick(){
+//    std::vector<int> value = mArduinoManager.getArduinoData();
+//    return true;
+//}
 
 //-----------------------
 
@@ -125,7 +132,7 @@ void ofApp::closeCurtain(){
     mFloorApp -> freeToSceneMemory();
 }
 
-void ofApp::sendAction(CONST::E_APP app){
+void ofApp::sendAction(CONST::E_GIMMICK app){
     switch (getNowScene()) {
         case CONST::PRISON:
             switch (app) {
@@ -161,7 +168,6 @@ void ofApp::sendAction(CONST::E_APP app){
     }
 }
 
-
 void ofApp::changeScene(){
     BaseScene *newScene;
     switch (getNowScene()) {
@@ -181,9 +187,9 @@ void ofApp::changeScene(){
         default:
             break;
     }
-       mBedApp -> changeScene();
-    //    mDeskApp -> changeScene();
-    //    mFloorApp -> changeScene();
+    mBedApp -> changeScene();
+    mDeskApp -> changeScene();
+    mFloorApp -> changeScene();
 }
 
 
@@ -198,43 +204,30 @@ void ofApp::updateLeapMotion(){
         mLeap.setMappingX(-230, 230, -ofGetWidth()/2, ofGetWidth()/2);
         mLeap.setMappingY(90, 490, -ofGetHeight()/2, ofGetHeight()/2);
         mLeap.setMappingZ(-150, 150, -200, 200);
+        switch (getNowScene()) {
+            case CONST::PRISON:
+                mFloorApp -> setLeapData(simpleHands);
+                break;
+            case CONST::MAGIC:
+                mBedApp -> setLeapData(simpleHands);
+            default:
+                break;
+        }
     }
         mLeap.markFrameAsOld();
 }
 
-void ofApp::endMovie(CONST::E_APP & app){
-    switch(getNowScene()){
-        case CONST::PRISON:
-            switch (app) {
-                case CONST::A_BED:
-                    break;
-                case CONST::A_CURTAIN:
-                    break;
-                case CONST::A_DESK:
-                    break;
-                case CONST::A_FLOOR:
-                    break;
-                default:
-                    break;
-            }
+void ofApp::endMovie(CONST::E_GIMMICK & gimmick){
+    switch (gimmick) {
+        case CONST::G_M_CHAIR:
             break;
-        case CONST::MAGIC:
-            switch (app) {
-                case CONST::A_BED:
-                    ofLogNotice() << "bedAction!" << 0;
-                    break;
-                case CONST::A_CURTAIN:
-                    break;
-                case CONST::A_DESK:
-                    break;
-                case CONST::A_FLOOR:
-                    break;
-                default:
-                    break;
-            }
+        case CONST::G_P_BED:
             break;
-        default:break;
-    }
+        case CONST::G_P_CHAIR:
+            break;
+        default:
+            break;
+        }
 }
 
 

@@ -11,15 +11,13 @@ int main( ){
   
     ofGLFWWindowSettings settings;
     
-    settings.width = 1440;
-    settings.height = 900;
+    settings.width = 1280;
+    settings.height = 800;
     settings.setPosition(ofVec2f(0,0));
     settings.multiMonitorFullScreen = true;
     settings.decorated = false;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
     
-    settings.width = 1000;
-    settings.height = 800;
     settings.setPosition(ofVec2f(500,0));
     settings.resizable = true;
     settings.shareContextWith = mainWindow;
@@ -28,23 +26,24 @@ int main( ){
     //メニューバーの非表示
     settings.decorated = false;
     shared_ptr<ofAppBaseWindow> bedWindow = ofCreateWindow(settings);
-//    settings.setPosition(ofVec2f(2720,0));
-//    shared_ptr<ofAppBaseWindow> deskWindow = ofCreateWindow(settings);
-//    settings.setPosition(ofVec2f(4000,0));
-//    shared_ptr<ofAppBaseWindow> floorWindow = ofCreateWindow(settings);
+    settings.setPosition(ofVec2f(2720,0));
+    shared_ptr<ofAppBaseWindow> deskWindow = ofCreateWindow(settings);
+    settings.setPosition(ofVec2f(4000,0));
+    shared_ptr<ofAppBaseWindow> floorWindow = ofCreateWindow(settings);
     
     shared_ptr<ofApp> mainApp(new ofApp);
     CONST::E_SCENE scene = CONST::NONE;
     shared_ptr<B_BedApp> bedApp(new B_BedApp);
-//    shared_ptr<B_DeskApp> deskApp(new B_DeskApp);
-//    shared_ptr<B_FloorApp> floorApp(new B_FloorApp);
+    shared_ptr<B_DeskApp> deskApp(new B_DeskApp);
+    shared_ptr<B_FloorApp> floorApp(new B_FloorApp);
 
     mainApp -> mBedApp = bedApp;
-//    mainApp -> mDeskApp = deskApp;
-//    mainApp -> mFloorApp = floorApp;
+    mainApp -> mDeskApp = deskApp;
+    mainApp -> mFloorApp = floorApp;
     ofRunApp(mainWindow,mainApp);
     ofRunApp(bedWindow,bedApp);
-    
+    ofRunApp(deskWindow,deskApp);
+    ofRunApp(floorWindow,floorApp);
     ofRunMainLoop();
     
 

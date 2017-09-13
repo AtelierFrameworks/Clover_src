@@ -12,6 +12,7 @@ static CONST::E_SCENE nowScene;
  static int logNumber;
 
 void BaseApp::setup(){
+    
     mLogDataFile.open("LogData.csv",ofFile::Append);
 }
 
@@ -123,7 +124,7 @@ string BaseApp::getLogDay(){
 
 void BaseApp::setNowScene(CONST::E_SCENE scene){
     nowScene = scene;
-    BaseScene * newScene;
+    BaseScene* newScene;
 }
 
 int BaseApp::getLogNumber(){return logNumber;}

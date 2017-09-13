@@ -7,8 +7,16 @@
 //
 
 #include "M_Scene.hpp"
+#include "ofxSPK.h"
+
+//spk
+ofxSPK::System sys;
+ofxSPK::Group group;
+ofImage sprite;
+ofxSPK::Modifier rot;
+
 void M_Scene::setup(){
-       magic_kabe.load("Magic/M_front.png");
+    magic_kabe.load("Magic/M_front.png");
     setupClock();
 }
 
@@ -20,9 +28,9 @@ void M_Scene::setupClock(){
     //画像データの読込み
     //frameImage.load("M_frame.jpg");
     //JoImage.load("20.jpg");
-    ClockImage.load("M_clock.png");
+    ClockImage.load("Magic/M_clock.png");
     
-    BellSound.load("Bell Sound.mp3");
+    BellSound.load("Magic/Bell Sound.mp3");
     //BellSound.setLoop(true);
     
     ofSetLineWidth(2);
@@ -45,22 +53,20 @@ void M_Scene::updateClock(){
 
 //--------------------------------------------------------------
 void M_Scene::draw(){
+    ofSetColor(255, 255, 255);
+    magic_kabe.draw(0,0, ofGetWidth(), ofGetHeight());
     drawClock();
 }
 
 void M_Scene::drawClock(){
     //色の設定
-    ofSetColor(255, 255, 255);
     //読み込んだ画像データを画面に描画
     //frameImage.draw(20, 20,400,600);
     //JoImage.draw(60, 60, 320, 520);
     ClockImage.draw(500, 30, 200, 300);
-    
-    
     ofSetColor(0, 0, 0);
     ofDrawLine(centerx, centery, needleLx, needleLy);
     ofDrawLine(centerx, centery, needleSx, needleSy);
-    
     if (cos(ofGetElapsedTimef() / 48)==1) {
         BellSound.play();
     }

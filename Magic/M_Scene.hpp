@@ -13,7 +13,7 @@
 
 #endif /* M_Scene_hpp */
 #include "BaseScene.hpp"
-#include "M_BedScene.hpp"
+
 class M_Scene : public BaseScene{
     void setup();
     void setupClock();
