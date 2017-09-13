@@ -2,27 +2,69 @@
 //  M_BedScene.cpp
 //  Atelier_Room
 //
-//  Created by 池上綾乃 on 2017/06/11.
+//  Created by √ä¬±‚Ä†‚Ä∞‚àè√§√Å‚àÇ√¶‚Ä∞œÄ√â on 2017/06/11.
 //
 //
 #include "M_BedScene.hpp"
 void M_BedScene::setup(){
     isAction = false;
-    mVideo.setup("mahojin.mp4", OF_LOOP_NONE, CONST::A_BED);
-    ofAddListener(mVideo.mEndEvent,this,&M_BedScene::endMovieEvent);
-}
-
-//--------------------------------------------------------------
-void M_BedScene::update(){
-    if(isAction){
-    mVideo.update();
+    countTime = 0;
+    isShowFont = false;
+    magic_kabe.load("Magic/M_front.png");
+    ofSetFrameRate(60);
+    ofEnableAlphaBlending();
+    for (int i = 0; i < 20;i++) {
+        letters[i].setup(-100, -100, 0);
     }
 }
 
 //--------------------------------------------------------------
+void M_BedScene::update(){
+    updateFont();
+    
+}
+
+void M_BedScene::updateFont(){
+    countTime++;
+    if (countTime == 600) {
+        countTime = 0;
+    }
+    int count = countTime % 600;
+    
+    if(mSimpleHands.size()){
+        isShowFont = true;
+        int modCount = count % 30;
+        if (modCount == 0) {
+            //フォント生成の条件
+            int letterIndex = count /30 ;
+            
+            //leapから撮ります。
+            float x = mSimpleHands.at(0).handPos.x;
+            float y = mSimpleHands.at(0).handPos.y;
+            letters[letterIndex].setup(x, y, count);
+        }else{
+            isShowFont = false;
+        }
+    
+    for (int i=0; i < 20; i++) {
+        letters[i].update(count);
+    }
+    }
+}
+
+
+
+
+//--------------------------------------------------------------
 void M_BedScene::draw(){
-    if(isAction){
-        mVideo.draw(0, 0, ofGetWidth(), ofGetHeight());
+    magic_kabe.draw(0,0,ofGetWidth(), ofGetHeight());
+    drawFont();
+//    mVideo.draw(0, 0, ofGetWidth(), ofGetHeight());
+}
+
+void M_BedScene::drawFont(){
+    for (int i = 0; i < 20; i++) {
+        letters[i].draw();
     }
 }
 
@@ -91,14 +133,13 @@ void M_BedScene::endBed(){
 void M_BedScene::actionBed(){
     //ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2,30);
     if(!isAction){
-    isAction= true;
-    mVideo.play();
+        isAction= true;
+        mVideo.play();
     }
 }
-void M_BedScene::endMovieEvent(CONST::E_APP & App){
-    CONST::E_APP e_app = CONST::A_BED;
+void M_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
     mVideo.stop();
-    ofNotifyEvent(mEndMovieEvent,e_app);
-    
+    CONST::E_GIMMICK e_gimmick = gimmick;
+    ofNotifyEvent(mEndMovieEvent, e_gimmick);
 }
 

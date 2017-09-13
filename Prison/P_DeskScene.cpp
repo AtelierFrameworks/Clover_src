@@ -7,14 +7,7 @@
 //
 
 #include "P_DeskScene.hpp"
-#include "ofxSPK.h"
 
-ofxSPK::System sys;
-ofxSPK::Group group;
-
-ofImage sprite;
-
-ofxSPK::Modifier rot;
 void P_DeskScene::setup(){
     //背景
     myImage.loadImage("P_side.png");
@@ -36,10 +29,8 @@ void P_DeskScene::setup(){
     
     //笑い声
     ofBackground(0,0,0);
-    ofSetVerticalSync(true);
     frameByframe = false;
-    ofEnableSmoothing();
-    mySound.loadSound("koe.wav");
+    mySound.load("koe.wav");
     mySound.setLoop(false);
     mySound.play();
     mySound.setVolume(0.5);
@@ -50,14 +41,10 @@ void P_DeskScene::setup(){
     
     //壁のひび
     ofBackground(0,0,0);
-    ofSetVerticalSync(true);
     frameByframe = false;
-    ofEnableSmoothing();
-    fingersMovie.loadMovie("hibi.mov");
+    fingersMovie.load("hibi.mov");
     fingersMovie.setLoopState(OF_LOOP_NONE);
     fingersMovie.play();
-    
-    
     
 }
 
@@ -75,7 +62,7 @@ void P_DeskScene::update(){
 void P_DeskScene::draw(){
     //ofSetColor(0,127,127);
     //ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);
-    //背景
+    //ËÉåÊôØ
     myImage.draw(0,0);
     
     ofSetColor(0xFFFFFF);
@@ -132,5 +119,10 @@ void P_DeskScene::windowResized(int w, int h){
 
 //--------------------------------------------------------------
 void P_DeskScene::gotMessage(ofMessage msg){
+    
+}
+
+//--------------------------------------------------------------
+void P_DeskScene::dragEvent(ofDragInfo dragInfo){
     
 }

@@ -13,7 +13,6 @@
 #endif /* GimmickDataModel_h */
 #include "ofMain.h"
 #include "CONST.h"
-class ArduinoDataModel;
 class BaseApp;
 class GimmickDataModel {
 public:

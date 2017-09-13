@@ -12,10 +12,9 @@ void P_Scene::setup(){
     ofSetVerticalSync(true);
     frameByframe = false;
     ofEnableSmoothing();
-    fingersMovie.loadMovie("inazuma.mp4");
+    fingersMovie.load("inazuma.mp4");
     fingersMovie.setLoopState(OF_LOOP_NONE);
     fingersMovie.play();
-    
 }
 
 //--------------------------------------------------------------
@@ -31,7 +30,6 @@ void P_Scene::draw(){
     ofSetColor(0xFFFFFF);
     fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     ofSetHexColor(0x000000);
-
 }
 
 //--------------------------------------------------------------
@@ -89,19 +87,5 @@ void P_Scene::dragEvent(ofDragInfo dragInfo){
     
 }
 
-void P_Scene::actionDesk(){
-    
-}
 
-void P_Scene::actionChair(){
-    
-}
-
-void P_Scene::actionBed(){
-    
-}
-
-void P_Scene::actionShelf(){
-    
-}
 

@@ -29,8 +29,9 @@ class P_BedScene : public BaseScene{
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+    void endMovieEvent(CONST::E_GIMMICK & gimmick);
     ofVideoPlayer fingersMovie;
-    bool                frameByframe;
+    bool frameByframe;
     ofImage myImage;
     void endMovieEvent(CONST::E_APP & App);
 };

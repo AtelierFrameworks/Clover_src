@@ -8,7 +8,8 @@
 
 #include "B_DeskApp.hpp"
 void B_DeskApp::setup(){
-  
+    
+
 //    mCam.setOrientation(ofPoint(-20, 0, 0));
 //
     BaseApp::setup();
@@ -16,8 +17,6 @@ void B_DeskApp::setup(){
 
 //--------------------------------------------------------------
 void B_DeskApp::update(){
-    
- 
     BaseApp::update();
 }
 
@@ -30,7 +29,6 @@ void B_DeskApp::draw(){
 //        ofDrawSphere( simpleHands.at(0).fingers.at(INDEX).pos, 10);
 //        mCam.end();
 //    }
-
     BaseApp::draw();
 }
 
@@ -94,10 +92,16 @@ void B_DeskApp::changeScene(){
     BaseScene *newScene;
     switch (getNowScene()) {
         case CONST::PRISON:
-//            newScene = new P_Scene();
+            newScene = new P_DeskScene();
+            mScenes.push_back(newScene);
+            mScenes[0]->setup();
+            ofAddListener(mScenes[0]->mEndMovieEvent,this,&B_DeskApp::endMovie);
             break;
         case CONST::MAGIC:
-//            newScene = new M_BedScene();
+            newScene = new M_DeskScene();
+            mScenes.push_back(newScene);
+            mScenes[0]->setup();
+            ofAddListener(mScenes[0]->mEndMovieEvent,this,&B_DeskApp::endMovie);
             break;
         case CONST::NONE:
               mScenes.clear();
@@ -105,8 +109,12 @@ void B_DeskApp::changeScene(){
         default:
             break;
     }
-    mScenes.push_back(newScene);
-    mScenes[0]->setup();
+    }
+
+void B_DeskApp::endMovie(CONST::E_GIMMICK & gimmick){
+    CONST::E_GIMMICK e_gimmick = gimmick;
+    ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_DeskApp::endMovie);
+    ofNotifyEvent(mMovieEndEvent, e_gimmick);
 }
 
 

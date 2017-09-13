@@ -1,25 +1,23 @@
 //
-//  B_FloorApp.hpp
+//  M_FloorScene.hpp
 //  Atelier_Room
 //
-//  Created by 池上綾乃 on 2017/08/10.
+//  Created by 池上綾乃 on 2017/09/07.
 //
 //
 #pragma once
-#ifndef B_FloorApp_hpp
-#define B_FloorApp_hpp
-#include "ofMain.h"
-#endif /* B_FloorApp_hpp */
-#include "BaseApp.hpp"
-#include "P_floor.hpp"
-#include "M_FloorScene.hpp"
-class BaseApp;
-class B_FloorApp : public BaseApp{
-    
+#ifndef M_FloorScene_hpp
+#define M_FloorScene_hpp
+#include <stdio.h>
+#include "BaseScene.hpp"
+#endif /* M_FloorScene_hpp */
+
+class M_FloorScene : public BaseScene{
 public:
     void setup();
     void update();
     void draw();
+    
     void keyPressed(int key);
     void keyReleased(int key);
     void mouseMoved(int x, int y );
@@ -31,8 +29,9 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    void changeScene();
-    void setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands);
-    void endMovie(CONST::E_GIMMICK & gimmick);
-    ofEvent<CONST::E_GIMMICK> mMovieEndEvent;
+    void endMovieEvent(CONST::E_GIMMICK & gimmick);
+    ofVideoPlayer ofMovie;
+    float px;
+    float py;
+    ofImage magic_floor;
 };

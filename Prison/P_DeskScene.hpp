@@ -32,7 +32,7 @@ class P_DeskScene : public BaseScene{
     
     ofVideoPlayer fingersMovie;
     ofSoundPlayer mySound;
-    bool                frameByframe;
+    bool frameByframe;
     ofImage myImage;
     
     };

@@ -40,9 +40,9 @@ public:
     virtual void actionChair();
     virtual void actionBed();
     virtual void actionShelf();
-    virtual void endMovieEvent(CONST::E_APP & App){};
+    virtual void endMovieEvent(CONST::E_GIMMICK & App){};
     EventVideo mVideo;
-    ofEvent<CONST::E_APP> mEndMovieEvent;
+    ofEvent<CONST::E_GIMMICK> mEndMovieEvent;
     bool isAction = false;
     std::vector <ofxLeapMotionSimpleHand> mSimpleHands;
 
