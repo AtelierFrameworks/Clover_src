@@ -42,8 +42,7 @@ void P_BedScene::update(){
 void P_BedScene::draw(){
     if(isAction){
         mVideo.draw(0, 0, ofGetWidth(), ofGetHeight());
-    }
-    
+    }    
     //背景
     myImage.draw(0,0);
     
@@ -51,8 +50,6 @@ void P_BedScene::draw(){
     ofSetColor(0xFFFFFF);
     fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     ofSetHexColor(0x000000);
-    
-    
 }
 
 //--------------------------------------------------------------
@@ -109,6 +106,8 @@ void P_BedScene::gotMessage(ofMessage msg){
 void P_BedScene::dragEvent(ofDragInfo dragInfo){
     
 }
+
+
 void P_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
     CONST::E_GIMMICK e_gimmick = gimmick;
     mVideo.stop();
@@ -116,4 +115,5 @@ void P_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
     ofNotifyEvent(mEndMovieEvent,e_gimmick);
     
 }
+
 
