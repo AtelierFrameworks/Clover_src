@@ -82,9 +82,7 @@ void B_FloorApp::changeScene(){
         case CONST::PRISON:
             newScene = new P_floor();
             mScenes.push_back(newScene);
-
             mScenes[0]->setup();
-
             break;
         case CONST::MAGIC:
             newScene = new M_FloorScene();
@@ -93,7 +91,6 @@ void B_FloorApp::changeScene(){
             ofAddListener(mScenes[0]->mEndMovieEvent,this,&B_FloorApp::endMovie);
             break;
         case CONST::NONE:
-
             mScenes.clear();
             break;
         default:

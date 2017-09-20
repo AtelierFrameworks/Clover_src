@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "BaseScene.hpp"
 #include "ofxSPK.h"
-
+#include "Bats.h"
 #endif /* M_DeskScene_hpp */
 
 class M_DeskScene : public BaseScene{
@@ -38,26 +38,33 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void endMovieEvent(CONST::E_GIMMICK & gimmick);
-    ofVideoPlayer ofMovie;
+    void actionShelf();
+    void endShelf();
+    void actionEndMovie();
     ofImage magic_kabe;
     float px;
     float py;
-    
+    bool mIsPlayShelf;
     //curse
     int check, angle;
     float range,add;
+    int out=0;
+    int particle = 3000;
+    
     
     //bat
-    ofVideoPlayer Movie1;
-    float BatPosition1x = 0;
-    float BatPosition1y = 0;
-    float BatPosition1w = 0;
-    float BatPosition1h = 0;
     ofSoundPlayer BatSound;
+    static const int BATCOUNT = 5;
+    Bats bats[BATCOUNT];
+    int separate;
     
     //spk
     ofxSPK::System sys;
     ofxSPK::Group group;
     ofImage sprite;
     ofxSPK::Modifier rot;
+    //movie bookshelf
+    ofVideoPlayer mBookPlayer;
+    bool mIsPlayBookShelf;
+    bool mIsPrevious;
 };

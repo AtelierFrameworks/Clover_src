@@ -8,14 +8,15 @@
 
 #include "ArduinoManager.hpp"
 
-const int BORDER_VALUE [] = { 0,0,0,0,0,0,0,0,0 };
+const int BORDER_VALUE [] = { 0,0,0,0,0,0,0,0,0,0 };
 
 
 void ArduinoManager::setup(){
     mSerial.listDevices();
     vector <ofSerialDeviceInfo> deviceList = mSerial.getDeviceList();
     mSerial.setup(1,9600);
-  
+    mValue.clear();
+    mHasData = false;
 }
 
 void ArduinoManager::update(){
@@ -24,49 +25,63 @@ void ArduinoManager::update(){
     unsigned char bytesReturned[50];
     
     memset(bytesReturned, 0, 50);
-    memset(mBytesReadString, 0, 50);
     
     if(mSerial.isInitialized()){
-        if(mSerial.available()){
-            unsigned int i = 0;
+        if(mSerial.available() > 0){
+            ofLogNotice() << "available" << mSerial.available();
+        
             while ((nRead = mSerial.readBytes(bytesReturned, 50)) > 0) {
                 nBytesRead = nRead;
-                i++;
-                ofLogNotice() << "num" << i;
                 ofLogNotice() << "nRead" << nRead;
                 ofLogNotice() << "value" <<  bytesReturned;
-            };
-            
-           if (nBytesRead > 0) {
-                memcpy(mBytesReadString, bytesReturned, 50);
+                mBytesReadString = string((char*)bytesReturned);
                 separateBytes();
-            }
+            };
+            mSerial.flush();
+            
         }
     }
-    
 }
 
 void ArduinoManager::separateBytes(){
-    mData.clear();
     std::vector<string> result = ofSplitString(mBytesReadString, ",");
+    
     for (string stringData:result) {
-        mData.push_back(std::stoi(stringData));
-        ofLogNotice() << "values" << std::stoi(stringData);
+       
+        if(stringData=="{"){
+            mHasData = true;
+             ofLogNotice() << "string" << stringData;
+            mValue.clear();
+            
+        }else if(stringData == "}" && mHasData){
+            judgeData();
+            mHasData = false;
+            }else{
+                if(stringData !="" && mHasData){
+                    try{
+                        ofLogNotice() << "data" << stringData;
+                        int data = std::stoi(stringData);
+                        mValue.push_back(data);
+                    }catch(const invalid_argument& e){
+                         
+                        ofLogNotice() << "error" << stringData;
+                    }
+                }
+
+        }
     }
 }
 
-std::vector<int> ArduinoManager::getArduinoData(){
-    return mData;
-}
+
 
 bool ArduinoManager::getIsSetup(){
     return mSerial.isInitialized();
 }
 
-std::vector<CONST::E_PARTS> ArduinoManager:: judgeData(){
+void ArduinoManager:: judgeData(){
     std::vector <CONST::E_PARTS> isActionParts;
     //bed
-    if((mData[0] < BORDER_VALUE[0] && mData[3] <= BORDER_VALUE[3] )||(mData[1] < BORDER_VALUE[1] && mData[4] <= BORDER_VALUE[4])||(mData[2] < BORDER_VALUE[2]&& mData[5]<=BORDER_VALUE[5])){
+    if((mValue[0] < BORDER_VALUE[0] && mValue[3] <= BORDER_VALUE[3] )||(mValue[1] < BORDER_VALUE[1] && mValue[4] <= BORDER_VALUE[4])||(mValue[2] < BORDER_VALUE[2]&& mValue[5]<=BORDER_VALUE[5])){
         mPastTimeData[0] ++;
         if(mPastTimeData[0] > 10){
             isActionParts.push_back(CONST::P_BED);
@@ -75,7 +90,7 @@ std::vector<CONST::E_PARTS> ArduinoManager:: judgeData(){
         mPastTimeData[0] = 0;
     }
     //chair
-    if(mData[6] < BORDER_VALUE[6]){
+    if(mValue[6] < BORDER_VALUE[6]){
         isActionParts.push_back(CONST::P_CHAIR);
         mPastTimeData[1] ++;
         if(mPastTimeData[1] > 10){
@@ -86,7 +101,7 @@ std::vector<CONST::E_PARTS> ArduinoManager:: judgeData(){
     }
 
     //shelf
-    if(mData[7] < BORDER_VALUE[7]){
+    if(mValue[7] < BORDER_VALUE[7]){
         isActionParts.push_back(CONST::P_SHELF);
         mPastTimeData[2] ++;
         if(mPastTimeData[2] > 10){
@@ -97,15 +112,23 @@ std::vector<CONST::E_PARTS> ArduinoManager:: judgeData(){
     }
 
     //curtain
-    if(mData[8] < BORDER_VALUE[8]){
+    if(mValue[8] < BORDER_VALUE[8]){
         mPastTimeData[3] ++;
         if(mPastTimeData[3] > 10){
-            isActionParts.push_back(CONST::P_CURTAIN);
+            isActionParts.push_back(CONST::P_CURTAIN_OPEN);
         }
          }else{
-        mPastTimeData[3] = 0;
+             mPastTimeData[3] = 0;
+             if(mValue[8] < BORDER_VALUE[9]){
+                 mPastTimeData[3] ++;
+                 if(mPastTimeData[4] > 10){
+                     isActionParts.push_back(CONST::P_CURTAIN_CLOSE);
+                 }
+             }else{
+                 mPastTimeData[4] = 0;
+             }
     }
-
-    return isActionParts;
+//    ofLogNotice() << "notify" << isActionParts;
+    ofNotifyEvent(mSendEvent, isActionParts);
 }
 

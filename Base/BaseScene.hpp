@@ -40,6 +40,9 @@ public:
     virtual void actionChair();
     virtual void actionBed();
     virtual void actionShelf();
+    virtual void endShelf(){};
+    virtual void actionFloor(){};
+    virtual void actionEndMovie(){};
     virtual void endMovieEvent(CONST::E_GIMMICK & App){};
     EventVideo mVideo;
     ofEvent<CONST::E_GIMMICK> mEndMovieEvent;

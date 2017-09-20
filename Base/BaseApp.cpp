@@ -12,7 +12,6 @@ static CONST::E_SCENE nowScene;
  static int logNumber;
 
 void BaseApp::setup(){
-    
     mLogDataFile.open("LogData.csv",ofFile::Append);
 }
 

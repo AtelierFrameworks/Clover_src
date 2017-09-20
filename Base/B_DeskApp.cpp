@@ -109,7 +109,7 @@ void B_DeskApp::changeScene(){
         default:
             break;
     }
-    }
+}
 
 void B_DeskApp::endMovie(CONST::E_GIMMICK & gimmick){
     CONST::E_GIMMICK e_gimmick = gimmick;

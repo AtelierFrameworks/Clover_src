@@ -31,9 +31,9 @@ class ofApp : public BaseApp{
         void updateLeapMotion();
         void actionCurtain();
         void closeCurtain();
-        void sendAction(CONST::E_GIMMICK app);
         void changeScene();
         void endMovie(CONST::E_GIMMICK & app);
+        void receiveData(std::vector<CONST::E_PARTS> & isActionParts);
 //        bool judgeGimmick();
         ofFile mLogDataFile;
         ArduinoManager mArduinoManager;

@@ -11,14 +11,16 @@ int main( ){
   
     ofGLFWWindowSettings settings;
     
-    settings.width = 1280;
-    settings.height = 800;
-    settings.setPosition(ofVec2f(0,0));
+//    settings.width = 1280;
+//    settings.height = 800;
+    settings.width = 1440;
+    settings.height = 900;
+    settings.setPosition(ofVec2f(3000,0));
     settings.multiMonitorFullScreen = true;
     settings.decorated = false;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
     
-    settings.setPosition(ofVec2f(500,0));
+    settings.setPosition(ofVec2f(0,0));
     settings.resizable = true;
     settings.shareContextWith = mainWindow;
     settings.multiMonitorFullScreen = true;

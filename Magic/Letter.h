@@ -9,7 +9,7 @@ public:
 	void setup(int _x,int _y,int _count_s);
 	void update(int _count_u);
 	void draw();
-
+    void reset();
 	int alpha;
 	int countBorn;
 	int countNow;

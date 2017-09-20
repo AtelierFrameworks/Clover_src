@@ -11,7 +11,6 @@
 #define M_BedScene_hpp
 #include "BaseScene.hpp"
 #include <stdio.h>
-#include "ofxTrueTypeFontUC.h"
 #include <vector>
 #include "Letter.h"
 #endif /* M_BedScene_hpp */
@@ -37,14 +36,21 @@ public:
     void endMovieEvent(CONST::E_GIMMICK & gimmick);
     void updateFont();
     void drawFont();
+    void actionEndMovie();
     ofImage magic_kabe;
     float px;
     float py;
     //desk Font
-    int countTime ;
-    Letter letters[20];
-    //bookshelf
+    int countTime;
+    static const int LETTER_COUNT = 20;
+    Letter letters[LETTER_COUNT];
+    
 private:
     bool isShowFont;
+    ofEasyCam mCamera;
     
+    //movie bookshelf
+    ofVideoPlayer mBookPlayer;
+    bool mIsPlayBookShelf;
+    bool mIsPrevious;
 };

@@ -10,17 +10,25 @@ void P_Scene::setup(){
     //雷
     ofBackground(0,0,0);
     ofSetVerticalSync(true);
-    frameByframe = false;
     ofEnableSmoothing();
-    fingersMovie.load("inazuma.mp4");
+    fingersMovie.load("Prison/inazuma.mp4");
     fingersMovie.setLoopState(OF_LOOP_NONE);
     fingersMovie.play();
+    mIsPlayShelfSound = false;
+    mPlayer.load("Prison/scream.mp3");
+    mPlayer.setLoop(OF_LOOP_NONE);
 }
 
 //--------------------------------------------------------------
 void P_Scene::update(){
     fingersMovie.update();
-    
+    if(mIsPlayShelfSound){
+        if(mPlayer.isPlaying()){
+            mIsPlayShelfSound = false;
+        }
+        ofSoundUpdate();
+    }
+
 }
 
 //--------------------------------------------------------------
@@ -30,7 +38,8 @@ void P_Scene::draw(){
     ofSetColor(0xFFFFFF);
     fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     ofSetHexColor(0x000000);
-}
+    
+    }
 
 //--------------------------------------------------------------
 void P_Scene::keyPressed(int key){
@@ -87,5 +96,8 @@ void P_Scene::dragEvent(ofDragInfo dragInfo){
     
 }
 
-
+void P_Scene::actionShelf(){
+    mIsPlayShelfSound = true;
+    mPlayer.play();
+}
 

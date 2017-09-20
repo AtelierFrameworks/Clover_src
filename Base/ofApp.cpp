@@ -19,6 +19,7 @@ void ofApp::setup(){
     actionCurtain();
     //TODO::setJudgeModel
     ofAddListener(mBedApp ->mMovieEndEvent, this, &ofApp::endMovie);
+    ofAddListener(mArduinoManager.mSendEvent,this,&ofApp::receiveData);
 }
 
 //--------------------------------------------------------------
@@ -110,6 +111,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 void ofApp::exit(){
     closeCurtain();
+    ofRemoveListener(mArduinoManager.mSendEvent,this,&ofApp::receiveData);
 }
 
 //„Ç´„Éº„ÉÜ„É≥
@@ -132,41 +134,6 @@ void ofApp::closeCurtain(){
     mFloorApp -> freeToSceneMemory();
 }
 
-void ofApp::sendAction(CONST::E_GIMMICK app){
-    switch (getNowScene()) {
-        case CONST::PRISON:
-            switch (app) {
-                case CONST::A_BED:
-                    break;
-                case CONST::A_CURTAIN:
-                    break;
-                case CONST::A_DESK:
-                    break;
-                case CONST::A_FLOOR:
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case CONST::MAGIC:
-            switch (app) {
-                case CONST::A_BED:
-                    ofLogNotice() << "bed" << 0;
-                    break;
-                case CONST::A_CURTAIN:
-                    break;
-                case CONST::A_DESK:
-                    break;
-                case CONST::A_FLOOR:
-                    break;
-                default:
-                    break;
-            }
-            break;
-        default:
-            break;
-    }
-}
 
 void ofApp::changeScene(){
     BaseScene *newScene;
@@ -187,8 +154,8 @@ void ofApp::changeScene(){
         default:
             break;
     }
-    mBedApp -> changeScene();
-    mDeskApp -> changeScene();
+    mBedApp   -> changeScene();
+    mDeskApp  -> changeScene();
     mFloorApp -> changeScene();
 }
 
@@ -199,27 +166,38 @@ void ofApp::setupLeapMotion(){
 
 void ofApp::updateLeapMotion(){
     simpleHands = mLeap.getSimpleHands();
-    if( mLeap.isFrameNew() && simpleHands.size() ){
+    switch (getNowScene()) {
+        case CONST::PRISON:
+            mFloorApp -> setLeapData(simpleHands);
+            break;
+        case CONST::MAGIC:
+            mBedApp -> setLeapData(simpleHands);
+            break;
+        default:
+            break;
+    }
+    
+    if( mLeap.isFrameNew() && simpleHands.size()){
         // 画面の大きさにあわせて、スケールをマッピング
+//        mLeap.setMappingX(-230, 230, -ofGetWidth()/2, ofGetWidth()/2);
+//        mLeap.setMappingX(-200, 230, -280, ofGetWidth());
+//        mLeap.setMappingY(90, 490, 50, ofGetHeight()/2);
+//        mLeap.setMappingZ(-150, 150, 0, 200);
+//        mLeap.setMappingY(90, 490, 450, ofGetHeight());
+//        mLeap.setMappingZ(-150, 150, -200, 200);
         mLeap.setMappingX(-230, 230, -ofGetWidth()/2, ofGetWidth()/2);
         mLeap.setMappingY(90, 490, -ofGetHeight()/2, ofGetHeight()/2);
         mLeap.setMappingZ(-150, 150, -200, 200);
-        switch (getNowScene()) {
-            case CONST::PRISON:
-                mFloorApp -> setLeapData(simpleHands);
-                break;
-            case CONST::MAGIC:
-                mBedApp -> setLeapData(simpleHands);
-            default:
-                break;
-        }
     }
-        mLeap.markFrameAsOld();
+    mLeap.markFrameAsOld();
+    
 }
 
 void ofApp::endMovie(CONST::E_GIMMICK & gimmick){
     switch (gimmick) {
         case CONST::G_M_CHAIR:
+            mBedApp -> mScenes.at(0) -> actionEndMovie();
+            mDeskApp -> mScenes.at(0) -> actionEndMovie();
             break;
         case CONST::G_P_BED:
             break;
@@ -230,6 +208,61 @@ void ofApp::endMovie(CONST::E_GIMMICK & gimmick){
         }
 }
 
+void ofApp:: receiveData(std::vector<CONST::E_PARTS> & isActionParts){
+    for(CONST::E_PARTS isAction :isActionParts){
+        switch(isAction){
+            case CONST::P_CURTAIN_OPEN:
+                actionCurtain();
+                break;
+            case CONST::P_CURTAIN_CLOSE:
+                closeCurtain();
+                break;
+            case CONST::P_SHELF:
+                switch (getNowScene()) {
+                    case CONST::PRISON:{
+                        mScenes.at(0) -> actionShelf();
+                        break;
+                    }
+                    case CONST::MAGIC:{
+                        mDeskApp -> mScenes.at(0) -> actionDesk();
+                        break;
+                    }
+                    default:
+                        break;
+                }
+                break;
+            case CONST::P_CHAIR:
+                switch (getNowScene()) {
+                    case CONST::PRISON:{
+                        
+                        break;
+                    }
+                    case CONST::MAGIC:{
+                        mFloorApp -> mScenes.at(0) -> actionChair();
+                        break;
+                    }
+                    default:
+                        break;
+                }
+                break;
+            case CONST::P_BED:
+                switch (getNowScene()) {
+                    case CONST::PRISON:{
+                        
+                        break;
+                    }
+                    case CONST::MAGIC:{
+                        
+                        break;
+                    }
+                    default:
+                        break;
+                }
+                break;
+            default:break;
+        }
+    }
+}
 
 
 

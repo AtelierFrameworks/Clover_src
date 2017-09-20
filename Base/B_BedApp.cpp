@@ -107,7 +107,7 @@ void B_BedApp::actionBed(){
 }
 
 void B_BedApp::endMovie(CONST::E_GIMMICK & gimmick){
-//    ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_BedApp::endMovie);
+//  ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_BedApp::endMovie);
     CONST::E_GIMMICK e_gimmick = gimmick;
     ofNotifyEvent(mMovieEndEvent, e_gimmick);
 }

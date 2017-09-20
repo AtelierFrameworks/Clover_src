@@ -10,22 +10,20 @@
 
 void P_DeskScene::setup(){
     //背景
-    myImage.loadImage("P_side.png");
+    myImage.load("P_side.png");
     
     //人影
     ofBackground(0,0,0);
     ofSetVerticalSync(true);
     frameByframe = false;
     ofEnableSmoothing();
-    fingersMovie.loadMovie("P_deskshadow.mp4");
+    fingersMovie.load("P_deskshadow.mp4");
     fingersMovie.setLoopState(OF_LOOP_NONE);
     fingersMovie.play();
-    mySound.loadSound("kodomo.wav");
+    mySound.load("kodomo.wav");
     mySound.setLoop(false);
     mySound.play();
     mySound.setVolume(0.5);
-    
-    
     
     //笑い声
     ofBackground(0,0,0);
@@ -34,11 +32,7 @@ void P_DeskScene::setup(){
     mySound.setLoop(false);
     mySound.play();
     mySound.setVolume(0.5);
-    
-    
-    
-    
-    
+
     //壁のひび
     ofBackground(0,0,0);
     frameByframe = false;
@@ -51,10 +45,7 @@ void P_DeskScene::setup(){
 //--------------------------------------------------------------
 void P_DeskScene::update(){
     fingersMovie.update();
-    
-    
-        
-//    ofSetWindowTitle(ofToString(ofGetFrameRate()));
+//  ofSetWindowTitle(ofToString(ofGetFrameRate()));
 
 }
 
@@ -64,13 +55,10 @@ void P_DeskScene::draw(){
     //ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);
     //ËÉåÊôØ
     myImage.draw(0,0);
-    
     ofSetColor(0xFFFFFF);
     fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     ofSetHexColor(0x000000);
-    
-    
-    }
+}
 
 //--------------------------------------------------------------
 void P_DeskScene::keyPressed(int key){

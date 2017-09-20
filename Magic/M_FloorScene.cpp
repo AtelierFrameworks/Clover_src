@@ -11,20 +11,25 @@
 void M_FloorScene::setup(){
     mVideo.setup("Magic/mahojin.mp4", OF_LOOP_NONE, CONST::G_M_CHAIR);
     ofAddListener(mVideo.mEndEvent,this,&M_FloorScene::endMovieEvent);
-    mVideo.play();
-    mVideo.pause();
+//    mVideo.play();
+//    mVideo.pause();
     magic_floor.load("Magic/M_floor.png");
+    isPlayChair = false;
 }
 
 //--------------------------------------------------------------
 void M_FloorScene::update(){
-     mVideo.update();
+    if(isPlayChair){
+        mVideo.update();
+    }
 }
 
 //--------------------------------------------------------------
 void M_FloorScene::draw(){
     magic_floor.draw(0, 0, ofGetWidth(), ofGetHeight());
-    mVideo.draw(0,0,400,300);
+    if(isPlayChair){
+        mVideo.draw(0,0,400,300);
+    }
 }
 
 //--------------------------------------------------------------
@@ -86,5 +91,10 @@ void M_FloorScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
     mVideo.stop();
     CONST::E_GIMMICK e_gimmick = gimmick;
     ofNotifyEvent(mEndMovieEvent, e_gimmick);
+}
+
+void M_FloorScene::actionChair(){
+    isPlayChair = true;
+    mVideo.play();
 }
 

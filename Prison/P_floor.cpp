@@ -79,10 +79,7 @@ void P_floor::updateFire(){
     }else if (mPosition.x == 100) {
         group.setLifeTime(0);
     }
-    
-    
     sys.update();
-
 }
 
 //--------------------------------------------------------------
@@ -182,14 +179,11 @@ void P_floor::setupFire(){
     group.setup(sys);
     group.setColor(ofxSPK::RangeC(ofColor(255, 255), ofColor(255, 255)),
                    ofxSPK::RangeC(ofColor(0, 0), ofColor(255, 0)));
-    
     group.setLifeTime(0.5);//0.3
     group.setFriction(0.1);
     group.setSize(0, ofxSPK::RangeF(30, 250));
-    
     group.setGravity(ofVec3f(0, -10, 0));
     group.setMass(0.1, 1);
-    
     rot.setup(SPK::Vortex::create(SPK::Vector3D(ofGetWidth() / 2, ofGetHeight() / 2),
                                   SPK::Vector3D(0, 1, 0),
                                   200,

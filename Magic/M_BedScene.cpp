@@ -7,49 +7,59 @@
 //
 #include "M_BedScene.hpp"
 void M_BedScene::setup(){
+    ofSetFullscreen(true);
     isAction = false;
     countTime = 0;
     isShowFont = false;
+    mIsPlayBookShelf = false;
+    mIsPrevious = false;
     magic_kabe.load("Magic/M_front.png");
+    mBookPlayer.load("Magic/M_Bookshelf.mp4");
+    mBookPlayer.setLoopState(OF_LOOP_NONE);
     ofSetFrameRate(60);
     ofEnableAlphaBlending();
-    for (int i = 0; i < 20;i++) {
-        letters[i].setup(-100, -100, 0);
+    mCamera.setOrientation(ofPoint(-20, 0, 0));
+    for (int i = 0; i < LETTER_COUNT;i++) {
+        letters[i].setup(-1000, -1000, 0);
     }
 }
 
 //--------------------------------------------------------------
 void M_BedScene::update(){
     updateFont();
-    
+    if(mIsPlayBookShelf){
+        mBookPlayer.update();
+        // check end the movie
+        if((mBookPlayer.getCurrentFrame() == mBookPlayer.getTotalNumFrames() && !mIsPrevious) || (mBookPlayer.getCurrentFrame() == 1 && mIsPrevious)){
+            mIsPlayBookShelf = false;
+            mBookPlayer.stop();
+        }
+    }
 }
 
 void M_BedScene::updateFont(){
     countTime++;
-    if (countTime == 600) {
+    if (countTime == 300) {
         countTime = 0;
     }
-    int count = countTime % 600;
+    int count = countTime % 300;
     
     if(mSimpleHands.size()){
-        isShowFont = true;
-        int modCount = count % 30;
+        int modCount = count % 15;
         if (modCount == 0) {
             //フォント生成の条件
-            int letterIndex = count /30 ;
+            int letterIndex = count /15 ;
             
-            //leapから撮ります。
+            //leapからとります。
             float x = mSimpleHands.at(0).handPos.x;
             float y = mSimpleHands.at(0).handPos.y;
             letters[letterIndex].setup(x, y, count);
-        }else{
-            isShowFont = false;
         }
-    
-    for (int i=0; i < 20; i++) {
+    }
+    for (int i=0; i < LETTER_COUNT; i++) {
         letters[i].update(count);
     }
-    }
+
 }
 
 
@@ -57,15 +67,18 @@ void M_BedScene::updateFont(){
 
 //--------------------------------------------------------------
 void M_BedScene::draw(){
+    ofSetColor(255);
     magic_kabe.draw(0,0,ofGetWidth(), ofGetHeight());
+    mVideo.draw(0, 0, 300, ofGetHeight());
     drawFont();
-//    mVideo.draw(0, 0, ofGetWidth(), ofGetHeight());
 }
 
 void M_BedScene::drawFont(){
-    for (int i = 0; i < 20; i++) {
+    mCamera.begin();
+    for (int i = 0; i < LETTER_COUNT; i++) {
         letters[i].draw();
     }
+    mCamera.end();
 }
 
 //--------------------------------------------------------------
@@ -130,6 +143,7 @@ void M_BedScene::startBed(){
 void M_BedScene::endBed(){
     
 }
+
 void M_BedScene::actionBed(){
     //ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2,30);
     if(!isAction){
@@ -142,4 +156,14 @@ void M_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
     CONST::E_GIMMICK e_gimmick = gimmick;
     ofNotifyEvent(mEndMovieEvent, e_gimmick);
 }
+
+void M_BedScene::actionEndMovie(){
+    mIsPlayBookShelf = true;
+    if(mBookPlayer.getCurrentFrame() == mBookPlayer.getTotalNumFrames()){
+        mBookPlayer.previousFrame();
+        mIsPrevious = true;
+    }
+    mBookPlayer.play();
+}
+
 

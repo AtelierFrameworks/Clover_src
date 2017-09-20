@@ -21,12 +21,13 @@ public:
     void update();
     void draw();
     bool getIsSetup();
-    std::vector<int> getArduinoData();
     void separateBytes();
+    void judgeData();
     ofSerial mSerial;
     int nBytesRead = 0;
-    char mBytesReadString[30];
-    std::vector<int> mData;
-    std::array<int,4> mPastTimeData{0,0,0,0};
-    std::vector<CONST::E_PARTS> judgeData();
+    string mBytesReadString;
+    std::vector<int> mValue;
+    bool mHasData;
+    std::array<int,5> mPastTimeData{0,0,0,0,0};
+    ofEvent<std::vector<CONST::E_PARTS>> mSendEvent;
 };

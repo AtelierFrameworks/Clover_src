@@ -14,6 +14,7 @@ ofSetVerticalSync(true);
 frameByframe = false;
 ofEnableSmoothing();
 mVideo.setup("P_bedshadow.mp4", OF_LOOP_NONE, CONST::G_P_BED);
+ofAddListener(mVideo.mEndEvent,this,&P_BedScene::endMovieEvent);
 
 //背景
 myImage.load("P_side.png");
@@ -26,6 +27,9 @@ ofEnableSmoothing();
 fingersMovie.load("hibi.mov");
 fingersMovie.setLoopState(OF_LOOP_NONE);
 fingersMovie.play();
+	
+//shadow
+	shadow.load("shadow.PNG");
 }
 
 //--------------------------------------------------------------
@@ -33,7 +37,6 @@ void P_BedScene::update(){
     if(isAction){
         mVideo.update();
     }
-    
     //ヒビ
     fingersMovie.update();
 }
@@ -50,6 +53,16 @@ void P_BedScene::draw(){
     ofSetColor(0xFFFFFF);
     fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     ofSetHexColor(0x000000);
+	
+	i = (int)ofGetFrameNum();
+	if (i < 256) {
+		ofSetColor(255, 255, 255, i);
+		shadow.draw(800, 300, 250, 400);
+	}else if (i < 510) {
+		j = i - 255;
+		ofSetColor(255, 255, 255, 255 - 2 * j);
+		shadow.draw(800, 300, 250, 400);
+	}
 }
 
 //--------------------------------------------------------------
@@ -111,9 +124,8 @@ void P_BedScene::dragEvent(ofDragInfo dragInfo){
 void P_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
     CONST::E_GIMMICK e_gimmick = gimmick;
     mVideo.stop();
-    ofRemoveListener(mVideo.mEndEvent, this, &P_BedScene::endMovieEvent);
+    ofRemoveListener(mVideo.mEndEvent, this,&P_BedScene::endMovieEvent);
     ofNotifyEvent(mEndMovieEvent,e_gimmick);
-    
 }
 
 
