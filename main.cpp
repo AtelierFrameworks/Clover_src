@@ -11,10 +11,8 @@ int main( ){
   
     ofGLFWWindowSettings settings;
     
-//    settings.width = 1280;
-//    settings.height = 800;
-    settings.width = 1440;
-    settings.height = 900;
+    settings.width = 1280;
+    settings.height = 800;
     settings.setPosition(ofVec2f(3000,0));
     settings.multiMonitorFullScreen = true;
     settings.decorated = false;
@@ -34,7 +32,6 @@ int main( ){
     shared_ptr<ofAppBaseWindow> floorWindow = ofCreateWindow(settings);
     
     shared_ptr<ofApp> mainApp(new ofApp);
-    CONST::E_SCENE scene = CONST::NONE;
     shared_ptr<B_BedApp> bedApp(new B_BedApp);
     shared_ptr<B_DeskApp> deskApp(new B_DeskApp);
     shared_ptr<B_FloorApp> floorApp(new B_FloorApp);

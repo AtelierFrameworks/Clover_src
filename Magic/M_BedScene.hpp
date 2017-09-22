@@ -44,13 +44,15 @@ public:
     int countTime;
     static const int LETTER_COUNT = 20;
     Letter letters[LETTER_COUNT];
-    
+      //bookshelf and stair
+    ofEvent<bool> mStairEvent;
 private:
     bool isShowFont;
     ofEasyCam mCamera;
-    
     //movie bookshelf
     ofVideoPlayer mBookPlayer;
     bool mIsPlayBookShelf;
     bool mIsPrevious;
-};
+    bool mIsPlayBed;
+  
+   };

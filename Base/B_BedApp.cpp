@@ -10,6 +10,7 @@
 void B_BedApp::setup(){
     
     BaseApp::setup();
+    
 }
 
 //--------------------------------------------------------------
@@ -93,6 +94,7 @@ void B_BedApp::changeScene(){
             mScenes.push_back(newScene);
             mScenes[0]->setup();
             ofAddListener(mScenes[0]->mEndMovieEvent,this,&B_BedApp::endMovie);
+            ofAddListener(dynamic_cast<M_BedScene*>(mScenes[0])->mStairEvent,this,&B_BedApp::stairEvent);
             break;
         case CONST::NONE:
               mScenes.clear();
@@ -114,4 +116,9 @@ void B_BedApp::endMovie(CONST::E_GIMMICK & gimmick){
 
 void B_BedApp::setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands){
     mScenes[0] -> setLeapData(simpleHands);
+}
+
+void B_BedApp::stairEvent(bool & flg){
+    bool a = flg;
+    ofNotifyEvent(mStairEvent,a);
 }

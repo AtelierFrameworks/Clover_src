@@ -34,6 +34,7 @@ class ofApp : public BaseApp{
         void changeScene();
         void endMovie(CONST::E_GIMMICK & app);
         void receiveData(std::vector<CONST::E_PARTS> & isActionParts);
+        void magicStair(bool & flg);
 //        bool judgeGimmick();
         ofFile mLogDataFile;
         ArduinoManager mArduinoManager;
@@ -47,5 +48,6 @@ private:
    // std::vector<GimmickDataModel> mGimmckModels;
     ofxLeapMotion mLeap; // Leap Motionのメインクラスをインスタンス化
     std::vector <ofxLeapMotionSimpleHand> simpleHands; // シンプルな手のモデルのvector配列
+    
     ofEasyCam mCam;
 };

@@ -210,5 +210,9 @@ void M_DeskScene::actionEndMovie(){
     mBookPlayer.play();
 }
 
+void M_DeskScene::actionBed(){
+    //stair
+    
+}
 
 

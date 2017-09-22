@@ -20,6 +20,7 @@ void ofApp::setup(){
     //TODO::setJudgeModel
     ofAddListener(mBedApp ->mMovieEndEvent, this, &ofApp::endMovie);
     ofAddListener(mArduinoManager.mSendEvent,this,&ofApp::receiveData);
+    ofAddListener(mBedApp -> mStairEvent,this,&ofApp::magicStair);
 }
 
 //--------------------------------------------------------------
@@ -252,7 +253,7 @@ void ofApp:: receiveData(std::vector<CONST::E_PARTS> & isActionParts){
                         break;
                     }
                     case CONST::MAGIC:{
-                        
+                        mBedApp -> mScenes.at(0) -> actionBed();
                         break;
                     }
                     default:
@@ -262,6 +263,12 @@ void ofApp:: receiveData(std::vector<CONST::E_PARTS> & isActionParts){
             default:break;
         }
     }
+}
+
+void ofApp::magicStair(bool & flg){
+    mScenes.at(0) -> actionBed();
+    mDeskApp -> mScenes.at(0) -> actionBed();
+    mFloorApp -> mScenes.at(0) -> actionBed();
 }
 
 

@@ -41,6 +41,7 @@ public:
     void actionShelf();
     void endShelf();
     void actionEndMovie();
+    void actionBed();
     ofImage magic_kabe;
     float px;
     float py;
@@ -57,14 +58,15 @@ public:
     static const int BATCOUNT = 5;
     Bats bats[BATCOUNT];
     int separate;
-    
+    //movie bookshelf
+    ofVideoPlayer mBookPlayer;
+    bool mIsPlayBookShelf;
+    bool mIsPrevious;
+    bool mIsPlayBed;
+
     //spk
     ofxSPK::System sys;
     ofxSPK::Group group;
     ofImage sprite;
     ofxSPK::Modifier rot;
-    //movie bookshelf
-    ofVideoPlayer mBookPlayer;
-    bool mIsPlayBookShelf;
-    bool mIsPrevious;
-};
+    };

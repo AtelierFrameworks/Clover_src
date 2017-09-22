@@ -34,5 +34,7 @@ public:
     void actionBed();
     void endMovie(CONST::E_GIMMICK & gimmick);
     void setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands);
+    void stairEvent(bool & flg);
     ofEvent<CONST::E_GIMMICK> mMovieEndEvent;
+    ofEvent<bool>  mStairEvent;
 };

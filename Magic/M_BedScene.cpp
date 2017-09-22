@@ -7,7 +7,6 @@
 //
 #include "M_BedScene.hpp"
 void M_BedScene::setup(){
-    ofSetFullscreen(true);
     isAction = false;
     countTime = 0;
     isShowFont = false;
@@ -22,6 +21,7 @@ void M_BedScene::setup(){
     for (int i = 0; i < LETTER_COUNT;i++) {
         letters[i].setup(-1000, -1000, 0);
     }
+    mIsPlayBed = false;
 }
 
 //--------------------------------------------------------------
@@ -31,8 +31,12 @@ void M_BedScene::update(){
         mBookPlayer.update();
         // check end the movie
         if((mBookPlayer.getCurrentFrame() == mBookPlayer.getTotalNumFrames() && !mIsPrevious) || (mBookPlayer.getCurrentFrame() == 1 && mIsPrevious)){
-            mIsPlayBookShelf = false;
-            mBookPlayer.stop();
+                mIsPlayBookShelf = false;
+                mBookPlayer.stop();
+                if(mIsPlayBed){
+                    bool a = true;
+                    ofNotifyEvent(mStairEvent, a);
+            }
         }
     }
 }
@@ -69,7 +73,7 @@ void M_BedScene::updateFont(){
 void M_BedScene::draw(){
     ofSetColor(255);
     magic_kabe.draw(0,0,ofGetWidth(), ofGetHeight());
-    mVideo.draw(0, 0, 300, ofGetHeight());
+    mBookPlayer.draw(0, 0, 300, ofGetHeight());
     drawFont();
 }
 
@@ -145,10 +149,15 @@ void M_BedScene::endBed(){
 }
 
 void M_BedScene::actionBed(){
-    //ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2,30);
-    if(!isAction){
-        isAction= true;
-        mVideo.play();
+    mIsPlayBed = true;
+    if(mBookPlayer.getCurrentFrame() == 0){
+        mIsPrevious = false;
+        mBookPlayer.nextFrame();
+        mBookPlayer.play();
+        mIsPlayBookShelf = true;
+    }else{
+        bool a = true;
+        ofNotifyEvent(mStairEvent, a);
     }
 }
 void M_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
