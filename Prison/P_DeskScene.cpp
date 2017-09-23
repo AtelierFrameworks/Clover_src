@@ -18,32 +18,35 @@ ofxSPK::Modifier rot;
 void P_DeskScene::setup(){
     //背景
     myImage.loadImage("P_side.png");
-    
+    gIsKeyPressed = false;
+    lIsKeyPressed = false;
     //人影
-    ofBackground(0,0,0);
-    ofSetVerticalSync(true);
-    frameByframe = false;
-    ofEnableSmoothing();
-    fingersMovie.loadMovie("P_deskshadow.mp4");
-    fingersMovie.setLoopState(OF_LOOP_NONE);
-    fingersMovie.play();
-    mySound.loadSound("kodomo.wav");
-    mySound.setLoop(false);
-    mySound.play();
-    mySound.setVolume(0.5);
-    
+    if(gIsKeyPressed == true){
+        ofBackground(0,0,0);
+        ofSetVerticalSync(true);
+        frameByframe = false;
+        ofEnableSmoothing();
+        fingersMovie.loadMovie("P_deskshadow.mp4");
+        fingersMovie.setLoopState(OF_LOOP_NONE);
+        fingersMovie.play();
+        mySound.loadSound("kodomo.wav");
+        mySound.setLoop(false);
+        mySound.play();
+        mySound.setVolume(0.5);
+    }
     
     
     //笑い声
-    ofBackground(0,0,0);
-    ofSetVerticalSync(true);
-    frameByframe = false;
-    ofEnableSmoothing();
-    mySound.loadSound("koe.wav");
-    mySound.setLoop(false);
-    mySound.play();
-    mySound.setVolume(0.5);
-    
+    if(lIsKeyPressed == true){
+        ofBackground(0,0,0);
+        ofSetVerticalSync(true);
+        frameByframe = false;
+        ofEnableSmoothing();
+        mySound.loadSound("koe.wav");
+        mySound.setLoop(false);
+        mySound.play();
+        mySound.setVolume(0.5);
+    }
     
     
     
@@ -87,11 +90,24 @@ void P_DeskScene::draw(){
 
 //--------------------------------------------------------------
 void P_DeskScene::keyPressed(int key){
+    if(key == 'g'){
+        gIsKeyPressed = true;
+    }
+    
+    if(key == 'l'){
+        lIsKeyPressed = true;
+    }
     
 }
 
 //--------------------------------------------------------------
 void P_DeskScene::keyReleased(int key){
+    if(key == 'g'){
+        gIsKeyPressed = false;
+    }
+    if(key == 'l'){
+        lIsKeyPressed = false;
+    }
     
 }
 

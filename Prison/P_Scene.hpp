@@ -36,5 +36,6 @@ class P_Scene : public BaseScene{
     void actionShelf();
     ofVideoPlayer fingersMovie;
     bool frameByframe;
+    bool tIsKeyPressed;
 
 };

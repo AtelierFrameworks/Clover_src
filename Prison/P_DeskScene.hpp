@@ -34,5 +34,7 @@ class P_DeskScene : public BaseScene{
     ofSoundPlayer mySound;
     bool                frameByframe;
     ofImage myImage;
+    bool gIsKeyPressed;
+    bool lIsKeyPressed;
     
     };

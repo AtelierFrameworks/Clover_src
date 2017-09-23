@@ -8,6 +8,7 @@
 
 #include "P_floor.hpp"
 void P_floor::setup(){
+    fIsKeyPressed = false;
     //床のひび割れ
     ofBackground(0,0,0);
     ofSetVerticalSync(true);
@@ -105,12 +106,16 @@ void P_floor::draw(){
 
 //--------------------------------------------------------------
 void P_floor::keyPressed(int key){
-    
+    if(key == ‘f’){
+        fIsKeyPressed = true;
+    }
 }
 
 //--------------------------------------------------------------
 void P_floor::keyReleased(int key){
-    
+    if(key == ‘f’){
+        fIsKeyPressed = false;
+    }
 }
 
 //--------------------------------------------------------------

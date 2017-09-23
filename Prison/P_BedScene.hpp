@@ -33,4 +33,5 @@ class P_BedScene : public BaseScene{
     bool                frameByframe;
     ofImage myImage;
     void endMovieEvent(CONST::E_APP & App);
+    bool mIsKeyPressed;
 };

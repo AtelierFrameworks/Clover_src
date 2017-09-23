@@ -7,16 +7,20 @@
 //
 #include "P_Scene.hpp"
 void P_Scene::setup(){
-    //雷
-    ofBackground(0,0,0);
-    ofSetVerticalSync(true);
-    frameByframe = false;
-    ofEnableSmoothing();
-    fingersMovie.loadMovie("inazuma.mp4");
-    fingersMovie.setLoopState(OF_LOOP_NONE);
-    fingersMovie.play();
+    tIsKeyPressed  = false;
     
+    //雷
+    if(tIsKeyPressed == true){
+        ofBackground(0,0,0);
+        ofSetVerticalSync(true);
+        frameByframe = false;
+        ofEnableSmoothing();
+        fingersMovie.loadMovie("inazuma.mp4");
+        fingersMovie.setLoopState(OF_LOOP_NONE);
+        fingersMovie.play();
+    }
 }
+
 
 //--------------------------------------------------------------
 void P_Scene::update(){
@@ -36,12 +40,16 @@ void P_Scene::draw(){
 
 //--------------------------------------------------------------
 void P_Scene::keyPressed(int key){
-    
+    if (key == 't') {
+        tIsKeyPressed = true;
+    }
 }
 
 //--------------------------------------------------------------
 void P_Scene::keyReleased(int key){
-    
+    if (key == 't') {
+        tIsKeyPressed = false;
+    }
 }
 
 //--------------------------------------------------------------
