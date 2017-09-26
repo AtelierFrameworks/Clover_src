@@ -39,6 +39,8 @@ public:
     virtual void actionDesk();
     virtual void actionChair();
     virtual void actionBed();
+    virtual void actionBedNext(){};
+    virtual void actionStandBed(){};
     virtual void actionShelf();
     virtual void endShelf(){};
     virtual void actionFloor(){};

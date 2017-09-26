@@ -13,7 +13,7 @@ int main( ){
     
     settings.width = 1280;
     settings.height = 800;
-    settings.setPosition(ofVec2f(3000,0));
+    settings.setPosition(ofVec2f(500,0));
     settings.multiMonitorFullScreen = true;
     settings.decorated = false;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);

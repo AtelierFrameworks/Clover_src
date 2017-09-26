@@ -20,6 +20,18 @@ void M_Scene::setup(){
     setupClock();
 }
 
+void M_Scene::setupStair(){
+    magic_kabe.load("T_front.png");
+    magic_kabe2.load("T_front.png");
+    magic_kabe3.load("T_front.png");
+    
+    px = 0;
+    py = 0;
+    
+    mPosition = ofVec2f(stairPx, stairPy);
+    isMove = false;
+}
+
 void M_Scene::setupClock(){
     ofEnableSmoothing();
     //画面の混色の設定を加算合成にする
@@ -40,6 +52,9 @@ void M_Scene::setupClock(){
 //--------------------------------------------------------------
 void M_Scene::update(){
     updateClock();
+    if (isMove) {
+        mPosition.y += (gravity - 7.0);
+    }
 }
 
 void M_Scene::updateClock(){
@@ -54,8 +69,18 @@ void M_Scene::updateClock(){
 //--------------------------------------------------------------
 void M_Scene::draw(){
     ofSetColor(255, 255, 255);
-    magic_kabe.draw(0,0, ofGetWidth(), ofGetHeight());
+    drawWall();
     drawClock();
+}
+
+void M_Scene::drawWall(){
+    magic_kabe.draw(mPosition.x,mPosition.y+100,ofGetWidth(),ofGetHeight());
+    magic_kabe2.draw(mPosition.x , mPosition.y-480, ofGetWidth(), ofGetHeight());
+    magic_kabe3.draw(mPosition.x,mPosition.y-1060, ofGetWidth(), ofGetHeight());
+    
+    if (mPosition.y >= 680) {
+        mPosition.y = 100;
+    }
 }
 
 void M_Scene::drawClock(){
@@ -136,10 +161,14 @@ void M_Scene::actionChair(){
 }
 
 void M_Scene::actionBed(){
-    
+    isMove = true;
 }
 
 void M_Scene::actionShelf(){
     
+}
+
+void M_Scene::actionStandBed(){
+    isMove = false;
 }
 

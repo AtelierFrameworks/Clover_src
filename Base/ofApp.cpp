@@ -5,6 +5,7 @@ static bool isStartScene;
 //--------------------------------------------------------------
 void ofApp::setup(){
     BaseApp::setup();
+    mBgm.setLoop(true);
     for(int i = 0; i < 5;i++){
         mIsAction[i] = false;
     }
@@ -122,7 +123,7 @@ void ofApp::actionCurtain(){
     //TODO: ‚Äû√á‚àë‚Äû√â¬∫‚Äû√â‚â•√à√Ö‚àè√ä√§√ª
     int sceneNum = ofRandom(2)+1;
     //setNowScene((BaseApp::E_SCENE)sceneNum);
-    setNowScene(CONST::MAGIC);
+    setNowScene(CONST::PRISON);
     changeScene();
 }
 
@@ -140,16 +141,21 @@ void ofApp::changeScene(){
     BaseScene *newScene;
     switch (getNowScene()) {
         case CONST::PRISON:
+            mBgm.load("Prison/P_bgm.mp3");
+            mBgm.play();
             newScene = new P_Scene();
             mScenes.push_back(newScene);
             mScenes[0]->setup();
             break;
         case CONST::MAGIC:
+            mBgm.load("Magic/M_bgm.mp3");
+            mBgm.play();
             newScene = new M_Scene();
             mScenes.push_back(newScene);
             mScenes[0]->setup();
             break;
         case CONST::NONE:
+            mBgm.stop();
             mScenes.clear();
             break;
         default:
@@ -254,6 +260,7 @@ void ofApp:: receiveData(std::vector<CONST::E_PARTS> & isActionParts){
                     }
                     case CONST::MAGIC:{
                         mBedApp -> mScenes.at(0) -> actionBed();
+                        mDeskApp -> mScenes.at(0) -> actionBed();
                         break;
                     }
                     default:
@@ -267,8 +274,8 @@ void ofApp:: receiveData(std::vector<CONST::E_PARTS> & isActionParts){
 
 void ofApp::magicStair(bool & flg){
     mScenes.at(0) -> actionBed();
-    mDeskApp -> mScenes.at(0) -> actionBed();
-    mFloorApp -> mScenes.at(0) -> actionBed();
+    mDeskApp -> mScenes.at(0) -> actionBedNext();
+    mBedApp -> mScenes.at(0) -> actionBedNext();
 }
 
 

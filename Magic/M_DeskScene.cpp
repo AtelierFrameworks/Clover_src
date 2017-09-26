@@ -12,10 +12,22 @@ void M_DeskScene::setup(){
     mIsPlayShelf = false;
     mIsPlayBookShelf = false;
     mIsPrevious = false;
-    mBookPlayer.load("Magic/M_Bookshelf.mp4");
+    mBookPlayer.load("Magic/M_bookshelf");
     mBookPlayer.setLoopState(OF_LOOP_NONE);
     setupBat();
     setupCurse();
+}
+
+void M_DeskScene::setupStair(){
+    magic_kabe.load("M_front.png");
+    magic_kabe2.load("M_front.png");
+    magic_kabe3.load("M_front.png");
+    
+    px = 0;
+    py = 0;
+    
+    mPosition = ofVec2f(stairPx, stairPy);
+    isMove = false;
 }
 
 void M_DeskScene::setupBat(){
@@ -57,12 +69,11 @@ void M_DeskScene::update(){
         updateBat();
     }
     if(mIsPlayBookShelf){
-        mBookPlayer.update();
-        // check end the movie
-        if((mBookPlayer.getCurrentFrame() == mBookPlayer.getTotalNumFrames() && !mIsPrevious) || (mBookPlayer.getCurrentFrame() == 1 && mIsPrevious)){
-            mIsPlayBookShelf = false;
-            mBookPlayer.stop();
-        }
+        updateBookShelf();
+    }
+    
+    if (isMove) {
+        mPosition.y += (gravity - 7.0);
     }
 
 }
@@ -104,6 +115,15 @@ void M_DeskScene::updateCurse(){
     sys.update();
 }
 
+void M_DeskScene::updateBookShelf(){
+    mBookPlayer.update();
+    // check end the movie
+    if((mBookPlayer.getCurrentFrame() == mBookPlayer.getTotalNumFrames() && !mIsPrevious) || (mBookPlayer.getCurrentFrame() == 0 && mIsPrevious)){
+        mIsPlayBookShelf = false;
+        mBookPlayer.stop();
+    }
+}
+
 //--------------------------------------------------------------
 void M_DeskScene::draw(){
     magic_kabe.draw(0,0,ofGetWidth(),ofGetHeight());
@@ -129,6 +149,16 @@ void M_DeskScene::drawCurse(){
     sprite.unbind();
     ofSetColor(255, 255, 0);
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+}
+
+void M_DeskScene::drawWall(){
+    magic_kabe.draw(mPosition.x,mPosition.y+100,ofGetWidth(),ofGetHeight());
+    magic_kabe2.draw(mPosition.x , mPosition.y-480, ofGetWidth(), ofGetHeight());
+    magic_kabe3.draw(mPosition.x,mPosition.y-1060, ofGetWidth(), ofGetHeight());
+    
+    if (mPosition.y >= 680) {
+        mPosition.y = 100;
+    }
 }
 
 //--------------------------------------------------------------
@@ -212,7 +242,22 @@ void M_DeskScene::actionEndMovie(){
 
 void M_DeskScene::actionBed(){
     //stair
-    
+    mIsPlayBed = true;
+    if(mBookPlayer.getCurrentFrame() == 0){
+        mIsPrevious = false;
+        mBookPlayer.nextFrame();
+        mBookPlayer.play();
+        mIsPlayBookShelf = true;
+    }
+
+}
+
+void M_DeskScene::actionBedNext(){
+    isMove = true;
+}
+
+void M_DeskScene::actionStandBed(){
+    isMove = false;
 }
 
 

@@ -35,13 +35,13 @@ class ofApp : public BaseApp{
         void endMovie(CONST::E_GIMMICK & app);
         void receiveData(std::vector<CONST::E_PARTS> & isActionParts);
         void magicStair(bool & flg);
-//        bool judgeGimmick();
+//      bool judgeGimmick();
         ofFile mLogDataFile;
         ArduinoManager mArduinoManager;
         shared_ptr<B_BedApp> mBedApp;
         shared_ptr<B_DeskApp> mDeskApp;
         shared_ptr<B_FloorApp> mFloorApp;
-    
+    ofSoundPlayer mBgm;
     //0:ベッド 1:机 2:いす 3:棚 4:カーテン
     bool mIsAction[5];
 private:

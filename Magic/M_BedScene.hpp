@@ -17,8 +17,10 @@
 class M_BedScene : public BaseScene{
 public:
     void setup();
+    void setupStair();
     void update();
     void draw();
+    void drawWall();
     void keyPressed(int key);
     void keyReleased(int key);
     void mouseMoved(int x, int y );
@@ -30,13 +32,14 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    void startBed();
-    void endBed();
     void actionBed();
+    void actionBedNext();
+    void actionStandBed();
     void endMovieEvent(CONST::E_GIMMICK & gimmick);
     void updateFont();
     void drawFont();
     void actionEndMovie();
+    void updateBookShelf();
     ofImage magic_kabe;
     float px;
     float py;
@@ -55,4 +58,13 @@ private:
     bool mIsPrevious;
     bool mIsPlayBed;
   
+    //stair
+    ofVec2f mPosition;
+    constexpr static const float gravity = 9.8;
+    ofImage magic_kabe2;
+    ofImage magic_kabe3;
+    float stairPx;
+    float stairPy;
+    bool isMove = false;
+
    };

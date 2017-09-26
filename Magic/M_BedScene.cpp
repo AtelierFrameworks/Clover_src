@@ -13,7 +13,7 @@ void M_BedScene::setup(){
     mIsPlayBookShelf = false;
     mIsPrevious = false;
     magic_kabe.load("Magic/M_front.png");
-    mBookPlayer.load("Magic/M_Bookshelf.mp4");
+    mBookPlayer.load("Magic/M_bookshelf.mov");
     mBookPlayer.setLoopState(OF_LOOP_NONE);
     ofSetFrameRate(60);
     ofEnableAlphaBlending();
@@ -24,21 +24,42 @@ void M_BedScene::setup(){
     mIsPlayBed = false;
 }
 
+void M_BedScene::setupStair(){
+    magic_kabe.load("M_front.png");
+    magic_kabe2.load("M_front.png");
+    magic_kabe3.load("M_front.png");
+    
+    px = 0;
+    py = 0;
+    
+    mPosition = ofVec2f(stairPx, stairPy);
+    isMove = false;
+}
+
+
 //--------------------------------------------------------------
 void M_BedScene::update(){
     updateFont();
     if(mIsPlayBookShelf){
-        mBookPlayer.update();
-        // check end the movie
-        if((mBookPlayer.getCurrentFrame() == mBookPlayer.getTotalNumFrames() && !mIsPrevious) || (mBookPlayer.getCurrentFrame() == 1 && mIsPrevious)){
-                mIsPlayBookShelf = false;
-                mBookPlayer.stop();
-                if(mIsPlayBed){
-                    bool a = true;
-                    ofNotifyEvent(mStairEvent, a);
-            }
+        updateBookShelf();
+    }
+    if (isMove) {
+        mPosition.y += (gravity - 7.0);
+    }
+}
+
+void M_BedScene::updateBookShelf(){
+    mBookPlayer.update();
+    // check end the movie
+    if((mBookPlayer.getCurrentFrame() == mBookPlayer.getTotalNumFrames() && !mIsPrevious) || (mBookPlayer.getCurrentFrame() == 0 && mIsPrevious)){
+        mIsPlayBookShelf = false;
+        mBookPlayer.stop();
+        if(mIsPlayBed){
+            bool a = true;
+            ofNotifyEvent(mStairEvent, a);
         }
     }
+
 }
 
 void M_BedScene::updateFont(){
@@ -73,7 +94,7 @@ void M_BedScene::updateFont(){
 void M_BedScene::draw(){
     ofSetColor(255);
     magic_kabe.draw(0,0,ofGetWidth(), ofGetHeight());
-    mBookPlayer.draw(0, 0, 300, ofGetHeight());
+    mBookPlayer.draw(520, 0, 218, ofGetHeight());
     drawFont();
 }
 
@@ -85,6 +106,15 @@ void M_BedScene::drawFont(){
     mCamera.end();
 }
 
+void M_BedScene::drawWall(){
+    magic_kabe.draw(mPosition.x,mPosition.y+100,ofGetWidth(),ofGetHeight());
+    magic_kabe2.draw(mPosition.x , mPosition.y-480, ofGetWidth(), ofGetHeight());
+    magic_kabe3.draw(mPosition.x,mPosition.y-1060, ofGetWidth(), ofGetHeight());
+    
+    if (mPosition.y >= 680) {
+        mPosition.y = 100;
+    }
+}
 //--------------------------------------------------------------
 void M_BedScene::keyPressed(int key){
     
@@ -140,13 +170,6 @@ void M_BedScene::dragEvent(ofDragInfo dragInfo){
     
 }
 
-void M_BedScene::startBed(){
-    
-}
-
-void M_BedScene::endBed(){
-    
-}
 
 void M_BedScene::actionBed(){
     mIsPlayBed = true;
@@ -159,6 +182,14 @@ void M_BedScene::actionBed(){
         bool a = true;
         ofNotifyEvent(mStairEvent, a);
     }
+}
+
+void M_BedScene::actionBedNext(){
+    isMove = true;
+}
+
+void M_BedScene::actionStandBed(){
+    isMove = false;
 }
 void M_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
     mVideo.stop();

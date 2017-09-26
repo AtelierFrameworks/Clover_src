@@ -17,10 +17,12 @@
 class M_Scene : public BaseScene{
     void setup();
     void setupClock();
+    void setupStair();
     void update();
     void updateClock();
     void draw();
     void drawClock();
+    void drawWall();
     void keyPressed(int key);
     void keyReleased(int key);
     void mouseMoved(int x, int y );
@@ -35,6 +37,7 @@ class M_Scene : public BaseScene{
     void actionDesk();
     void actionChair();
     void actionBed();
+    void actionStandBed();
     void actionShelf();
     ofImage magic_kabe;
     float px;
@@ -51,4 +54,13 @@ class M_Scene : public BaseScene{
     
     ofSoundPlayer BellSound;
     
+    
+    //stair
+    ofVec2f mPosition;
+    constexpr static const float gravity = 9.8;
+    ofImage magic_kabe2;
+    ofImage magic_kabe3;
+    float stairPx;
+    float stairPy;
+    bool isMove = false;
 };

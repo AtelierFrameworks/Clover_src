@@ -20,12 +20,15 @@ public:
     void setup();
     void setupCurse();
     void setupBat();
+    void setupStair();
     void update();
     void updateCurse();
     void updateBat();
+    void updateBookShelf();
     void draw();
     void drawBat();
     void drawCurse();
+    void drawWall();
     void keyPressed(int key);
     void keyReleased(int key);
     void mouseMoved(int x, int y );
@@ -42,6 +45,8 @@ public:
     void endShelf();
     void actionEndMovie();
     void actionBed();
+    void actionStandBed();
+    void actionBedNext();
     ofImage magic_kabe;
     float px;
     float py;
@@ -49,10 +54,10 @@ public:
     //curse
     int check, angle;
     float range,add;
-    int out=0;
+    int out =0;
     int particle = 3000;
     
-    
+    private:
     //bat
     ofSoundPlayer BatSound;
     static const int BATCOUNT = 5;
@@ -69,4 +74,13 @@ public:
     ofxSPK::Group group;
     ofImage sprite;
     ofxSPK::Modifier rot;
+    
+    //stair
+    ofVec2f mPosition;
+    constexpr static const float gravity = 9.8;
+    ofImage magic_kabe2;
+    ofImage magic_kabe3;
+    float stairPx;
+    float stairPy;
+    bool isMove = false;
     };
