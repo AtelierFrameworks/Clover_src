@@ -11,19 +11,24 @@
 
 #include <stdio.h>
 #include "ofMain.h"
-#include "ArduinoDataModel.hpp"
 #include "CONST.h"
+#include <vector>
+#include <array>
 #endif /* ArduinoManager_hpp */
 class ArduinoManager{
 public:
     void setup();
     void update();
     void draw();
-
-    static bool getIsSetup();
-    ArduinoDataModel getArduinoData(CONST::E_PARTS);
+    bool getIsSetup();
+    void separateBytes();
+    void judgeData();
     ofSerial mSerial;
     int nBytesRead = 0;
-    char bytesReadString[50];
-//    int getArduinoDatas();
+    string mBytesReadString;
+    std::vector<int> mValue;
+    bool mHasData;
+    std::array<int,5> mPastTimeData{0,0,0,0,0};
+    ofEvent<std::vector<CONST::E_PARTS>> mSendEvent;
+    bool mIsMagicMove;
 };

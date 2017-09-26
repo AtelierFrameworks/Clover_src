@@ -14,6 +14,8 @@
 #include "ofMain.h"
 #include "BaseApp.hpp"
 #include "ofxLeapMotion2.h"
+#include "M_DeskScene.hpp"
+#include "P_DeskScene.hpp"
 #endif /* B_DeskApp_hpp */
 
 class B_DeskApp : public BaseApp{
@@ -33,4 +35,6 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void changeScene();
+    void endMovie(CONST::E_GIMMICK & app);
+    ofEvent<CONST::E_GIMMICK> mMovieEndEvent;
 };

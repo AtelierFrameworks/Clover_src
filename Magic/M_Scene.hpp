@@ -2,7 +2,7 @@
 //  M_Scene.hpp
 //  Atelier_Room
 //
-//  Created by 池上綾乃 on 2017/08/17.
+//  Created by Ê±†‰∏äÁ∂æ‰πÉ on 2017/08/17.
 //
 //
 
@@ -13,12 +13,16 @@
 
 #endif /* M_Scene_hpp */
 #include "BaseScene.hpp"
-#include "M_BedScene.hpp"
+
 class M_Scene : public BaseScene{
     void setup();
+    void setupClock();
+    void setupStair();
     void update();
+    void updateClock();
     void draw();
-    
+    void drawClock();
+    void drawWall();
     void keyPressed(int key);
     void keyReleased(int key);
     void mouseMoved(int x, int y );
@@ -30,11 +34,33 @@ class M_Scene : public BaseScene{
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    
     void actionDesk();
     void actionChair();
     void actionBed();
+    void actionStandBed();
     void actionShelf();
-    shared_ptr<M_BedScene> mBedScene;
+    ofImage magic_kabe;
+    float px;
+    float py;
     
+    //時計等
+    //ofImage frameImage; //画像ファイルより読みこまれたイメージデータ
+    //ofImage JoImage;
+    ofImage ClockImage;
+    
+    double centerx, centery;
+    double needleLx, needleLy;
+    double needleSx, needleSy;
+    
+    ofSoundPlayer BellSound;
+    
+    
+    //stair
+    ofVec2f mPosition;
+    constexpr static const float gravity = 9.8;
+    ofImage magic_kabe2;
+    ofImage magic_kabe3;
+    float stairPx;
+    float stairPy;
+    bool isMove = false;
 };

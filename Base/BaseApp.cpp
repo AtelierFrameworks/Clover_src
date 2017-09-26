@@ -123,15 +123,15 @@ string BaseApp::getLogDay(){
 
 void BaseApp::setNowScene(CONST::E_SCENE scene){
     nowScene = scene;
-    BaseScene * newScene;
+    BaseScene* newScene;
 }
 
 int BaseApp::getLogNumber(){return logNumber;}
 void BaseApp::setLogNumber(int num){logNumber = num;}
 //void BaseApp::setArduinoManager(shared_ptr<ArduinoManager> manager){mArduinoManager = manager;}
 void BaseApp::freeToSceneMemory(){
-    for(BaseScene * scene  : mScenes){
-        free(&scene);
+    for(BaseScene * scene : mScenes){
+        delete scene;
     }
 }
 

@@ -8,7 +8,6 @@
 #include "B_DeskApp.hpp"
 #include "B_FloorApp.hpp"
 #include "ofxLeapMotion2.h"
-#include "GimmickDataModel.h"
 #include "ArduinoManager.hpp"
 class ofApp : public BaseApp{
     
@@ -32,20 +31,23 @@ class ofApp : public BaseApp{
         void updateLeapMotion();
         void actionCurtain();
         void closeCurtain();
-    void sendAction(CONST::E_APP app);
-    void changeScene();
-    void endMovie(CONST::E_APP & app);
+        void changeScene();
+        void endMovie(CONST::E_GIMMICK & app);
+        void receiveData(std::vector<CONST::E_PARTS> & isActionParts);
+        void magicStair(bool & flg);
+//      bool judgeGimmick();
         ofFile mLogDataFile;
         ArduinoManager mArduinoManager;
         shared_ptr<B_BedApp> mBedApp;
         shared_ptr<B_DeskApp> mDeskApp;
         shared_ptr<B_FloorApp> mFloorApp;
-    
+    ofSoundPlayer mBgm;
     //0:ベッド 1:机 2:いす 3:棚 4:カーテン
     bool mIsAction[5];
 private:
-    std::vector<GimmickDataModel> mGimmckModels;
+   // std::vector<GimmickDataModel> mGimmckModels;
     ofxLeapMotion mLeap; // Leap Motionのメインクラスをインスタンス化
     std::vector <ofxLeapMotionSimpleHand> simpleHands; // シンプルな手のモデルのvector配列
+    
     ofEasyCam mCam;
 };

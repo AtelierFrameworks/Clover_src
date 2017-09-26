@@ -1,25 +1,33 @@
 //
-//  M_BedScene.hpp
+//  M_DeskScene.hpp
 //  Atelier_Room
 //
-//  Created by √ä¬±‚Ä†‚Ä∞‚àè√§√Å‚àÇ√¶‚Ä∞œÄ√â on 2017/06/11.
+//  Created by Ê±†‰∏äÁ∂æ‰πÉ on 2017/09/07.
 //
 //
-//√à‚â†√Æ√ä‚â•√Ø√Ç√µ‚â•√ä√µ‚àè√à¬ß¬Æ‚Äû√á‚àë‚Äû√â¬∫‚Äû√â‚â•
+
 #pragma once
-#ifndef M_BedScene_hpp
-#define M_BedScene_hpp
-#include "BaseScene.hpp"
+#ifndef M_DeskScene_hpp
+#define M_DeskScene_hpp
 #include <stdio.h>
-#include <vector>
-#include "Letter.h"
-#endif /* M_BedScene_hpp */
-class M_BedScene : public BaseScene{
+#include "BaseScene.hpp"
+#include "ofxSPK.h"
+#include "Bats.h"
+#endif /* M_DeskScene_hpp */
+
+class M_DeskScene : public BaseScene{
 public:
     void setup();
+    void setupCurse();
+    void setupBat();
     void setupStair();
     void update();
+    void updateCurse();
+    void updateBat();
+    void updateBookShelf();
     void draw();
+    void drawBat();
+    void drawCurse();
     void drawWall();
     void keyPressed(int key);
     void keyReleased(int key);
@@ -32,32 +40,41 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    void actionBed();
-    void actionBedNext();
-    void actionStandBed();
     void endMovieEvent(CONST::E_GIMMICK & gimmick);
-    void updateFont();
-    void drawFont();
+    void actionShelf();
+    void endShelf();
     void actionEndMovie();
-    void updateBookShelf();
+    void actionBed();
+    void actionStandBed();
+    void actionBedNext();
     ofImage magic_kabe;
     float px;
     float py;
-    //desk Font
-    int countTime;
-    static const int LETTER_COUNT = 20;
-    Letter letters[LETTER_COUNT];
-      //bookshelf and stair
-    ofEvent<bool> mStairEvent;
-private:
-    bool isShowFont;
-    ofEasyCam mCamera;
+    bool mIsPlayShelf;
+    //curse
+    int check, angle;
+    float range,add;
+    int out =0;
+    int particle = 3000;
+    
+    private:
+    //bat
+    ofSoundPlayer BatSound;
+    static const int BATCOUNT = 5;
+    Bats bats[BATCOUNT];
+    int separate;
     //movie bookshelf
     ofVideoPlayer mBookPlayer;
     bool mIsPlayBookShelf;
     bool mIsPrevious;
     bool mIsPlayBed;
-  
+
+    //spk
+    ofxSPK::System sys;
+    ofxSPK::Group group;
+    ofImage sprite;
+    ofxSPK::Modifier rot;
+    
     //stair
     ofVec2f mPosition;
     constexpr static const float gravity = 9.8;
@@ -66,5 +83,4 @@ private:
     float stairPx;
     float stairPy;
     bool isMove = false;
-
-   };
+    };

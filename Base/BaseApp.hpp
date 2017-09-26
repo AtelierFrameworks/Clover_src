@@ -17,7 +17,7 @@
 class BaseApp : public ofBaseApp{
     
 public:
-       virtual void setup();
+    virtual void setup();
     virtual void update();
     virtual void draw();
     virtual void keyPressed(int key);
@@ -33,7 +33,7 @@ public:
     virtual void gotMessage(ofMessage msg);
     virtual void exit();
     virtual void changeScene(){};
-    virtual void endMovie(CONST::E_APP & app){};
+    virtual void endMovie(CONST::E_GIMMICK & app){};
     virtual void freeToSceneMemory();
     static CONST::E_SCENE getNowScene();
     static void setNowScene(CONST::E_SCENE);
