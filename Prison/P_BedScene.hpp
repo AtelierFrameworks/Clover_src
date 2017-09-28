@@ -10,7 +10,7 @@
 #define P_BedScene_hpp
 
 #include <stdio.h>
-
+#include "P_Crack.hpp"
 #endif /* P_BedScene_hpp */
 
 #include "BaseScene.hpp"
@@ -30,12 +30,20 @@ class P_BedScene : public BaseScene{
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void endMovieEvent(CONST::E_GIMMICK & gimmick);
+    void actionChair();
+    void actionBed();
     ofVideoPlayer fingersMovie;
     bool frameByframe;
     ofImage myImage;
     bool mIsKeyPressed;
-
+    bool mIsPlayChair;
+    bool mIsPlayBed;
     ofImage shadow;
+
     int i;
     int j;
+    
+    float x,y,time;
+    
+    P_Crack mCrack;
 };

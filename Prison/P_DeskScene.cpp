@@ -10,7 +10,7 @@
 
 void P_DeskScene::setup(){
     //背景
-    myImage.loadImage("P_side.png");
+    myImage.load("Prison/P_side.png");
     gIsKeyPressed = false;
     lIsKeyPressed = false;
     //人影
@@ -19,10 +19,10 @@ void P_DeskScene::setup(){
         ofSetVerticalSync(true);
         frameByframe = false;
         ofEnableSmoothing();
-        fingersMovie.loadMovie("P_deskshadow.mp4");
+        fingersMovie.load("Prison/P_deskshadow.mp4");
         fingersMovie.setLoopState(OF_LOOP_NONE);
         fingersMovie.play();
-        mySound.loadSound("kodomo.wav");
+        mySound.load("Prison/kodomo.wav");
         mySound.setLoop(false);
         mySound.play();
         mySound.setVolume(0.5);
@@ -35,25 +35,23 @@ void P_DeskScene::setup(){
         ofSetVerticalSync(true);
         frameByframe = false;
         ofEnableSmoothing();
-        mySound.loadSound("koe.wav");
+        mySound.load("Prison/koe.wav");
         mySound.setLoop(false);
         mySound.play();
         mySound.setVolume(0.5);
     }
    
     //壁のひび
-    ofBackground(0,0,0);
-    frameByframe = false;
-    fingersMovie.load("hibi.mov");
-    fingersMovie.setLoopState(OF_LOOP_NONE);
-    fingersMovie.play();
-    
+    mCrack.setup();
+    mIsPlayBed = false;
+    //fire(Leap)
+    setupFire();
 }
 
 //--------------------------------------------------------------
 void P_DeskScene::update(){
     fingersMovie.update();
-//  ofSetWindowTitle(ofToString(ofGetFrameRate()));
+    updateFire();
 
 }
 
@@ -66,6 +64,84 @@ void P_DeskScene::draw(){
     ofSetColor(0xFFFFFF);
     fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     ofSetHexColor(0x000000);
+    drawFire();
+    
+    //crack
+    if(mIsPlayBed){
+        if(P_Crack::getCount() == -1){
+            mIsPlayBed = false;
+        }else{
+            mCrack.draw();
+        }
+    }
+}
+
+
+void P_DeskScene::updateFire(){
+    //ÁÅ´„ÅÆÁéâ
+    group.emitRandom(20, mPosition);//(ofGetMouseX(), ofGetMouseY()));
+    mPosition += mVelocity;
+    
+    if (mPosition.x + 30 <= ofGetMouseX() && y - 30 >= ofGetMouseY() ) {
+        mPosition.x -= 4;
+        mPosition.y += 4;
+        
+        if (mPosition.x - ofGetMouseX() == 50) {
+            mPosition.x += 7;
+            mPosition.y -= 4;
+            
+        }
+        
+    }else if (mPosition.x - 30 >= ofGetMouseX() && y - 30 >= ofGetMouseY()) {
+        mPosition.x -= 1.5;
+        mPosition.y += 5;
+        
+        if (mPosition.x - ofGetMouseX() == 20) {
+            mPosition.x += 5;
+            mPosition.y -= 4;
+        }
+        
+        
+    }else if (mPosition.x + 30 <= ofGetMouseX() && y + 30 <= ofGetMouseY()) {
+        mPosition.x -= 4;
+        mPosition.y -= 4;
+        
+        if (mPosition.x - ofGetMouseX() == 50) {
+            mPosition.x += 7;
+            mPosition.y += 4;
+        }
+        
+        
+    }else if (mPosition.x - 30 >= ofGetMouseX() && y + 30 <= ofGetMouseY()) {
+        mPosition.x -= 1.5;
+        mPosition.y += 5;
+        
+        if (mPosition.x - ofGetMouseX() == 20) {
+            mPosition.x += 5;
+            mPosition.y -= 4;
+        }
+        
+        
+        
+    }else if (mPosition.x == 100) {
+        group.setLifeTime(0);
+    }
+    sys.update();
+}
+
+
+void P_DeskScene::drawFire(){
+    //FireBall
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    sprite.bind();
+    ofEnablePointSprites();
+    if (mPosition.x > 30){
+        sys.draw();
+    }
+    sys.draw();
+    ofDisablePointSprites();
+    sprite.unbind();
+    
 }
 
 //--------------------------------------------------------------
@@ -135,3 +211,40 @@ void P_DeskScene::gotMessage(ofMessage msg){
 void P_DeskScene::dragEvent(ofDragInfo dragInfo){
     
 }
+
+void P_DeskScene::setupFire(){
+    //ÁÅ´„ÅÆÁéâ
+    ofDisableArbTex();
+    sprite.load("image.png");
+    ofEnableArbTex();
+    ofSetFrameRate(60);
+    ofSetVerticalSync(true);
+    ofBackground(0);
+    sys.setup();
+    group.setup(sys);
+    group.setColor(ofxSPK::RangeC(ofColor(255, 255), ofColor(255, 255)),
+                   ofxSPK::RangeC(ofColor(0, 0), ofColor(255, 0)));
+    group.setLifeTime(0.5);//0.3
+    group.setFriction(0.1);
+    group.setSize(0, ofxSPK::RangeF(30, 250));
+    group.setGravity(ofVec3f(0, -10, 0));
+    group.setMass(0.1, 1);
+    rot.setup(SPK::Vortex::create(SPK::Vector3D(ofGetWidth() / 2, ofGetHeight() / 2),
+                                  SPK::Vector3D(0, 1, 0),
+                                  200,
+                                  10), group);
+    
+    group.reserve(10000);
+    x = ofGetWidth() - 100;
+    y = ofRandom(ofGetHeight() / 3, ofGetHeight() / 2);
+    mPosition = ofVec2f(x, y);
+    vx = 0;
+    vy = 0;
+    mVelocity = ofVec2f(vx, vy);
+    
+}
+
+void P_DeskScene::actionBed(){
+    mIsPlayBed = true;
+}
+

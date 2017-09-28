@@ -11,7 +11,7 @@
 #define P_Scene_hpp
 #include "BaseScene.hpp"
 #include <stdio.h>
-
+#include "P_Crack.hpp"
 #endif /* P_Scene_hpp */
 class P_Scene : public BaseScene{
     void setup();
@@ -29,9 +29,16 @@ class P_Scene : public BaseScene{
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void actionShelf();
+    void actionChair();
+    void actionBed();
+    void endMovieEvent(CONST::E_GIMMICK & App);
+    void soundCrack();
     ofVideoPlayer fingersMovie;
-    bool tIsKeyPressed;
-    bool mIsPlayShelfSound = false;
+    bool mIsPlayChair;
+    bool mIsPlayShelfSound;
+    bool mIsPlayBed;
     ofSoundPlayer mPlayer;
-
+    ofSoundPlayer mCrackPlayer;
+    P_Crack mCrack;
+    bool mIsPlayCrackSound;
 };

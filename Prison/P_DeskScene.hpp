@@ -10,14 +10,16 @@
 #define P_DeskScene_hpp
 
 #include "BaseScene.hpp"
+#include "P_Crack.hpp"
 #include <stdio.h>
-
+#include "ofxSPK.h"
 #endif /* P_DeskScene_hpp */
 class P_DeskScene : public BaseScene{
     void setup();
     void update();
     void draw();
-    
+    void updateFire();
+    void drawFire();
     void keyPressed(int key);
     void keyReleased(int key);
     void mouseMoved(int x, int y );
@@ -29,12 +31,29 @@ class P_DeskScene : public BaseScene{
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    
+    void setupFire();
+    void actionBed();
     ofVideoPlayer fingersMovie;
     ofSoundPlayer mySound;
     bool frameByframe;
     ofImage myImage;
     bool gIsKeyPressed;
     bool lIsKeyPressed;
+    bool mIsPlayBed;
+    //fireBall
+    ofVec2f mPosition;
+    ofVec2f mVelocity;
+    float x;
+    float y;
+    float vx;
+    float vy;
+    
+    ofxSPK::System sys;
+    ofxSPK::Group group;
+    ofImage sprite;
+    ofxSPK::Modifier rot;
+    
+    //bed crack
+    P_Crack mCrack;
     
     };

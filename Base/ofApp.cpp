@@ -209,6 +209,7 @@ void ofApp::endMovie(CONST::E_GIMMICK & gimmick){
         case CONST::G_P_BED:
             break;
         case CONST::G_P_CHAIR:
+            mBedApp -> mScenes.at(0) -> actionChair();
             break;
         default:
             break;
@@ -241,7 +242,7 @@ void ofApp:: receiveData(std::vector<CONST::E_PARTS> & isActionParts){
             case CONST::P_CHAIR:
                 switch (getNowScene()) {
                     case CONST::PRISON:{
-                        
+                        mScenes.at(0) -> actionChair();
                         break;
                     }
                     case CONST::MAGIC:{

@@ -11,14 +11,14 @@
 
 #include <stdio.h>
 #include "BaseScene.hpp"
-#include "ofxSPK.h"
+
 #endif /* P_floor_hpp */
 class P_floor : public BaseScene{
     void setup();
     void update();
-    void updateFire();
+    
     void draw();
-    void drawFire();
+   
     void keyPressed(int key);
     void keyReleased(int key);
     void mouseMoved(int x, int y );
@@ -30,24 +30,12 @@ class P_floor : public BaseScene{
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-   
-    void setupFire();
+  
     ofVideoPlayer fingersMovie;
     bool frameByframe;
     ofImage myImage;
     
-    //fireBall
-    ofVec2f mPosition;
-    ofVec2f mVelocity;
-    float x;
-    float y;
-    float vx;
-    float vy;
-    
-    ofxSPK::System sys;
-    ofxSPK::Group group;
-    ofImage sprite;
-    ofxSPK::Modifier rot;
+ 
 
 };
 
