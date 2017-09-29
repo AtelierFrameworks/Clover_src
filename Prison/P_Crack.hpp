@@ -5,7 +5,7 @@
 //  Created by 池上綾乃 on 2017/09/28.
 //
 //
-
+#pragma once
 #ifndef P_Crack_hpp
 #define P_Crack_hpp
 

@@ -12,6 +12,7 @@ void P_Scene::setup(){
     ofBackground(0,0,0);
     ofSetVerticalSync(true);
     ofEnableSmoothing();
+    mBackground.load("Prison/P_front");
     //chair
     mVideo.setup("Prison/inazuma.mp4",OF_LOOP_NONE,CONST::G_P_CHAIR);
     ofAddListener(mVideo.mEndEvent,this,&P_Scene::endMovieEvent);

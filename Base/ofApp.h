@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "Prison/P_Scene.hpp"
+#include "P_Scene.hpp"
 #include "Magic/M_Scene.hpp"
 #include "B_BedApp.hpp"
 #include "BaseApp.hpp"

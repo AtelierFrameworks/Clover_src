@@ -10,7 +10,7 @@
 static int crackCount;
 void P_Crack::setup(){
     for(int i = 0;i<4;i++){
-        string path = "1-" + std::to_string(i+1) + ".png";
+        string path = "Prison/Crack/1-" + std::to_string(i+1) + ".png";
         mImages[i].load(path);
     }
     crackCount = -1;

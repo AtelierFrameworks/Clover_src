@@ -15,18 +15,18 @@ void P_floor::setup(){
     ofSetVerticalSync(true);
     frameByframe = false;
     ofEnableSmoothing();
-    fingersMovie.load("yuka.mov");
-    fingersMovie.setLoopState(OF_LOOP_NONE);
-    fingersMovie.play();
+//    fingersMovie.load("yuka.mov");
+//    fingersMovie.setLoopState(OF_LOOP_NONE);
+//    fingersMovie.play();
     //背景
-    myImage.load("P_floor.png");
+    myImage.load("Prison/P_floor.png");
     
     
 }
 
 //--------------------------------------------------------------
 void P_floor::update(){
-    fingersMovie.update();
+//    fingersMovie.update();
     }
 
 //--------------------------------------------------------------
@@ -37,7 +37,7 @@ void P_floor::draw(){
     ofSetColor(0,127,127);
     ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);
     ofSetColor(0xFFFFFF);
-    fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
+//    fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     ofSetHexColor(0x000000);
     
    

@@ -215,7 +215,7 @@ void P_DeskScene::dragEvent(ofDragInfo dragInfo){
 void P_DeskScene::setupFire(){
     //ÁÅ´„ÅÆÁéâ
     ofDisableArbTex();
-    sprite.load("image.png");
+    sprite.load("Prison/image.png");
     ofEnableArbTex();
     ofSetFrameRate(60);
     ofSetVerticalSync(true);

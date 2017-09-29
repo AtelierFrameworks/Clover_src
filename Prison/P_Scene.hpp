@@ -2,10 +2,10 @@
 //  P_Scene.hpp
 //  Atelier_Room
 //
-//  Created by 池上綾乃 on 2017/06/11.
+//  Created by Ê±†‰∏äÁ∂æ‰πÉ on 2017/06/11.
 //
 //
-//牢屋用シーン
+//Áâ¢Â±ãÁî®„Ç∑„Éº„É≥
 #pragma once
 #ifndef P_Scene_hpp
 #define P_Scene_hpp
@@ -41,4 +41,5 @@ class P_Scene : public BaseScene{
     ofSoundPlayer mCrackPlayer;
     P_Crack mCrack;
     bool mIsPlayCrackSound;
+    ofImage mBackground;
 };

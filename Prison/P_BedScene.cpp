@@ -28,7 +28,7 @@ myImage.load("Prison/P_side.png");
     ofEnableAlphaBlending();
     mIsKeyPressed = false;
     ofSetColor(255, 255, 255, 0);
-    shadow.load("Prison/shadow.PNG");
+//    shadow.load("Prison/shadow.PNG");
     x = ofRandom(ofGetWidth() - 250);
     y = ofRandom(ofGetHeight() - 400);
     time = -1;
@@ -78,7 +78,7 @@ void P_BedScene::draw(){
             i = i / 5;
         }
     }
-    shadow.draw(x, y, 250, 400);
+//    shadow.draw(x, y, 250, 400);
     
     ofSetColor(0xFFFFFF);
     fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
