@@ -21,35 +21,27 @@ void ArduinoManager::setup(){
 }
 
 void ArduinoManager::update(){
-//    int nRead = 0;
-//    char bytesRead[50];
-//    unsigned char bytesReturned[50];
-//    
-//    memset(bytesReturned, 0, 50);
-//    
-//    if(mSerial.isInitialized()){
-//        if(mSerial.available() > 0){
-//            int available = mSerial.available();
-//            ofLogNotice() << "available" << mSerial.available();
-//            while ((nRead = mSerial.readBytes(bytesReturned, 50)) > 0) {
-//                nBytesRead = nRead;
-//                ofLogNotice() << "nRead" << nRead;
-//                ofLogNotice() << "value" <<  bytesReturned;
-//                mBytesReadString = string((char*)bytesReturned);
-//                separateBytes();
-//            };
-////            mSerial.flush();
-//            
-//        }
-//    }
-    mValue.clear();
-    mValue.push_back(1);
-    mValue.push_back(2);
-    mValue.push_back(1);
-    mValue.push_back(1);
-    mValue.push_back(1);
-    mValue.push_back(1);
-    judgeData();
+    int nRead = 0;
+    char bytesRead[50];
+    unsigned char bytesReturned[50];
+    
+    memset(bytesReturned, 0, 50);
+    
+    if(mSerial.isInitialized()){
+        if(mSerial.available() > 0){
+            int available = mSerial.available();
+            ofLogNotice() << "available" << mSerial.available();
+            while ((nRead = mSerial.readBytes(bytesReturned, 50)) > 0) {
+                nBytesRead = nRead;
+                ofLogNotice() << "nRead" << nRead;
+                ofLogNotice() << "value" <<  bytesReturned;
+                mBytesReadString = string((char*)bytesReturned);
+                separateBytes();
+            };
+//            mSerial.flush();
+            
+        }
+    }
     
 }
 

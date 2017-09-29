@@ -6,13 +6,14 @@ static bool isStartScene;
 void ofApp::setup(){
     BaseApp::setup();
     mBgm.setLoop(true);
+    mBgm.setVolume(0.5);
+    
     for(int i = 0; i < 5;i++){
         mIsAction[i] = false;
     }
     setupLeapMotion();
     mArduinoManager.setup();
     setNowScene(CONST::NONE);
-    ofSetBackgroundColor(0);
     //„É≠„Ç∞„Éï„Ç°„Ç§„É´‰ΩúÊàê
     isStartScene=false;
     //„Ç∑„Éº„É≥ÂàùÊúüÂåñ

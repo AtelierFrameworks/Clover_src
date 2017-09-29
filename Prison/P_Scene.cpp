@@ -23,8 +23,9 @@ void P_Scene::setup(){
 
     //crack
     mCrack.setup();
-    mCrackPlayer.load("Prison/kodomo.wav");
+    mCrackPlayer.load("Prison/P_crack.mp3");
     mCrackPlayer.setLoop(false);
+    mCrackPlayer.setMultiPlay(true);
     mIsPlayCrackSound = false;
     mIsPlayBed = false;
 }
@@ -37,7 +38,6 @@ void P_Scene::update(){
         if(mPlayer.isPlaying()){
             mIsPlayShelfSound = false;
         }
-        ofSoundUpdate();
     }
     
     if(mIsPlayCrackSound){
@@ -46,7 +46,6 @@ void P_Scene::update(){
             mIsPlayBed = false;
             P_Crack::reset();
         }
-        ofSoundUpdate();
     }
 
     if(mIsPlayChair){
@@ -58,7 +57,7 @@ void P_Scene::update(){
 //--------------------------------------------------------------
 void P_Scene::draw(){
     ofSetColor(255);
-    mBackground.draw(0,0,ofGetWidth(),ofGetHeight());
+//    mBackground.draw(0,0,ofGetWidth(),ofGetHeight());
 //    fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     
     if(mIsPlayChair){
