@@ -13,12 +13,12 @@ ofBackground(0,0,0);
 ofSetVerticalSync(true);
 mIsPlayChair = false;
 mIsPlayBed = false;
-frameByframe = false;
+mIsPlayShelf = false;
 ofEnableSmoothing();
 mVideo.setup("Prison/P_bedshadow.mp4", OF_LOOP_NONE, CONST::G_P_BED);
 ofAddListener(mVideo.mEndEvent,this,&P_BedScene::endMovieEvent);
 	//背景
-myImage.load("Prison/P_side.png");
+mBackground.load("Prison/P_side.png");
 
 	//ヒビ
 	mCrack.setup();
@@ -49,7 +49,7 @@ void P_BedScene::update(){
         time++;
     }
     else if(mIsKeyPressed){
-        time -= 1;
+        time --;
     }
    
 }
@@ -57,7 +57,7 @@ void P_BedScene::update(){
 //--------------------------------------------------------------
 void P_BedScene::draw(){
     //背景
-    myImage.draw(0,0);
+    mBackground.draw(0,0);
 	
 	//shadow
 	if(mIsPlayChair){
@@ -65,6 +65,7 @@ void P_BedScene::draw(){
 	}
 	
     //人影(現れて消えるだけ)
+	if(mIsPlayShelf){
     i = (int)ofGetFrameNum();//frame数
     if (mIsKeyPressed == true) {
         if (i - time < 256) {
@@ -78,12 +79,7 @@ void P_BedScene::draw(){
             i = i / 5;
         }
     }
-//    shadow.draw(x, y, 250, 400);
-    
-    ofSetColor(0xFFFFFF);
-    fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
-    ofSetHexColor(0x000000);
-	
+		
 	i = (int)ofGetFrameNum();
 	if (i < 256) {
 		ofSetColor(255, 255, 255, i);
@@ -93,6 +89,7 @@ void P_BedScene::draw(){
 		ofSetColor(255, 255, 255, 255 - 2 * j);
 		shadow.draw(800, 300, 250, 400);
 	}
+	}
 	
 	//crack
 	if(mIsPlayBed){
@@ -100,6 +97,7 @@ void P_BedScene::draw(){
 			mIsPlayBed = false;
 		}else{
 			mCrack.draw();
+			ofLogNotice() << "crack!" << P_Crack::getCount();
 		}
 	}
 }
@@ -175,5 +173,9 @@ void P_BedScene::actionChair(){
 
 void P_BedScene::actionBed(){
 	mIsPlayBed = true;
+}
+
+void P_BedScene::actionShelf(){
+	mIsPlayShelf = true;
 }
 

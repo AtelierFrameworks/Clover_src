@@ -35,6 +35,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void changeScene();
+    void setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands);
     void endMovie(CONST::E_GIMMICK & app);
     ofEvent<CONST::E_GIMMICK> mMovieEndEvent;
 };

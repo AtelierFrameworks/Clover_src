@@ -31,4 +31,5 @@ public:
     std::array<int,5> mPastTimeData{0,0,0,0,0};
     ofEvent<std::vector<CONST::E_PARTS>> mSendEvent;
     bool mIsMagicMove;
+    bool mIsCurtainOpen;
 };

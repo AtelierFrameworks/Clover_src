@@ -20,6 +20,7 @@ class P_DeskScene : public BaseScene{
     void draw();
     void updateFire();
     void drawFire();
+    void resetFire();
     void keyPressed(int key);
     void keyReleased(int key);
     void mouseMoved(int x, int y );
@@ -33,13 +34,16 @@ class P_DeskScene : public BaseScene{
     void gotMessage(ofMessage msg);
     void setupFire();
     void actionBed();
-    ofVideoPlayer fingersMovie;
+    void actionChair();
+    ofVideoPlayer mShadowMovie;
     ofSoundPlayer mySound;
     bool frameByframe;
-    ofImage myImage;
+    ofImage mBackground;
     bool gIsKeyPressed;
     bool lIsKeyPressed;
     bool mIsPlayBed;
+    bool mIsPlayDesk;
+    bool mIsPlayChair;
     //fireBall
     ofVec2f mPosition;
     ofVec2f mVelocity;

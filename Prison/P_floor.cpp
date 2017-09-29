@@ -13,48 +13,45 @@ void P_floor::setup(){
     //床のひび割れ
     ofBackground(0,0,0);
     ofSetVerticalSync(true);
-    frameByframe = false;
     ofEnableSmoothing();
 //    fingersMovie.load("yuka.mov");
 //    fingersMovie.setLoopState(OF_LOOP_NONE);
 //    fingersMovie.play();
     //背景
-    myImage.load("Prison/P_floor.png");
+    mBackground.load("Prison/P_floor.png");
     
-    
+    mCrack.setup();
+    mIsPlayBed = false;
+
 }
 
 //--------------------------------------------------------------
 void P_floor::update(){
 //    fingersMovie.update();
+    //crack
+    if(mIsPlayBed){
+        if(P_Crack::getCount() == -1){
+            mIsPlayBed = false;
+        }else{
+            mCrack.draw();
+        }
     }
+}
 
 //--------------------------------------------------------------
 void P_floor::draw(){
-    //ËÉåÊôØ
-    myImage.draw(0,0);
-    //„Å≤„Å≥Ââ≤„Çå
-    ofSetColor(0,127,127);
-    ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);
-    ofSetColor(0xFFFFFF);
-//    fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
-    ofSetHexColor(0x000000);
-    
-   
+    mBackground.draw(0,0,ofGetWidth(),ofGetHeight());
+
 }
 
 //--------------------------------------------------------------
 void P_floor::keyPressed(int key){
-    if(key == 'f'){
-//        fIsKeyPressed = true;
-    }
+
 }
 
 //--------------------------------------------------------------
 void P_floor::keyReleased(int key){
-    if(key == 'f'){
-//        fIsKeyPressed = false;
-    }
+
 }
 
 //--------------------------------------------------------------
@@ -100,5 +97,9 @@ void P_floor::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void P_floor::dragEvent(ofDragInfo dragInfo){
     
+}
+
+void P_floor::actionBed(){
+    mIsPlayBed = true;
 }
 

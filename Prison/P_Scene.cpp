@@ -9,10 +9,9 @@
 void P_Scene::setup(){
     mIsPlayChair = false;
     //雷
-    ofBackground(0,0,0);
     ofSetVerticalSync(true);
     ofEnableSmoothing();
-    mBackground.load("Prison/P_front");
+    mBackground.load("Prison/P_front.png");
     //chair
     mVideo.setup("Prison/inazuma.mp4",OF_LOOP_NONE,CONST::G_P_CHAIR);
     ofAddListener(mVideo.mEndEvent,this,&P_Scene::endMovieEvent);
@@ -58,10 +57,9 @@ void P_Scene::update(){
 
 //--------------------------------------------------------------
 void P_Scene::draw(){
-    ofSetColor(0,127,127);
-    ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);
+    ofSetColor(255);
+    mBackground.draw(0,0,ofGetWidth(),ofGetHeight());
 //    fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
-    ofSetHexColor(0xFFFFFF);
     
     if(mIsPlayChair){
         mVideo.draw(0, 0, ofGetWidth(), ofGetHeight());

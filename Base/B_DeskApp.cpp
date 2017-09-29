@@ -117,4 +117,6 @@ void B_DeskApp::endMovie(CONST::E_GIMMICK & gimmick){
     ofNotifyEvent(mMovieEndEvent, e_gimmick);
 }
 
-
+void B_DeskApp::setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands){
+    mScenes.at(0) -> setLeapData(simpleHands);
+}

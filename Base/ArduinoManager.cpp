@@ -8,7 +8,7 @@
 
 #include "ArduinoManager.hpp"
 
-const int BORDER_VALUE [] = { 0,0,0,1,1,1,0,0,0,0 };
+
 
 
 void ArduinoManager::setup(){
@@ -17,30 +17,40 @@ void ArduinoManager::setup(){
     mSerial.setup(1,9600);
     mValue.clear();
     mHasData = false;
+    mIsCurtainOpen = false;
 }
 
 void ArduinoManager::update(){
-    int nRead = 0;
-    char bytesRead[50];
-    unsigned char bytesReturned[50];
+//    int nRead = 0;
+//    char bytesRead[50];
+//    unsigned char bytesReturned[50];
+//    
+//    memset(bytesReturned, 0, 50);
+//    
+//    if(mSerial.isInitialized()){
+//        if(mSerial.available() > 0){
+//            int available = mSerial.available();
+//            ofLogNotice() << "available" << mSerial.available();
+//            while ((nRead = mSerial.readBytes(bytesReturned, 50)) > 0) {
+//                nBytesRead = nRead;
+//                ofLogNotice() << "nRead" << nRead;
+//                ofLogNotice() << "value" <<  bytesReturned;
+//                mBytesReadString = string((char*)bytesReturned);
+//                separateBytes();
+//            };
+////            mSerial.flush();
+//            
+//        }
+//    }
+    mValue.clear();
+    mValue.push_back(1);
+    mValue.push_back(2);
+    mValue.push_back(1);
+    mValue.push_back(1);
+    mValue.push_back(1);
+    mValue.push_back(1);
+    judgeData();
     
-    memset(bytesReturned, 0, 50);
-    
-    if(mSerial.isInitialized()){
-        if(mSerial.available() > 0){
-            int available = mSerial.available();
-            ofLogNotice() << "available" << mSerial.available();
-            while ((nRead = mSerial.readBytes(bytesReturned, 50)) > 0) {
-                nBytesRead = nRead;
-                ofLogNotice() << "nRead" << nRead;
-                ofLogNotice() << "value" <<  bytesReturned;
-                mBytesReadString = string((char*)bytesReturned);
-                separateBytes();
-            };
-//            mSerial.flush();
-            
-        }
-    }
 }
 
 void ArduinoManager::separateBytes(){
@@ -89,6 +99,7 @@ bool ArduinoManager::getIsSetup(){
 }
 
 void ArduinoManager:: judgeData(){
+    
     ofLogNotice() << "judge" << mValue.size() ;
     string log ;
     if(mValue.size() > 9){
@@ -99,7 +110,7 @@ void ArduinoManager:: judgeData(){
     }
     std::vector <CONST::E_PARTS> isActionParts;
     //bed
-    if((mValue[0] < BORDER_VALUE[0] && mValue[3] == BORDER_VALUE[3] )||(mValue[1] < BORDER_VALUE[1] && mValue[4] == BORDER_VALUE[4])||(mValue[2] < BORDER_VALUE[2]&& mValue[5]==BORDER_VALUE[5])){
+    if(mValue[0] > 1 || mValue[1] > 1 || mValue[2] > 1){
         mPastTimeData[0] ++;
         if(mPastTimeData[0] > 10){
             isActionParts.push_back(CONST::P_BED);
@@ -108,7 +119,7 @@ void ArduinoManager:: judgeData(){
         mPastTimeData[0] = 0;
     }
     //chair
-    if(mValue[6] < BORDER_VALUE[6]){
+    if(mValue[3] > 1){
         isActionParts.push_back(CONST::P_CHAIR);
         mPastTimeData[1] ++;
         if(mPastTimeData[1] > 10){
@@ -119,7 +130,7 @@ void ArduinoManager:: judgeData(){
     }
 
     //shelf
-    if(mValue[7] < BORDER_VALUE[7]){
+    if(mValue[5] > 1 ){
         isActionParts.push_back(CONST::P_SHELF);
         mPastTimeData[2] ++;
         if(mPastTimeData[2] > 10){
@@ -130,16 +141,18 @@ void ArduinoManager:: judgeData(){
     }
 
     //curtain
-    if(mValue[8] < BORDER_VALUE[8]){
+    if(mValue[4] > 2){
         mPastTimeData[3] ++;
         if(mPastTimeData[3] > 10){
+            mIsCurtainOpen = true;
             isActionParts.push_back(CONST::P_CURTAIN_OPEN);
         }
          }else{
              mPastTimeData[3] = 0;
-             if(mValue[8] < BORDER_VALUE[9]){
+             if(mValue[4] == 1 && mIsCurtainOpen){
                  mPastTimeData[3] ++;
                  if(mPastTimeData[4] > 10){
+                     mIsCurtainOpen = false;
                      isActionParts.push_back(CONST::P_CURTAIN_CLOSE);
                  }
              }else{

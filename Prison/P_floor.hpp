@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include "BaseScene.hpp"
-
+#include "P_Crack.hpp"
 #endif /* P_floor_hpp */
 class P_floor : public BaseScene{
     void setup();
@@ -30,12 +30,10 @@ class P_floor : public BaseScene{
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-  
+    void actionBed();
     ofVideoPlayer fingersMovie;
-    bool frameByframe;
-    ofImage myImage;
-    
- 
-
+    ofImage mBackground;
+    P_Crack mCrack;
+    bool mIsPlayBed;
 };
 

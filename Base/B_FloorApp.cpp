@@ -98,9 +98,6 @@ void B_FloorApp::changeScene(){
     }
     }
 
-void B_FloorApp::setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands){
-    mScenes[0] -> setLeapData(simpleHands);
-}
 
 void B_FloorApp::endMovie(CONST::E_GIMMICK & gimmick){
     CONST::E_GIMMICK e_gimmick = gimmick;

@@ -10,49 +10,59 @@
 
 void P_DeskScene::setup(){
     //背景
-    myImage.load("Prison/P_side.png");
+    mBackground.load("Prison/P_side.png");
     gIsKeyPressed = false;
     lIsKeyPressed = false;
+    ofBackground(0,0,0);
+    ofSetVerticalSync(true);
+    ofEnableSmoothing();
+    mShadowMovie.load("Prison/P_deskshadow.mp4");
+    mShadowMovie.setLoopState(OF_LOOP_NONE);
+    mShadowMovie.play();
+    mIsPlayChair = false;
+    
     //人影
-    if(gIsKeyPressed == true){
-        ofBackground(0,0,0);
-        ofSetVerticalSync(true);
-        frameByframe = false;
-        ofEnableSmoothing();
-        fingersMovie.load("Prison/P_deskshadow.mp4");
-        fingersMovie.setLoopState(OF_LOOP_NONE);
-        fingersMovie.play();
-        mySound.load("Prison/kodomo.wav");
-        mySound.setLoop(false);
-        mySound.play();
-        mySound.setVolume(0.5);
-    }
+    
+    mySound.load("Prison/kodomo.wav");
+    mySound.setLoop(false);
+//        mySound.play();
+//        mySound.setVolume(0.5);
     
     
-    //笑い声
-    if(lIsKeyPressed == true){
-        ofBackground(0,0,0);
-        ofSetVerticalSync(true);
-        frameByframe = false;
-        ofEnableSmoothing();
-        mySound.load("Prison/koe.wav");
-        mySound.setLoop(false);
-        mySound.play();
-        mySound.setVolume(0.5);
-    }
+    
+//    //笑い声
+//    if(lIsKeyPressed == true){
+//        ofBackground(0,0,0);
+//        ofSetVerticalSync(true);
+//        frameByframe = false;
+//        ofEnableSmoothing();
+//        mySound.load("Prison/koe.wav");
+//        mySound.setLoop(false);
+//        mySound.play();
+//        mySound.setVolume(0.5);
+//    }
    
-    //壁のひび
+    //wall crack
     mCrack.setup();
     mIsPlayBed = false;
     //fire(Leap)
+    
     setupFire();
 }
 
 //--------------------------------------------------------------
 void P_DeskScene::update(){
-    fingersMovie.update();
-    updateFire();
-
+    if(mIsPlayChair){
+        mShadowMovie.update();
+        ofSoundUpdate();
+    }
+    if(mSimpleHands.size() > 0 && !mIsPlayDesk){
+        mIsPlayDesk = true;
+    }
+    
+    if(mIsPlayDesk){
+        updateFire();
+    }
 }
 
 //--------------------------------------------------------------
@@ -60,11 +70,14 @@ void P_DeskScene::draw(){
     //ofSetColor(0,127,127);
     //ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);
     //ËÉåÊôØ
-    myImage.draw(0,0);
-    ofSetColor(0xFFFFFF);
-    fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
-    ofSetHexColor(0x000000);
-    drawFire();
+    mBackground.draw(0,0);
+    if(mIsPlayChair){
+        mShadowMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
+    }
+    
+    if(mIsPlayDesk){
+        drawFire();
+    }
     
     //crack
     if(mIsPlayBed){
@@ -127,10 +140,15 @@ void P_DeskScene::updateFire(){
         group.setLifeTime(0);
     }
     sys.update();
+    if(mPosition.x > ofGetWidth()){
+        mIsPlayDesk = false;
+    }
+    
 }
 
 
 void P_DeskScene::drawFire(){
+    ofSetColor(0);
     //FireBall
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     sprite.bind();
@@ -213,7 +231,8 @@ void P_DeskScene::dragEvent(ofDragInfo dragInfo){
 }
 
 void P_DeskScene::setupFire(){
-    //ÁÅ´„ÅÆÁéâ
+    //fire
+    mIsPlayDesk = false;
     ofDisableArbTex();
     sprite.load("Prison/image.png");
     ofEnableArbTex();
@@ -244,7 +263,20 @@ void P_DeskScene::setupFire(){
     
 }
 
+void P_DeskScene::resetFire(){
+    x = ofGetWidth() - 100;
+    y = ofRandom(ofGetHeight() / 3, ofGetHeight() / 2);
+    mPosition = ofVec2f(x, y);
+    vx = 0;
+    vy = 0;
+    mVelocity = ofVec2f(vx, vy);
+}
+
 void P_DeskScene::actionBed(){
     mIsPlayBed = true;
 }
 
+void P_DeskScene::actionChair(){
+    mIsPlayChair = true;
+    mySound.play();
+}

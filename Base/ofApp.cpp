@@ -175,7 +175,7 @@ void ofApp::updateLeapMotion(){
     simpleHands = mLeap.getSimpleHands();
     switch (getNowScene()) {
         case CONST::PRISON:
-            mFloorApp -> setLeapData(simpleHands);
+            mDeskApp -> setLeapData(simpleHands);
             break;
         case CONST::MAGIC:
             mBedApp -> setLeapData(simpleHands);
@@ -256,7 +256,10 @@ void ofApp:: receiveData(std::vector<CONST::E_PARTS> & isActionParts){
             case CONST::P_BED:
                 switch (getNowScene()) {
                     case CONST::PRISON:{
-                        
+                        mScenes.at(0) -> actionBed();
+                        mBedApp -> mScenes.at(0) -> actionBed();
+                        mDeskApp -> mScenes.at(0) -> actionBed();
+                        mFloorApp -> mScenes.at(0) -> actionBed();
                         break;
                     }
                     case CONST::MAGIC:{

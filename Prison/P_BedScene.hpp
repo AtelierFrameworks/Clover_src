@@ -32,12 +32,13 @@ class P_BedScene : public BaseScene{
     void endMovieEvent(CONST::E_GIMMICK & gimmick);
     void actionChair();
     void actionBed();
+    void actionShelf();
     ofVideoPlayer fingersMovie;
-    bool frameByframe;
-    ofImage myImage;
+    ofImage mBackground;
     bool mIsKeyPressed;
     bool mIsPlayChair;
     bool mIsPlayBed;
+    bool mIsPlayShelf;
     ofImage shadow;
 
     int i;
