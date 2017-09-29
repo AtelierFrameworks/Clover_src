@@ -37,8 +37,11 @@ class P_Scene : public BaseScene{
     bool mIsPlayChair;
     bool mIsPlayShelfSound;
     bool mIsPlayBed;
+    bool mIsPlayCrackVoice;
     ofSoundPlayer mPlayer;
     ofSoundPlayer mCrackPlayer;
+    ofSoundPlayer mLastCrackPlayer;
+    ofSoundPlayer mCrackVoicePlayer;
     P_Crack mCrack;
     bool mIsPlayCrackSound;
     ofImage mBackground;

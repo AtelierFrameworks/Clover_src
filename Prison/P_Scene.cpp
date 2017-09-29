@@ -26,6 +26,12 @@ void P_Scene::setup(){
     mCrackPlayer.load("Prison/P_crack.mp3");
     mCrackPlayer.setLoop(false);
     mCrackPlayer.setMultiPlay(true);
+    mLastCrackPlayer.load("Prison/P_lastCrack.mp3");
+    mLastCrackPlayer.setLoop(false);
+    mLastCrackPlayer.setMultiPlay(true);
+    mCrackVoicePlayer.load("Prison/kodomo.wav");
+    mCrackVoicePlayer.setLoop(false);
+    mIsPlayCrackVoice = false;
     mIsPlayCrackSound = false;
     mIsPlayBed = false;
 }
@@ -41,8 +47,17 @@ void P_Scene::update(){
     }
     
     if(mIsPlayCrackSound){
-        if(mPlayer.isPlaying()){
+        if(!mPlayer.isPlaying()){
             mIsPlayCrackSound = false;
+            mCrackVoicePlayer.play();
+            mIsPlayCrackVoice = true;
+            
+        }
+    }
+
+    if(mIsPlayCrackVoice){
+        if(!mCrackVoicePlayer.isPlaying()){
+            mIsPlayCrackVoice = false;
             mIsPlayBed = false;
             P_Crack::reset();
         }
@@ -57,7 +72,7 @@ void P_Scene::update(){
 //--------------------------------------------------------------
 void P_Scene::draw(){
     ofSetColor(255);
-//    mBackground.draw(0,0,ofGetWidth(),ofGetHeight());
+    mBackground.draw(0,0,ofGetWidth(),ofGetHeight());
 //    fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     
     if(mIsPlayChair){
@@ -137,10 +152,13 @@ void P_Scene::actionChair(){
 }
 
 void P_Scene::actionBed(){
+    if(!mIsPlayCrackVoice){
     mCrack.addCount();
+    mCrackPlayer.play();
     mIsPlayBed = true;
-    if(P_Crack::getCount() == 3){
-        soundCrack();
+        if(P_Crack::getCount() == 3){
+            soundCrack();
+        }
     }
 }
 
@@ -155,6 +173,6 @@ void P_Scene::endMovieEvent(CONST::E_GIMMICK & gimmick){
 
 void P_Scene::soundCrack(){
     mIsPlayCrackSound = true;
-    mCrackPlayer.play();
+    mLastCrackPlayer.play();
 }
 

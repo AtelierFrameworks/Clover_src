@@ -13,7 +13,7 @@ int main( ){
     
     settings.width = 1280;
     settings.height = 800;
-    settings.setPosition(ofVec2f(5120,0));
+    settings.setPosition(ofVec2f(0,0));
     settings.multiMonitorFullScreen = true;
     settings.decorated = false;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
@@ -39,10 +39,11 @@ int main( ){
     mainApp -> mBedApp = bedApp;
     mainApp -> mDeskApp = deskApp;
     mainApp -> mFloorApp = floorApp;
-    ofRunApp(mainWindow,mainApp);
-    ofRunApp(bedWindow,bedApp);
+        ofRunApp(bedWindow,bedApp);
     ofRunApp(deskWindow,deskApp);
     ofRunApp(floorWindow,floorApp);
+    ofRunApp(mainWindow,mainApp);
+
     ofRunMainLoop();
     
 
