@@ -14,6 +14,7 @@
 #include "P_Crack.hpp"
 #endif /* P_Scene_hpp */
 class P_Scene : public BaseScene{
+public:
     void setup();
     void update();
     void draw();
@@ -45,4 +46,5 @@ class P_Scene : public BaseScene{
     P_Crack mCrack;
     bool mIsPlayCrackSound;
     ofImage mBackground;
+    ofEvent<CONST::E_GIMMICK> mThunderEvent;
 };

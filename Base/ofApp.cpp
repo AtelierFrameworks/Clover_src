@@ -60,7 +60,7 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     BaseApp::keyPressed(key);
     if(key == 'f'){
-        
+         mScenes.at(0) -> actionShelf();
     }
 
 }
@@ -133,6 +133,9 @@ void ofApp::actionCurtain(){
 
 void ofApp::closeCurtain(){
     mLogDataFile << ofToString(getLogNumber()) + ",exit," + getLogDay() + "," + "curtain," + "NO" <<endl;
+    if(getNowScene()==CONST::PRISON){
+        ofRemoveListener(dynamic_cast<P_Scene*>(mScenes[0])->mThunderEvent,this,&ofApp::endMovie);
+    }
     setNowScene(CONST::NONE);
     freeToSceneMemory();
     mBedApp -> freeToSceneMemory();
@@ -149,6 +152,7 @@ void ofApp::changeScene(){
             mBgm.play();
             newScene = new P_Scene();
             mScenes.push_back(newScene);
+            ofAddListener(mScenes[0]->mEndMovieEvent,this,&ofApp::endMovie);
             mScenes[0]->setup();
             break;
         case CONST::MAGIC:
@@ -157,6 +161,7 @@ void ofApp::changeScene(){
             newScene = new M_Scene();
             mScenes.push_back(newScene);
             mScenes[0]->setup();
+           
             break;
         case CONST::NONE:
             mBgm.stop();
@@ -232,7 +237,7 @@ void ofApp:: receiveData(std::vector<CONST::E_PARTS> & isActionParts){
             case CONST::P_SHELF:
                 switch (getNowScene()) {
                     case CONST::PRISON:{
-                        mScenes.at(0) -> actionShelf();
+                        
                         break;
                     }
                     case CONST::MAGIC:{

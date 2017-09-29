@@ -41,7 +41,7 @@ void P_Scene::setup(){
 void P_Scene::update(){
     fingersMovie.update();
     if(mIsPlayShelfSound){
-        if(mPlayer.isPlaying()){
+        if(!mPlayer.isPlaying()){
             mIsPlayShelfSound = false;
         }
     }
@@ -143,12 +143,15 @@ void P_Scene::dragEvent(ofDragInfo dragInfo){
 }
 
 void P_Scene::actionShelf(){
-    mIsPlayShelfSound = true;
-    mPlayer.play();
+    if(!mIsPlayShelfSound){
+        mIsPlayShelfSound = true;
+        mPlayer.play();
+    }
 }
 
 void P_Scene::actionChair(){
     mIsPlayChair = true;
+    mVideo.play();
 }
 
 void P_Scene::actionBed(){

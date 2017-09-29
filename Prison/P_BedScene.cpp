@@ -169,6 +169,7 @@ void P_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
 
 void P_BedScene::actionChair(){
 	mIsPlayChair = true;
+	mVideo.play();
 }
 
 void P_BedScene::actionBed(){

@@ -70,7 +70,7 @@ void P_DeskScene::draw(){
     //ofSetColor(0,127,127);
     //ofDrawCircle(ofGetWidth()/2,ofGetHeight()/2,20);
     //ËÉåÊôØ
-    mBackground.draw(0,0);
+    mBackground.draw(0,0,ofGetWidth(),ofGetHeight());
     if(mIsPlayChair){
         mShadowMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     }
@@ -236,9 +236,6 @@ void P_DeskScene::setupFire(){
     ofDisableArbTex();
     sprite.load("Prison/image.png");
     ofEnableArbTex();
-    ofSetFrameRate(60);
-    ofSetVerticalSync(true);
-    ofBackground(0);
     sys.setup();
     group.setup(sys);
     group.setColor(ofxSPK::RangeC(ofColor(255, 255), ofColor(255, 255)),
