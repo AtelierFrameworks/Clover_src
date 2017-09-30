@@ -23,5 +23,6 @@ class EventVideo{
     void play();
     void stop();
     void pause();
+    void closeMovie();
     bool mIsPlayed;
 };

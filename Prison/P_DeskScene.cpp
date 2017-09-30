@@ -140,15 +140,16 @@ void P_DeskScene::updateFire(){
         group.setLifeTime(0);
     }
     sys.update();
-    if(mPosition.x > ofGetWidth()){
+    if(mPosition.x > ofGetWidth() || mPosition.x < 0 || mPosition.y > ofGetHeight() || mPosition.y < 0){
         mIsPlayDesk = false;
+        resetFire();
     }
     
 }
 
 
 void P_DeskScene::drawFire(){
-    ofSetColor(0);
+   
     //FireBall
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     sprite.bind();
@@ -159,7 +160,7 @@ void P_DeskScene::drawFire(){
     sys.draw();
     ofDisablePointSprites();
     sprite.unbind();
-    
+    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 }
 
 //--------------------------------------------------------------

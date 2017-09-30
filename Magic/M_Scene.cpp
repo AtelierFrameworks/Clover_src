@@ -16,14 +16,14 @@ ofImage sprite;
 ofxSPK::Modifier rot;
 
 void M_Scene::setup(){
-    magic_kabe.load("Magic/M_front.png");
+    setupStair();
     setupClock();
 }
 
 void M_Scene::setupStair(){
-    magic_kabe.load("T_front.png");
-    magic_kabe2.load("T_front.png");
-    magic_kabe3.load("T_front.png");
+    magic_kabe.load("Magic/M_front.png");
+    magic_kabe2.load("Magic/M_front.png");
+    magic_kabe3.load("Magic/M_front.png");
     
     px = 0;
     py = 0;
@@ -74,7 +74,7 @@ void M_Scene::draw(){
 }
 
 void M_Scene::drawWall(){
-    magic_kabe.draw(mPosition.x,mPosition.y+100,ofGetWidth(),ofGetHeight());
+    magic_kabe.draw(mPosition.x,mPosition.y,ofGetWidth(),ofGetHeight());
     magic_kabe2.draw(mPosition.x , mPosition.y-480, ofGetWidth(), ofGetHeight());
     magic_kabe3.draw(mPosition.x,mPosition.y-1060, ofGetWidth(), ofGetHeight());
     

@@ -8,20 +8,19 @@
 
 #include "M_DeskScene.hpp"
 void M_DeskScene::setup(){
-    magic_kabe.load("Magic/M_front.png");
     mIsPlayShelf = false;
     mIsPlayBookShelf = false;
-    mIsPrevious = false;
-    mBookPlayer.load("Magic/M_bookshelf");
+    mIsPrevious = true;
+    mBookPlayer.load("Magic/M_bookshelf.mp4");
     mBookPlayer.setLoopState(OF_LOOP_NONE);
     setupBat();
     setupCurse();
 }
 
 void M_DeskScene::setupStair(){
-    magic_kabe.load("M_front.png");
-    magic_kabe2.load("M_front.png");
-    magic_kabe3.load("M_front.png");
+    magic_kabe.load("Magic/M_front.png");
+    magic_kabe2.load("Magic/M_front.png");
+    magic_kabe3.load("Magic/M_front.png");
     
     px = 0;
     py = 0;
@@ -37,7 +36,7 @@ void M_DeskScene::setupBat(){
         separate = i % 2;
         bats[i].setup(separate);
     }
-    BatSound.load("batSound.mp3");
+    BatSound.load("Magic/batSound.mp3");
     BatSound.setLoop(true);
 }
 
@@ -142,12 +141,12 @@ void M_DeskScene::drawBat(){
 
 void M_DeskScene::drawCurse(){
     ofEnableBlendMode(OF_BLENDMODE_ADD/*ALPHA  ADD*/);
+    
     sprite.bind();
     ofEnablePointSprites();
     sys.draw();
     ofDisablePointSprites();
     sprite.unbind();
-    ofSetColor(255, 255, 0);
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 }
 
@@ -233,7 +232,7 @@ void M_DeskScene::endShelf(){
 
 void M_DeskScene::actionEndMovie(){
     mIsPlayBookShelf = true;
-    if(mBookPlayer.getCurrentFrame() == mBookPlayer.getTotalNumFrames()){
+    if(!mIsPrevious){
         mBookPlayer.previousFrame();
         mIsPrevious = true;
     }
@@ -243,7 +242,7 @@ void M_DeskScene::actionEndMovie(){
 void M_DeskScene::actionBed(){
     //stair
     mIsPlayBed = true;
-    if(mBookPlayer.getCurrentFrame() == 0){
+    if(mIsPrevious){
         mIsPrevious = false;
         mBookPlayer.nextFrame();
         mBookPlayer.play();

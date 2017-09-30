@@ -13,7 +13,7 @@ void ofApp::setup(){
     }
     setupLeapMotion();
     mArduinoManager.setup();
-    setNowScene(CONST::NONE);
+    setNowScene(CONST::PRISON);
     //„É≠„Ç∞„Éï„Ç°„Ç§„É´‰ΩúÊàê
     isStartScene=false;
     //„Ç∑„Éº„É≥ÂàùÊúüÂåñ
@@ -23,6 +23,7 @@ void ofApp::setup(){
     ofAddListener(mBedApp ->mMovieEndEvent, this, &ofApp::endMovie);
     ofAddListener(mArduinoManager.mSendEvent,this,&ofApp::receiveData);
     ofAddListener(mBedApp -> mStairEvent,this,&ofApp::magicStair);
+    ofAddListener(mFloorApp -> mMovieEndEvent,this,&ofApp::endMovie);
 }
 
 //--------------------------------------------------------------
@@ -60,7 +61,7 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     BaseApp::keyPressed(key);
     if(key == 'f'){
-         mScenes.at(0) -> actionShelf();
+         mFloorApp -> mScenes.at(0) -> actionChair();
     }
 
 }
@@ -127,7 +128,7 @@ void ofApp::actionCurtain(){
     //TODO: ‚Äû√á‚àë‚Äû√â¬∫‚Äû√â‚â•√à√Ö‚àè√ä√§√ª
     int sceneNum = ofRandom(2)+1;
     //setNowScene((BaseApp::E_SCENE)sceneNum);
-    setNowScene(CONST::PRISON);
+    setNowScene(CONST::MAGIC);
     changeScene();
 }
 
@@ -136,7 +137,7 @@ void ofApp::closeCurtain(){
     if(getNowScene()==CONST::PRISON){
         ofRemoveListener(dynamic_cast<P_Scene*>(mScenes[0])->mThunderEvent,this,&ofApp::endMovie);
     }
-    setNowScene(CONST::NONE);
+    setNowScene(CONST::MAGIC);
     freeToSceneMemory();
     mBedApp -> freeToSceneMemory();
     mDeskApp -> freeToSceneMemory();
@@ -237,7 +238,7 @@ void ofApp:: receiveData(std::vector<CONST::E_PARTS> & isActionParts){
             case CONST::P_SHELF:
                 switch (getNowScene()) {
                     case CONST::PRISON:{
-                        
+                        mScenes.at(0) -> actionShelf();
                         break;
                     }
                     case CONST::MAGIC:{

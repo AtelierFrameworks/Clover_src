@@ -13,7 +13,7 @@ void M_BedScene::setup(){
     mIsPlayBookShelf = false;
     mIsPrevious = false;
     magic_kabe.load("Magic/M_front.png");
-    mBookPlayer.load("Magic/M_bookshelf.mov");
+    mBookPlayer.load("Magic/M_bookshelf.mp4");
     mBookPlayer.setLoopState(OF_LOOP_NONE);
     ofSetFrameRate(60);
     ofEnableAlphaBlending();
@@ -25,9 +25,9 @@ void M_BedScene::setup(){
 }
 
 void M_BedScene::setupStair(){
-    magic_kabe.load("M_front.png");
-    magic_kabe2.load("M_front.png");
-    magic_kabe3.load("M_front.png");
+    magic_kabe.load("Magic/M_front.png");
+    magic_kabe2.load("Magic/M_front.png");
+    magic_kabe3.load("Magic/M_front.png");
     
     px = 0;
     py = 0;
@@ -94,7 +94,7 @@ void M_BedScene::updateFont(){
 void M_BedScene::draw(){
     ofSetColor(255);
     magic_kabe.draw(0,0,ofGetWidth(), ofGetHeight());
-    mBookPlayer.draw(520, 0, 218, ofGetHeight());
+    mBookPlayer.draw(0, 0, ofGetWidth(), ofGetHeight());
     drawFont();
 }
 

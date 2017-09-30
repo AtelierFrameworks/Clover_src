@@ -101,7 +101,6 @@ void B_FloorApp::changeScene(){
 
 void B_FloorApp::endMovie(CONST::E_GIMMICK & gimmick){
     CONST::E_GIMMICK e_gimmick = gimmick;
-    ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_FloorApp::endMovie);
     ofNotifyEvent(mMovieEndEvent, e_gimmick);
 }
 

@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "BaseScene.hpp"
 #include "ofxSPK.h"
-#include "Bats.h"
+#include "Bat.h"
 #endif /* M_DeskScene_hpp */
 
 class M_DeskScene : public BaseScene{
@@ -61,7 +61,7 @@ public:
     //bat
     ofSoundPlayer BatSound;
     static const int BATCOUNT = 5;
-    Bats bats[BATCOUNT];
+    Bat bats[BATCOUNT];
     int separate;
     //movie bookshelf
     ofVideoPlayer mBookPlayer;

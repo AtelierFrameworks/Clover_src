@@ -40,3 +40,7 @@ void EventVideo::stop(){
 void EventVideo::pause(){
     mPlayer.setPaused(true);
 }
+
+void EventVideo::closeMovie(){
+    mPlayer.closeMovie();
+}

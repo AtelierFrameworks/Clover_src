@@ -89,6 +89,7 @@ void M_FloorScene::dragEvent(ofDragInfo dragInfo){
 
 void M_FloorScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
     mVideo.stop();
+    isPlayChair = false;
     CONST::E_GIMMICK e_gimmick = gimmick;
     ofNotifyEvent(mEndMovieEvent, e_gimmick);
 }
