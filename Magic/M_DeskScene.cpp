@@ -16,6 +16,7 @@ void M_DeskScene::setup(){
     mBookPlayer.setVolume(0);
     setupBat();
     setupCurse();
+    setupStair();
 }
 
 void M_DeskScene::setupStair(){
@@ -45,6 +46,7 @@ void M_DeskScene::setupCurse(){
     // setup pointsprite texture
     // NOTES: the texture size must be Power of Two,
     // and turn off arb texture option while loading
+    out = 0;
     ofDisableArbTex();
     sprite.load("Magic/sample11.png");
     ofEnableArbTex();
@@ -56,7 +58,7 @@ void M_DeskScene::setupCurse(){
     group.setup(sys);
     group.setColor(ofxSPK::RangeC(ofColor(255, 20), ofColor(255, 40)),
                    ofxSPK::RangeC(ofColor(0, 0 ), ofColor(255, 0)));
-    group.setLifeTime(1, 15);//粒子が発生している時間の範囲(最小時間,最大時間)
+    group.setLifeTime(1, 10);//粒子が発生している時間の範囲(最小時間,最大時間)
     group.setFriction(0.1);
     group.setSize(0, ofxSPK::RangeF(50, 200));//粒子の最大の大きさ
     group.setMass(0.1, 0.5);//MAXを高くすると波状がくっきりする?
@@ -64,9 +66,10 @@ void M_DeskScene::setupCurse(){
 
 //--------------------------------------------------------------
 void M_DeskScene::update(){
+    
     if(mIsPlayShelf){
-        updateCurse();
         updateBat();
+        updateCurse();
     }
 //    if(mIsPlayBookShelf){
 //        updateBookShelf();
@@ -79,30 +82,33 @@ void M_DeskScene::update(){
 }
 
 void M_DeskScene::updateBat(){
+    int outWindowCount = 0;
     for (int i = 0; i < BATCOUNT; i++) {
         bats[i].update();
+        if(bats[i].Position.y < 0){
+            outWindowCount++;
+        }
+    }
+    if(outWindowCount == BATCOUNT){
+        BatSound.stop();
+        out = 1;
     }
 }
 
 void M_DeskScene::updateCurse(){
     check = (int)ofGetElapsedTimef() % 3;
-    if (check == 0) {
-        angle = -1000;
-    }
-    else if (check == 1) {
-        angle = 0;
-    }
-    else if (check == 2) {
-        angle = 1000;
-    }
-    group.setGravity(ofVec3f(0, -50, 0));
+    group.setGravity(ofVec3f(0, -100, 0));
     
     group.reserve(particle);//粒子の発生する量
     if (out == 1) {
-        particle -= 10;//消える速さ
+        particle -= 15;//消える速さ
         if (particle == 0) {//エラー対策
             out = 0;
             mIsPlayShelf = false;
+            for (Bat bat:bats) {
+                bat.reset();
+            }
+            ofNotifyEvent(mShelfEvent, mIsPlayShelf );
         }
     }
     
@@ -110,29 +116,28 @@ void M_DeskScene::updateCurse(){
         range = ofGetElapsedTimef() * 10;
     }
     
-    group.emitRandom(10, ofVec3f(150*sin(15*ofGetElapsedTimef())+ofGetWidth()/2,ofGetHeight()/5*4+300));
-    
+//    group.emitRandom(10, ofVec3f(150*sin(15*ofGetElapsedTimef())+ofGetWidth()/2,ofGetHeight()/5*4+300));
+     group.emitRandom(10, ofVec3f(150*sin(15*ofGetElapsedTimef())+ofGetWidth()/2,ofGetHeight()/5*4+200));
     sys.update();
 }
 
 void M_DeskScene::updateBookShelf(){
     mBookPlayer.update();
     // check end the movie
-    if((mBookPlayer.getCurrentFrame() == mBookPlayer.getTotalNumFrames() && !mIsPrevious) || (mBookPlayer.getCurrentFrame() == 0 && mIsPrevious)){
-        mIsPlayBookShelf = false;
-        mBookPlayer.stop();
-    }
+//    if((mBookPlayer.getCurrentFrame() == mBookPlayer.getTotalNumFrames() && !mIsPrevious) || (mBookPlayer.getCurrentFrame() == 0 && mIsPrevious)){
+//        mIsPlayBookShelf = false;
+//        mBookPlayer.stop();
+//    }
 }
 
 //--------------------------------------------------------------
 void M_DeskScene::draw(){
-    mBookPlayer.draw(0,0,ofGetWidth(),ofGetHeight());
-    drawBat();
+    magic_kabe.draw(0,0, ofGetWidth(), ofGetHeight());
     if(mIsPlayShelf){
         drawBat();
         drawCurse();
     }
-}
+   }
 
 void M_DeskScene::drawBat(){
     for (int i = 0; i < BATCOUNT; i++) {
@@ -142,7 +147,6 @@ void M_DeskScene::drawBat(){
 
 void M_DeskScene::drawCurse(){
     ofEnableBlendMode(OF_BLENDMODE_ADD/*ALPHA  ADD*/);
-    
     sprite.bind();
     ofEnablePointSprites();
     sys.draw();
@@ -223,8 +227,15 @@ void M_DeskScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
 }
 
 void M_DeskScene::actionShelf(){
-    mIsPlayShelf = true;
-    BatSound.play();
+    if(!mIsPlayShelf){
+        for (int i = 0;i < BATCOUNT;i++) {
+            bats[i].reset();
+        }
+        mIsPlayShelf = true;
+        BatSound.play();
+        out = 0;
+        particle = 3000;
+    }
 }
 
 void M_DeskScene::endShelf(){
@@ -260,5 +271,6 @@ void M_DeskScene::actionBedNext(){
 void M_DeskScene::actionStandBed(){
     isMove = false;
 }
+
 
 

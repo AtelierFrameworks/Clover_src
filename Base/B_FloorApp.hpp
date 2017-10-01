@@ -33,5 +33,7 @@ public:
     void gotMessage(ofMessage msg);
     void changeScene();
     void endMovie(CONST::E_GIMMICK & gimmick);
+    
     ofEvent<CONST::E_GIMMICK> mMovieEndEvent;
+    
 };

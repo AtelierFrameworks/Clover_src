@@ -18,6 +18,7 @@ ofxSPK::Modifier rot;
 void M_Scene::setup(){
     setupStair();
     setupClock();
+    mIsActionShelf = false;
 }
 
 void M_Scene::setupStair(){
@@ -59,7 +60,7 @@ void M_Scene::update(){
 
 void M_Scene::updateClock(){
     centerx = 595;
-    centery = 120;
+    centery = 240;
     needleLx = centerx + 25 * sin(ofGetElapsedTimef() / 4.0);
     needleLy = centery - 25 * cos(ofGetElapsedTimef() / 4.0);
     needleSx = centerx + 15 * sin(ofGetElapsedTimef() / 48.0);
@@ -88,7 +89,8 @@ void M_Scene::drawClock(){
     //読み込んだ画像データを画面に描画
     //frameImage.draw(20, 20,400,600);
     //JoImage.draw(60, 60, 320, 520);
-    ClockImage.draw(500, 30, 200, 300);
+//    ClockImage.draw(500, 30, 200, 300);
+       ClockImage.draw(500, 150, 200, 300);
     ofSetColor(0, 0, 0);
     ofDrawLine(centerx, centery, needleLx, needleLy);
     ofDrawLine(centerx, centery, needleSx, needleSy);

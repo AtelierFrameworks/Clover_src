@@ -50,11 +50,13 @@ public:
     ofImage magic_kabe;
     float px;
     float py;
+    //shelf
     bool mIsPlayShelf;
+    ofEvent<bool> mShelfEvent;
     //curse
     int check, angle;
     float range,add;
-    int out =0;
+    int out ;
     int particle = 3000;
     
     private:
@@ -68,7 +70,7 @@ public:
     bool mIsPlayBookShelf;
     bool mIsPrevious;
     bool mIsPlayBed;
-
+    
     //spk
     ofxSPK::System sys;
     ofxSPK::Group group;

@@ -63,4 +63,8 @@ class M_Scene : public BaseScene{
     float stairPx;
     float stairPy;
     bool isMove = false;
+
+    //shelf
+    bool mIsActionShelf;
+    
 };

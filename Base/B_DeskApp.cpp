@@ -102,6 +102,7 @@ void B_DeskApp::changeScene(){
             mScenes.push_back(newScene);
             mScenes[0]->setup();
             ofAddListener(mScenes[0]->mEndMovieEvent,this,&B_DeskApp::endMovie);
+            ofAddListener(dynamic_cast<M_DeskScene*>(mScenes[0])->mShelfEvent, this, &B_DeskApp::magicShelf);
             break;
         case CONST::NONE:
               mScenes.clear();
@@ -119,4 +120,11 @@ void B_DeskApp::endMovie(CONST::E_GIMMICK & gimmick){
 
 void B_DeskApp::setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands){
     mScenes.at(0) -> setLeapData(simpleHands);
+}
+
+
+
+void B_DeskApp::magicShelf(bool & flg){
+    bool a = true;
+    ofNotifyEvent(mShelfEvent, a);
 }

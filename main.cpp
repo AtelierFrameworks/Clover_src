@@ -13,22 +13,21 @@ int main( ){
     
     settings.width = 1280;
     settings.height = 800;
-    settings.setPosition(ofVec2f(0,0));
+    settings.setPosition(ofVec2f(-1280,0));
     settings.multiMonitorFullScreen = true;
     settings.decorated = false;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
-    
-    settings.setPosition(ofVec2f(3840,0));
+    settings.setPosition(ofVec2f(2560,0));
     settings.resizable = true;
     settings.shareContextWith = mainWindow;
-    settings.multiMonitorFullScreen = true;
-    
+    settings.multiMonitorFullScreen = false;
     //メニューバーの非表示
     settings.decorated = false;
     shared_ptr<ofAppBaseWindow> bedWindow = ofCreateWindow(settings);
-    settings.setPosition(ofVec2f(1280,0));
+    settings.setPosition(ofVec2f(3840,0));
     shared_ptr<ofAppBaseWindow> deskWindow = ofCreateWindow(settings);
-    settings.setPosition(ofVec2f(0,0));
+    settings.height=1000;
+    settings.setPosition(ofVec2f(5120,0));
     shared_ptr<ofAppBaseWindow> floorWindow = ofCreateWindow(settings);
     
     shared_ptr<ofApp> mainApp(new ofApp);
@@ -39,7 +38,7 @@ int main( ){
     mainApp -> mBedApp = bedApp;
     mainApp -> mDeskApp = deskApp;
     mainApp -> mFloorApp = floorApp;
-        ofRunApp(bedWindow,bedApp);
+    ofRunApp(bedWindow,bedApp);
     ofRunApp(deskWindow,deskApp);
     ofRunApp(floorWindow,floorApp);
     ofRunApp(mainWindow,mainApp);

@@ -23,6 +23,7 @@ void ofApp::setup(){
     ofAddListener(mBedApp ->mMovieEndEvent, this, &ofApp::endMovie);
     ofAddListener(mArduinoManager.mSendEvent,this,&ofApp::receiveData);
     ofAddListener(mBedApp -> mStairEvent,this,&ofApp::magicStair);
+    ofAddListener(mDeskApp -> mShelfEvent, this, &ofApp::magicShelf);
     ofAddListener(mFloorApp -> mMovieEndEvent,this,&ofApp::endMovie);
 }
 
@@ -61,7 +62,8 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     BaseApp::keyPressed(key);
     if(key == 'f'){
-         mFloorApp -> mScenes.at(0) -> actionChair();
+        mDeskApp -> mScenes.at(0) -> actionShelf();
+
     }
 
 }
@@ -162,7 +164,7 @@ void ofApp::changeScene(){
             newScene = new M_Scene();
             mScenes.push_back(newScene);
             mScenes[0]->setup();
-           
+            
             break;
         case CONST::NONE:
             mBgm.stop();
@@ -214,7 +216,6 @@ void ofApp::endMovie(CONST::E_GIMMICK & gimmick){
     switch (gimmick) {
         case CONST::G_M_CHAIR:
             mBedApp -> mScenes.at(0) -> actionEndMovie();
-            mDeskApp -> mScenes.at(0) -> actionEndMovie();
             break;
         case CONST::G_P_BED:
             break;
@@ -242,7 +243,7 @@ void ofApp:: receiveData(std::vector<CONST::E_PARTS> & isActionParts){
                         break;
                     }
                     case CONST::MAGIC:{
-                        mDeskApp -> mScenes.at(0) -> actionDesk();
+                        mDeskApp -> mScenes.at(0) -> actionShelf();
                         break;
                     }
                     default:
@@ -292,6 +293,8 @@ void ofApp::magicStair(bool & flg){
     mBedApp -> mScenes.at(0) -> actionBedNext();
 }
 
-
+void ofApp::magicShelf(bool & flg){
+    mScenes.at(0) -> actionShelf();
+}
 
 

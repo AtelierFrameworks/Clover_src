@@ -37,5 +37,7 @@ public:
     void changeScene();
     void setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands);
     void endMovie(CONST::E_GIMMICK & app);
+    void magicShelf(bool & flg);
+    ofEvent<bool> mShelfEvent;
     ofEvent<CONST::E_GIMMICK> mMovieEndEvent;
 };

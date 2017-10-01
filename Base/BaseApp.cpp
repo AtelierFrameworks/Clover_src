@@ -13,6 +13,8 @@ static CONST::E_SCENE nowScene;
 
 void BaseApp::setup(){
     mLogDataFile.open("LogData.csv",ofFile::Append);
+    ofLogNotice() << "x" << ofGetScreenWidth();
+    
 }
 
 //--------------------------------------------------------------

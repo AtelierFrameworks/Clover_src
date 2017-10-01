@@ -35,6 +35,7 @@ class ofApp : public BaseApp{
         void endMovie(CONST::E_GIMMICK & app);
         void receiveData(std::vector<CONST::E_PARTS> & isActionParts);
         void magicStair(bool & flg);
+        void magicShelf(bool & flg);
 //      bool judgeGimmick();
         ofFile mLogDataFile;
         ArduinoManager mArduinoManager;

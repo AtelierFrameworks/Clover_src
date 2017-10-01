@@ -9,6 +9,7 @@
 #include "B_FloorApp.hpp"
 void B_FloorApp::setup(){
     BaseApp::setup();
+    
 }
 
 //--------------------------------------------------------------
@@ -103,6 +104,7 @@ void B_FloorApp::endMovie(CONST::E_GIMMICK & gimmick){
     CONST::E_GIMMICK e_gimmick = gimmick;
     ofNotifyEvent(mMovieEndEvent, e_gimmick);
 }
+
 
 
 
