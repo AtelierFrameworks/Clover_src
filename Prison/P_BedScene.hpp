@@ -33,6 +33,7 @@ class P_BedScene : public BaseScene{
     void actionChair();
     void actionBed();
     void actionShelf();
+    void exit();
     ofVideoPlayer fingersMovie;
     ofImage mBackground;
     bool mIsKeyPressed;

@@ -9,6 +9,7 @@
 #include "B_BedApp.hpp"
 void B_BedApp::setup(){
     BaseApp::setup();
+    
 }
 
 //--------------------------------------------------------------
@@ -78,6 +79,7 @@ void B_BedApp::dragEvent(ofDragInfo dragInfo){
 
 void B_BedApp::changeScene(){
     BaseScene *newScene;
+   
     switch (getNowScene()) {
         case CONST::PRISON:
             newScene = new P_BedScene();
@@ -93,11 +95,20 @@ void B_BedApp::changeScene(){
             ofAddListener(dynamic_cast<M_BedScene*>(mScenes[0])->mStairEvent,this,&B_BedApp::stairEvent);
             break;
         case CONST::NONE:
-              mScenes.clear();
+            mScenes[0] -> exit();
+            ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_BedApp::endMovie);
+            if(getPreScene() == CONST::MAGIC){
+                ofRemoveListener(dynamic_cast<M_BedScene*>(mScenes[0])->mStairEvent,this,&B_BedApp::stairEvent);
+            }
+            mScenes.clear();
             break;
         default:
             break;
     }
+//    if(mScenes.size() > 1){
+//        delete mScenes[0];
+//        mScenes.erase(mScenes.begin());
+//    }
 }
 
 void B_BedApp::actionBed(){

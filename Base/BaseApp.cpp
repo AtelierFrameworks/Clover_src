@@ -8,13 +8,13 @@
 
 #include "BaseApp.hpp"
 
-static CONST::E_SCENE nowScene;
+static CONST::E_SCENE nowScene = CONST::NONE;
+static CONST::E_SCENE preScene;
  static int logNumber;
 
 void BaseApp::setup(){
     mLogDataFile.open("LogData.csv",ofFile::Append);
-    ofLogNotice() << "x" << ofGetScreenWidth();
-    
+
 }
 
 //--------------------------------------------------------------
@@ -124,16 +124,21 @@ string BaseApp::getLogDay(){
 }
 
 void BaseApp::setNowScene(CONST::E_SCENE scene){
+    preScene = nowScene;
     nowScene = scene;
-    BaseScene* newScene;
 }
 
 int BaseApp::getLogNumber(){return logNumber;}
 void BaseApp::setLogNumber(int num){logNumber = num;}
 //void BaseApp::setArduinoManager(shared_ptr<ArduinoManager> manager){mArduinoManager = manager;}
 void BaseApp::freeToSceneMemory(){
-    for(BaseScene * scene : mScenes){
-        delete scene;
-    }
+//    for(int i = 0; i< mScenes.size();i++){
+//        delete mScenes.at(i);
+//    }
+//    mScenes.clear();
+}
+
+CONST::E_SCENE BaseApp::getPreScene(){
+    return preScene;
 }
 

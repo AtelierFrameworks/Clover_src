@@ -32,4 +32,5 @@ public:
     ofEvent<std::vector<CONST::E_PARTS>> mSendEvent;
     bool mIsMagicMove;
     bool mIsCurtainOpen;
+    
 };

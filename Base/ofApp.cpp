@@ -13,12 +13,12 @@ void ofApp::setup(){
     }
     setupLeapMotion();
     mArduinoManager.setup();
-    setNowScene(CONST::PRISON);
+    setNowScene(CONST::NONE);
     //„É≠„Ç∞„Éï„Ç°„Ç§„É´‰ΩúÊàê
     isStartScene=false;
     //„Ç∑„Éº„É≥ÂàùÊúüÂåñ
     mScenes.clear();
-    actionCurtain();
+//    actionCurtain();
     //TODO::setJudgeModel
     ofAddListener(mBedApp ->mMovieEndEvent, this, &ofApp::endMovie);
     ofAddListener(mArduinoManager.mSendEvent,this,&ofApp::receiveData);
@@ -61,6 +61,12 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     BaseApp::keyPressed(key);
+    if(key == 'a'){
+        actionCurtain();
+    }
+    if(key == 'c'){
+        closeCurtain();
+    }
     if(key == 'f'){
         mBedApp -> mScenes.at(0) -> actionBed();
     }
@@ -128,17 +134,20 @@ void ofApp::actionCurtain(){
     mLogDataFile << ofToString(getLogNumber()) + ",setup," + getLogDay() + "," + "curtain," + "NO" <<endl;
     //TODO: ‚Äû√á‚àë‚Äû√â¬∫‚Äû√â‚â•√à√Ö‚àè√ä√§√ª
     int sceneNum = ofRandom(2)+1;
-    //setNowScene((BaseApp::E_SCENE)sceneNum);
-    setNowScene(CONST::MAGIC);
+    setNowScene((CONST::E_SCENE)sceneNum);
+//    setNowScene(CONST::MAGIC);
     changeScene();
 }
 
 void ofApp::closeCurtain(){
     mLogDataFile << ofToString(getLogNumber()) + ",exit," + getLogDay() + "," + "curtain," + "NO" <<endl;
     if(getNowScene()==CONST::PRISON){
-        ofRemoveListener(dynamic_cast<P_Scene*>(mScenes[0])->mThunderEvent,this,&ofApp::endMovie);
+      
+        ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&ofApp::endMovie);
     }
-    setNowScene(CONST::PRISON);
+    setNowScene(CONST::NONE);
+    mBgm.stop();
+    changeScene();
     freeToSceneMemory();
     mBedApp -> freeToSceneMemory();
     mDeskApp -> freeToSceneMemory();
@@ -148,6 +157,7 @@ void ofApp::closeCurtain(){
 
 void ofApp::changeScene(){
     BaseScene *newScene;
+   
     switch (getNowScene()) {
         case CONST::PRISON:
             mBgm.load("Prison/P_bgm.mp3");
@@ -167,11 +177,21 @@ void ofApp::changeScene(){
             break;
         case CONST::NONE:
             mBgm.stop();
-            mScenes.clear();
+            
+            mScenes[0] -> exit();
+            if(getPreScene() == CONST::PRISON){
+                ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&ofApp::endMovie);
+            }
+           mScenes.clear();
             break;
         default:
             break;
+           
     }
+//    if(mScenes.size() > 1){
+//        delete mScenes[0];
+//        mScenes.erase(mScenes.begin());
+//    }
     mBedApp   -> changeScene();
     mDeskApp  -> changeScene();
     mFloorApp -> changeScene();

@@ -12,8 +12,9 @@ void M_BedScene::setup(){
     isShowFont = false;
     mIsPlayBookShelf = false;
     mIsPrevious = false;
-    mVideo.setup("Magic/M_bookshelf.mp4", OF_LOOP_NONE, CONST::G_M_BED);
-    ofAddListener(mVideo.mEndEvent, this, &M_BedScene::endMovieEvent);
+    mVideo = new EventVideo();
+    mVideo->setup("Magic/M_bookshelf.mp4", OF_LOOP_NONE, CONST::G_M_BED);
+    ofAddListener(mVideo->mEndEvent, this, &M_BedScene::endMovieEvent);
     ofSetFrameRate(60);
     ofEnableAlphaBlending();
     mCamera.setOrientation(ofPoint(-20, 0, 0));
@@ -25,9 +26,12 @@ void M_BedScene::setup(){
 }
 
 void M_BedScene::setupStair(){
+    magic_kabe2 = new ofImage();
+    magic_kabe3 = new ofImage();
+    
     magic_kabe.load("Magic/M_fullBook.png");
-    magic_kabe2.load("Magic/M_fullBook.png");
-    magic_kabe3.load("Magic/M_fullBook.png");
+    magic_kabe2 = &magic_kabe;
+    magic_kabe3 = &magic_kabe;
     
     px = 0;
     py = 0;
@@ -50,7 +54,7 @@ void M_BedScene::update(){
 }
 
 void M_BedScene::updateBookShelf(){
-    mVideo.update();
+    mVideo->update();
 
 }
 
@@ -88,7 +92,7 @@ void M_BedScene::draw(){
     if(isMove){
         drawWall();
     }else{
-        mVideo.draw(0, 0, ofGetWidth(), ofGetHeight());
+        mVideo->draw(0, 0, ofGetWidth(), ofGetHeight());
     }
     drawFont();
 }
@@ -103,8 +107,8 @@ void M_BedScene::drawFont(){
 
 void M_BedScene::drawWall(){
     magic_kabe.draw(mPosition.x,mPosition.y,ofGetWidth(),ofGetHeight());
-    magic_kabe2.draw(mPosition.x , mPosition.y-1000, ofGetWidth(), ofGetHeight());
-    magic_kabe3.draw(mPosition.x,mPosition.y-2000, ofGetWidth(), ofGetHeight());
+    magic_kabe2->draw(mPosition.x , mPosition.y-1000, ofGetWidth(), ofGetHeight());
+    magic_kabe3->draw(mPosition.x,mPosition.y-2000, ofGetWidth(), ofGetHeight());
     
     if (mPosition.y == 2000) {
         mPosition.y = 0;
@@ -172,8 +176,8 @@ void M_BedScene::actionBed(){
     mIsPlayBed = true;
     if(!mIsPrevious){
         mIsPrevious = !mIsPrevious; 
-        mVideo.setSpeed(1.1);
-        mVideo.play();
+        mVideo->setSpeed(1.1);
+        mVideo->play();
         mIsPlayBookShelf = true;
     }else{
         bool a = true;
@@ -194,7 +198,7 @@ void M_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
     if(mIsPlayBookShelf){
         mIsPlayBookShelf = false;
     }
-    mVideo.stop();
+    mVideo->stop();
     if(mIsPlayBed){
         CONST::E_GIMMICK e_gimmick = gimmick;
         ofNotifyEvent(mEndMovieEvent, e_gimmick);
@@ -204,14 +208,19 @@ void M_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
 void M_BedScene::actionEndMovie(){
     mIsPlayBookShelf = true;
     if(mIsPrevious){
-        mVideo.setFrame(mVideo.getTotalNumFrames());
-        mVideo.setSpeed(-2);
+        mVideo->setFrame(mVideo->getTotalNumFrames());
+        mVideo->setSpeed(-2);
     }else{
-        mVideo.setFrame(0);
-        mVideo.setSpeed(1.1);
+        mVideo->setFrame(0);
+        mVideo->setSpeed(1.1);
     }
     mIsPrevious = !mIsPrevious;
-    mVideo.play();
+    mVideo->play();
 }
 
+
+void M_BedScene:: exit(){
+    ofRemoveListener(mVideo->mEndEvent, this, &M_BedScene::endMovieEvent);
+    delete mVideo;
+}
 

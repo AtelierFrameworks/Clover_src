@@ -13,8 +13,9 @@ void P_Scene::setup(){
     ofEnableSmoothing();
     mBackground.load("Prison/P_front.png");
     //chair
-    mVideo.setup("Prison/inazuma.mp4",OF_LOOP_NONE,CONST::G_P_CHAIR);
-    ofAddListener(mVideo.mEndEvent,this,&P_Scene::endMovieEvent);
+    mVideo = new EventVideo();
+    mVideo->setup("Prison/inazuma.mp4",OF_LOOP_NONE,CONST::G_P_CHAIR);
+    ofAddListener(mVideo->mEndEvent,this,&P_Scene::endMovieEvent);
     mIsPlayBed = false;
     //shelf
     mIsPlayShelfSound = false;
@@ -64,7 +65,7 @@ void P_Scene::update(){
     }
 
     if(mIsPlayChair){
-        mVideo.update();
+        mVideo->update();
     }
 
 }
@@ -76,7 +77,7 @@ void P_Scene::draw(){
 //    fingersMovie.draw(0, 0, ofGetWidth(), ofGetHeight());
     
     if(mIsPlayChair){
-        mVideo.draw(0, 0, ofGetWidth(), ofGetHeight());
+        mVideo->draw(0, 0, ofGetWidth(), ofGetHeight());
     }
     if(mIsPlayBed){
         mCrack.draw();
@@ -151,7 +152,7 @@ void P_Scene::actionShelf(){
 
 void P_Scene::actionChair(){
     mIsPlayChair = true;
-    mVideo.play();
+    mVideo->play();
 }
 
 void P_Scene::actionBed(){
@@ -168,7 +169,7 @@ void P_Scene::actionBed(){
 void P_Scene::endMovieEvent(CONST::E_GIMMICK & gimmick){
     mIsPlayChair = false;
     CONST::E_GIMMICK e_gimmick = gimmick;
-    mVideo.stop();
+    mVideo->stop();
     ofNotifyEvent(mEndMovieEvent,e_gimmick);
 }
 
@@ -177,5 +178,9 @@ void P_Scene::endMovieEvent(CONST::E_GIMMICK & gimmick){
 void P_Scene::soundCrack(){
     mIsPlayCrackSound = true;
     mLastCrackPlayer.play();
+}
+
+void P_Scene:: exit(){
+    ofRemoveListener(mVideo->mEndEvent, this, &P_Scene::endMovieEvent);
 }
 

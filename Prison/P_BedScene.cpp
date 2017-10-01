@@ -15,8 +15,9 @@ mIsPlayChair = false;
 mIsPlayBed = false;
 mIsPlayShelf = false;
 ofEnableSmoothing();
-mVideo.setup("Prison/P_bedshadow.mp4", OF_LOOP_NONE, CONST::G_P_BED);
-ofAddListener(mVideo.mEndEvent,this,&P_BedScene::endMovieEvent);
+    mVideo = new EventVideo();
+mVideo->setup("Prison/P_bedshadow.mp4", OF_LOOP_NONE, CONST::G_P_BED);
+ofAddListener(mVideo->mEndEvent,this,&P_BedScene::endMovieEvent);
 	//背景
 mBackground.load("Prison/P_side.png");
 
@@ -41,7 +42,7 @@ mBackground.load("Prison/P_side.png");
 //--------------------------------------------------------------
 void P_BedScene::update(){
     if(mIsPlayChair){
-        mVideo.update();
+        mVideo->update();
     }
     
     //人影(現れて消えるだけ)
@@ -61,7 +62,7 @@ void P_BedScene::draw(){
 	
 	//shadow
 	if(mIsPlayChair){
-		mVideo.draw(0, 0, ofGetWidth(), ofGetHeight());
+		mVideo->draw(0, 0, ofGetWidth(), ofGetHeight());
 	}
 	
     //人影(現れて消えるだけ)
@@ -159,7 +160,7 @@ void P_BedScene::dragEvent(ofDragInfo dragInfo){
 
 
 void P_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
-	mVideo.stop();
+	mVideo->stop();
 	if(!mIsPlayChair){
 		CONST::E_GIMMICK e_gimmick = gimmick;
 		ofNotifyEvent(mEndMovieEvent,e_gimmick);
@@ -169,7 +170,7 @@ void P_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
 
 void P_BedScene::actionChair(){
 	mIsPlayChair = true;
-	mVideo.play();
+	mVideo->play();
 }
 
 void P_BedScene::actionBed(){
@@ -180,3 +181,6 @@ void P_BedScene::actionShelf(){
 	mIsPlayShelf = true;
 }
 
+void P_BedScene:: exit(){
+    ofRemoveListener(mVideo->mEndEvent, this, &P_BedScene::endMovieEvent);
+}

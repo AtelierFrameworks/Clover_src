@@ -12,8 +12,9 @@ void Bat::setup(int _sep) {
 
 	for (int i = 0; i < 12; i++) {
 		char chara[20];
+        Bats[i] = new ofImage();
 		sprintf(chara, "Magic/Bat/M_bat0_%d.png", i + 1);
-        Bats[i].load(chara);
+        Bats[i]->load(chara);
 		
 	}
 	currentFrame = ofRandom(0,11);
@@ -26,7 +27,7 @@ void Bat::update() {
 }
 
 void Bat::draw() {
-	Bats[(int)(currentFrame)].draw(Position.x, Position.y,100,100);
+	Bats[(int)(currentFrame)]->draw(Position.x, Position.y,100,100);
     
 	currentFrame+=0.2;
 

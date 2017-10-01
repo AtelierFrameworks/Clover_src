@@ -18,6 +18,7 @@ void ArduinoManager::setup(){
     mValue.clear();
     mHasData = false;
     mIsCurtainOpen = false;
+    
 }
 
 void ArduinoManager::update(){

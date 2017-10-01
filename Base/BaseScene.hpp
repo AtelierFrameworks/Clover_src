@@ -46,7 +46,8 @@ public:
     virtual void actionFloor(){};
     virtual void actionEndMovie(){};
     virtual void endMovieEvent(CONST::E_GIMMICK & App){};
-    EventVideo mVideo;
+    virtual void exit(){};
+    EventVideo* mVideo;
     ofEvent<CONST::E_GIMMICK> mEndMovieEvent;
     bool isAction = false;
     std::vector <ofxLeapMotionSimpleHand> mSimpleHands;

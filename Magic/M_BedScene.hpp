@@ -32,6 +32,7 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+    void exit();
     void actionBed();
     void actionBedNext();
     void actionStandBed();
@@ -61,8 +62,8 @@ private:
     //stair
     ofVec2f mPosition;
 //    constexpr static const float gravity = 9.8;
-    ofImage magic_kabe2;
-    ofImage magic_kabe3;
+    ofImage *magic_kabe2;
+    ofImage *magic_kabe3;
     float stairPx;
     float stairPy;
     bool isMove = false;

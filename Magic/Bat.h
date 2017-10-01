@@ -8,7 +8,7 @@ public:
 	void update();
 	void draw();
     void reset();
-	ofImage Bats[12];
+	ofImage* Bats[12];
 
 	float currentFrame;
 	ofVec2f Position;

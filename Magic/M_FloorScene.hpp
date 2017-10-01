@@ -30,6 +30,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void endMovieEvent(CONST::E_GIMMICK & gimmick);
+    void exit();
     void actionChair();
     ofVideoPlayer ofMovie;
     float px;

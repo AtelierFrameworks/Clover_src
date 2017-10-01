@@ -79,6 +79,7 @@ void B_FloorApp::dragEvent(ofDragInfo dragInfo){
 
 void B_FloorApp::changeScene(){
     BaseScene *newScene;
+
     switch (getNowScene()) {
         case CONST::PRISON:
             newScene = new P_floor();
@@ -92,11 +93,18 @@ void B_FloorApp::changeScene(){
             ofAddListener(mScenes[0]->mEndMovieEvent,this,&B_FloorApp::endMovie);
             break;
         case CONST::NONE:
+           mScenes[0] -> exit();
+            if(getPreScene() == CONST::MAGIC){
+                ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_FloorApp::endMovie);            }
             mScenes.clear();
             break;
         default:
             break;
     }
+//    if(mScenes.size() > 1){
+//        delete mScenes[0];
+//        mScenes.erase(mScenes.begin());
+//    }
     }
 
 

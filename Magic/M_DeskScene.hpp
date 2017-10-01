@@ -80,8 +80,8 @@ public:
     //stair
     ofVec2f mPosition;
     constexpr static const float gravity = 9.8;
-    ofImage magic_kabe2;
-    ofImage magic_kabe3;
+    ofImage *magic_kabe2;
+    ofImage *magic_kabe3;
     float stairPx;
     float stairPy;
     bool isMove = false;

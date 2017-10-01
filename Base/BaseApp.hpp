@@ -39,7 +39,7 @@ public:
     static void setNowScene(CONST::E_SCENE);
     static int getLogNumber();
     static void setLogNumber(int num);
-    
+    static CONST::E_SCENE getPreScene();
     //void setArduinoManager(shared_ptr<ArduinoManager> manager);
     std::vector<BaseScene *> mScenes;
 protected:

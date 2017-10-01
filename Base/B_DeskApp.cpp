@@ -90,6 +90,8 @@ void B_DeskApp::dragEvent(ofDragInfo dragInfo){
 
 void B_DeskApp::changeScene(){
     BaseScene *newScene;
+    int index;
+
     switch (getNowScene()) {
         case CONST::PRISON:
             newScene = new P_DeskScene();
@@ -105,11 +107,20 @@ void B_DeskApp::changeScene(){
             ofAddListener(dynamic_cast<M_DeskScene*>(mScenes[0])->mShelfEvent, this, &B_DeskApp::magicShelf);
             break;
         case CONST::NONE:
-              mScenes.clear();
+            mScenes[0] -> exit();
+            ofRemoveListener(mScenes[0]->mEndMovieEvent, this, &B_DeskApp::endMovie);
+            if(getPreScene() == CONST::MAGIC){
+                ofRemoveListener(dynamic_cast<M_DeskScene*>(mScenes[0])->mShelfEvent, this, &B_DeskApp::magicShelf);
+            }
+            mScenes.clear();
             break;
         default:
             break;
     }
+//    if(mScenes.size() > 1){
+//        delete mScenes[0];
+//        mScenes.erase(mScenes.begin());
+//    }
 }
 
 void B_DeskApp::endMovie(CONST::E_GIMMICK & gimmick){

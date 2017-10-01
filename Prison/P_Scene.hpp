@@ -34,6 +34,7 @@ public:
     void actionBed();
     void endMovieEvent(CONST::E_GIMMICK & App);
     void soundCrack();
+    void exit();
     ofVideoPlayer fingersMovie;
     bool mIsPlayChair;
     bool mIsPlayShelfSound;

@@ -21,9 +21,8 @@ void M_DeskScene::setup(){
 
 void M_DeskScene::setupStair(){
     magic_kabe.load("Magic/M_front.png");
-    magic_kabe2.load("Magic/M_front.png");
-    magic_kabe3.load("Magic/M_front.png");
-    
+    magic_kabe2=&magic_kabe;
+    magic_kabe3=&magic_kabe;
     px = 0;
     py = 0;
     
@@ -161,8 +160,8 @@ void M_DeskScene::drawCurse(){
 
 void M_DeskScene::drawWall(){
     magic_kabe.draw(mPosition.x,mPosition.y,ofGetWidth(),ofGetHeight());
-    magic_kabe2.draw(mPosition.x , mPosition.y-1000, ofGetWidth(), ofGetHeight());
-    magic_kabe3.draw(mPosition.x,mPosition.y-2000, ofGetWidth(), ofGetHeight());
+    magic_kabe2->draw(mPosition.x , mPosition.y-1000, ofGetWidth(), ofGetHeight());
+    magic_kabe3->draw(mPosition.x,mPosition.y-2000, ofGetWidth(), ofGetHeight());
     
     if (mPosition.y == 2000) {
         mPosition.y = 0;
@@ -226,7 +225,7 @@ void M_DeskScene::dragEvent(ofDragInfo dragInfo){
 }
 
 void M_DeskScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
-    mVideo.stop();
+   
     CONST::E_GIMMICK e_gimmick = gimmick;
     ofNotifyEvent(mEndMovieEvent, e_gimmick);
 }
