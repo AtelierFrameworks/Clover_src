@@ -18,5 +18,5 @@ public:
     enum E_PARTS{P_CURTAIN_OPEN,P_CURTAIN_CLOSE,P_CHAIR,P_SHELF,P_BED,LEAP};
     constexpr static const float gravity = 9.8;
     //to use check movie's ending
-    enum E_GIMMICK{G_P_CHAIR,G_P_BED,G_M_CHAIR};
+    enum E_GIMMICK{G_P_CHAIR,G_P_BED,G_M_CHAIR,G_M_BED};
 };

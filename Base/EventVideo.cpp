@@ -41,6 +41,18 @@ void EventVideo::pause(){
     mPlayer.setPaused(true);
 }
 
+void EventVideo::setSpeed(float speed){
+    mPlayer.setSpeed(speed);
+}
+
+void EventVideo::setFrame(int flameNum){
+    mPlayer.setFrame(flameNum);
+}
+
 void EventVideo::closeMovie(){
     mPlayer.closeMovie();
+}
+
+int EventVideo::getTotalNumFrames(){
+    return mPlayer.getTotalNumFrames();
 }

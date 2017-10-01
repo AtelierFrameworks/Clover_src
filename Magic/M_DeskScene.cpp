@@ -76,7 +76,7 @@ void M_DeskScene::update(){
 //    }
     
     if (isMove) {
-        mPosition.y += (gravity - 7.0);
+        mPosition.y += 20;
     }
 
 }
@@ -132,7 +132,11 @@ void M_DeskScene::updateBookShelf(){
 
 //--------------------------------------------------------------
 void M_DeskScene::draw(){
-    magic_kabe.draw(0,0, ofGetWidth(), ofGetHeight());
+    if(isMove){
+        drawWall();
+    }else{
+         magic_kabe.draw(mPosition.x,mPosition.y,ofGetWidth(),ofGetHeight());
+    }
     if(mIsPlayShelf){
         drawBat();
         drawCurse();
@@ -156,12 +160,13 @@ void M_DeskScene::drawCurse(){
 }
 
 void M_DeskScene::drawWall(){
-    magic_kabe.draw(mPosition.x,mPosition.y+100,ofGetWidth(),ofGetHeight());
-    magic_kabe2.draw(mPosition.x , mPosition.y-480, ofGetWidth(), ofGetHeight());
-    magic_kabe3.draw(mPosition.x,mPosition.y-1060, ofGetWidth(), ofGetHeight());
+    magic_kabe.draw(mPosition.x,mPosition.y,ofGetWidth(),ofGetHeight());
+    magic_kabe2.draw(mPosition.x , mPosition.y-1000, ofGetWidth(), ofGetHeight());
+    magic_kabe3.draw(mPosition.x,mPosition.y-2000, ofGetWidth(), ofGetHeight());
     
-    if (mPosition.y >= 680) {
-        mPosition.y = 100;
+    if (mPosition.y == 2000) {
+        mPosition.y = 0;
+        isMove = false;
     }
 }
 
@@ -243,24 +248,10 @@ void M_DeskScene::endShelf(){
 }
 
 void M_DeskScene::actionEndMovie(){
-//    mIsPlayBookShelf = true;
-//    if(!mIsPrevious){
-//        mBookPlayer.previousFrame();
-//        mIsPrevious = true;
-//    }
-//    mBookPlayer.play();
+
 }
 
 void M_DeskScene::actionBed(){
-    //stair
-    mIsPlayBookShelf = true;
-    mIsPrevious = !mIsPrevious;
-    if(mIsPrevious){
-        mBookPlayer.setSpeed(-1);
-    }else{
-        mBookPlayer.setSpeed(1);
-    }
-    mBookPlayer.play();
 
 }
 

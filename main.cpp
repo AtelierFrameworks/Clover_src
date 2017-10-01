@@ -12,7 +12,7 @@ int main( ){
     ofGLFWWindowSettings settings;
     
     settings.width = 1280;
-    settings.height = 800;
+    settings.height = 1000;
     settings.setPosition(ofVec2f(-1280,0));
     settings.multiMonitorFullScreen = true;
     settings.decorated = false;
@@ -26,7 +26,6 @@ int main( ){
     shared_ptr<ofAppBaseWindow> bedWindow = ofCreateWindow(settings);
     settings.setPosition(ofVec2f(3840,0));
     shared_ptr<ofAppBaseWindow> deskWindow = ofCreateWindow(settings);
-    settings.height=1000;
     settings.setPosition(ofVec2f(5120,0));
     shared_ptr<ofAppBaseWindow> floorWindow = ofCreateWindow(settings);
     

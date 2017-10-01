@@ -57,7 +57,7 @@ void P_BedScene::update(){
 //--------------------------------------------------------------
 void P_BedScene::draw(){
     //背景
-    mBackground.draw(0,0);
+    mBackground.draw(0,0,ofGetWidth(),ofGetHeight());
 	
 	//shadow
 	if(mIsPlayChair){

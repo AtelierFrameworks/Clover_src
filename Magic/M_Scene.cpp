@@ -54,7 +54,7 @@ void M_Scene::setupClock(){
 void M_Scene::update(){
     updateClock();
     if (isMove) {
-        mPosition.y += (gravity - 7.0);
+        mPosition.y += 20;
     }
 }
 
@@ -70,18 +70,24 @@ void M_Scene::updateClock(){
 //--------------------------------------------------------------
 void M_Scene::draw(){
     ofSetColor(255, 255, 255);
-    drawWall();
-    drawClock();
+    if(isMove){
+        drawWall();
+
+    }else{
+         magic_kabe.draw(0,0,ofGetWidth(),ofGetHeight());
+    }
+        drawClock();
 }
 
 void M_Scene::drawWall(){
-    magic_kabe.draw(mPosition.x,mPosition.y,ofGetWidth(),ofGetHeight());
-    magic_kabe2.draw(mPosition.x , mPosition.y-480, ofGetWidth(), ofGetHeight());
-    magic_kabe3.draw(mPosition.x,mPosition.y-1060, ofGetWidth(), ofGetHeight());
-    
-    if (mPosition.y >= 680) {
-        mPosition.y = 100;
-    }
+        magic_kabe.draw(mPosition.x,mPosition.y,ofGetWidth(),ofGetHeight());
+        magic_kabe2.draw(mPosition.x , mPosition.y-1000, ofGetWidth(), ofGetHeight());
+        magic_kabe3.draw(mPosition.x,mPosition.y-2000, ofGetWidth(), ofGetHeight());
+        
+        if (mPosition.y == 2000) {
+            mPosition.y = 0;
+            isMove = false;
+        }
 }
 
 void M_Scene::drawClock(){

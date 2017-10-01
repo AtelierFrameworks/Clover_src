@@ -62,8 +62,7 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     BaseApp::keyPressed(key);
     if(key == 'f'){
-        mDeskApp -> mScenes.at(0) -> actionShelf();
-
+        mBedApp -> mScenes.at(0) -> actionBed();
     }
 
 }
@@ -139,7 +138,7 @@ void ofApp::closeCurtain(){
     if(getNowScene()==CONST::PRISON){
         ofRemoveListener(dynamic_cast<P_Scene*>(mScenes[0])->mThunderEvent,this,&ofApp::endMovie);
     }
-    setNowScene(CONST::MAGIC);
+    setNowScene(CONST::PRISON);
     freeToSceneMemory();
     mBedApp -> freeToSceneMemory();
     mDeskApp -> freeToSceneMemory();
@@ -217,6 +216,11 @@ void ofApp::endMovie(CONST::E_GIMMICK & gimmick){
         case CONST::G_M_CHAIR:
             mBedApp -> mScenes.at(0) -> actionEndMovie();
             break;
+        case CONST::G_M_BED:
+            mScenes.at(0) -> actionBed();
+            mDeskApp -> mScenes.at(0) -> actionBedNext();
+            mBedApp -> mScenes.at(0) -> actionBedNext();
+
         case CONST::G_P_BED:
             break;
         case CONST::G_P_CHAIR:

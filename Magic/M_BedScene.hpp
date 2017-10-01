@@ -53,14 +53,14 @@ private:
     bool isShowFont;
     ofEasyCam mCamera;
     //movie bookshelf
-    ofVideoPlayer mBookPlayer;
+    EventVideo mBookPlayer;
     bool mIsPlayBookShelf;
     bool mIsPrevious;
     bool mIsPlayBed;
   
     //stair
     ofVec2f mPosition;
-    constexpr static const float gravity = 9.8;
+//    constexpr static const float gravity = 9.8;
     ofImage magic_kabe2;
     ofImage magic_kabe3;
     float stairPx;

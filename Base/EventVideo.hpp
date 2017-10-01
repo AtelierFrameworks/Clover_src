@@ -23,6 +23,9 @@ class EventVideo{
     void play();
     void stop();
     void pause();
+    void setSpeed(float speed);
+    void setFrame(int frameNum);
     void closeMovie();
+    int getTotalNumFrames();
     bool mIsPlayed;
 };
