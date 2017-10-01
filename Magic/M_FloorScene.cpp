@@ -9,7 +9,7 @@
 #include "M_FloorScene.hpp"
 
 void M_FloorScene::setup(){
-    mVideo.setup("Magic/mahojin.mp4", OF_LOOP_NONE, CONST::G_M_CHAIR);
+    mVideo.setup("Magic/M_mahojin.mp4", OF_LOOP_NONE, CONST::G_M_CHAIR);
     ofAddListener(mVideo.mEndEvent,this,&M_FloorScene::endMovieEvent);
 //    mVideo.play();
 //    mVideo.pause();
@@ -28,7 +28,7 @@ void M_FloorScene::update(){
 void M_FloorScene::draw(){
     magic_floor.draw(0, 0, ofGetWidth(), ofGetHeight());
     if(isPlayChair){
-        mVideo.draw(0,0,400,300);
+        mVideo.draw(0,0,ofGetWidth(),ofGetHeight());
     }
 }
 

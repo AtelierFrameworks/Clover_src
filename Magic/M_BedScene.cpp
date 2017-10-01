@@ -11,7 +11,7 @@ void M_BedScene::setup(){
     countTime = 0;
     isShowFont = false;
     mIsPlayBookShelf = false;
-    mIsPrevious = false;
+    mIsPrevious = true;
     magic_kabe.load("Magic/M_front.png");
     mBookPlayer.load("Magic/M_bookshelf.mp4");
     mBookPlayer.setLoopState(OF_LOOP_NONE);
@@ -201,9 +201,11 @@ void M_BedScene::actionEndMovie(){
     mIsPlayBookShelf = true;
     mIsPrevious = !mIsPrevious;
     if(mIsPrevious){
-        mBookPlayer.setSpeed(-1);
+        mBookPlayer.setFrame(mBookPlayer.getTotalNumFrames());
+        mBookPlayer.setSpeed(-2);
     }else{
-        mBookPlayer.setSpeed(1);
+        mBookPlayer.setFrame(0);
+        mBookPlayer.setSpeed(1.1);
     }
     mBookPlayer.play();
 }

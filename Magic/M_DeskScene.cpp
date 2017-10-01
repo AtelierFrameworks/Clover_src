@@ -11,7 +11,7 @@ void M_DeskScene::setup(){
     mIsPlayShelf = false;
     mIsPlayBookShelf = false;
     mIsPrevious = true;
-    mBookPlayer.load("Magic/M_bookshelf.mp4");
+//    mBookPlayer.load("Magic/M_bookshelf.mp4");
     mBookPlayer.setLoopState(OF_LOOP_NONE);
     mBookPlayer.setVolume(0);
     setupBat();
@@ -68,9 +68,9 @@ void M_DeskScene::update(){
         updateCurse();
         updateBat();
     }
-    if(mIsPlayBookShelf){
-        updateBookShelf();
-    }
+//    if(mIsPlayBookShelf){
+//        updateBookShelf();
+//    }
     
     if (isMove) {
         mPosition.y += (gravity - 7.0);
@@ -232,12 +232,12 @@ void M_DeskScene::endShelf(){
 }
 
 void M_DeskScene::actionEndMovie(){
-    mIsPlayBookShelf = true;
-    if(!mIsPrevious){
-        mBookPlayer.previousFrame();
-        mIsPrevious = true;
-    }
-    mBookPlayer.play();
+//    mIsPlayBookShelf = true;
+//    if(!mIsPrevious){
+//        mBookPlayer.previousFrame();
+//        mIsPrevious = true;
+//    }
+//    mBookPlayer.play();
 }
 
 void M_DeskScene::actionBed(){
