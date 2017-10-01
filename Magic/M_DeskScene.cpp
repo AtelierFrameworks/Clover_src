@@ -13,6 +13,7 @@ void M_DeskScene::setup(){
     mIsPrevious = true;
     mBookPlayer.load("Magic/M_bookshelf.mp4");
     mBookPlayer.setLoopState(OF_LOOP_NONE);
+    mBookPlayer.setVolume(0);
     setupBat();
     setupCurse();
 }
@@ -125,7 +126,7 @@ void M_DeskScene::updateBookShelf(){
 
 //--------------------------------------------------------------
 void M_DeskScene::draw(){
-    magic_kabe.draw(0,0,ofGetWidth(),ofGetHeight());
+    mBookPlayer.draw(0,0,ofGetWidth(),ofGetHeight());
     drawBat();
     if(mIsPlayShelf){
         drawBat();
@@ -241,13 +242,14 @@ void M_DeskScene::actionEndMovie(){
 
 void M_DeskScene::actionBed(){
     //stair
-    mIsPlayBed = true;
+    mIsPlayBookShelf = true;
+    mIsPrevious = !mIsPrevious;
     if(mIsPrevious){
-        mIsPrevious = false;
-        mBookPlayer.nextFrame();
-        mBookPlayer.play();
-        mIsPlayBookShelf = true;
+        mBookPlayer.setSpeed(-1);
+    }else{
+        mBookPlayer.setSpeed(1);
     }
+    mBookPlayer.play();
 
 }
 

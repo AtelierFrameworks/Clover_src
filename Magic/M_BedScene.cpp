@@ -199,9 +199,11 @@ void M_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
 
 void M_BedScene::actionEndMovie(){
     mIsPlayBookShelf = true;
-    if(mBookPlayer.getCurrentFrame() == mBookPlayer.getTotalNumFrames()){
-        mBookPlayer.previousFrame();
-        mIsPrevious = true;
+    mIsPrevious = !mIsPrevious;
+    if(mIsPrevious){
+        mBookPlayer.setSpeed(-1);
+    }else{
+        mBookPlayer.setSpeed(1);
     }
     mBookPlayer.play();
 }
