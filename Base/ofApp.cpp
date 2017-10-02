@@ -68,7 +68,23 @@ void ofApp::keyPressed(int key){
         closeCurtain();
     }
     if(key == 'f'){
-        mBedApp -> mScenes.at(0) -> actionBed();
+        switch (getNowScene()) {
+            case CONST::PRISON:{
+                mScenes.at(0) -> actionBed();
+                mBedApp -> mScenes.at(0) -> actionBed();
+                mDeskApp -> mScenes.at(0) -> actionBed();
+                mFloorApp -> mScenes.at(0) -> actionBed();
+                break;
+            }
+            case CONST::MAGIC:{
+                mBedApp -> mScenes.at(0) -> actionBed();
+                mDeskApp -> mScenes.at(0) -> actionBed();
+                break;
+            }
+            default:
+                break;
+        }
+
     }
 
 }
@@ -130,8 +146,7 @@ void ofApp::exit(){
 
 //„Ç´„Éº„ÉÜ„É≥
 void ofApp::actionCurtain(){
-    setLogNumber(0);
-    mLogDataFile << ofToString(getLogNumber()) + ",setup," + getLogDay() + "," + "curtain," + "NO" <<endl;
+    
     //TODO: ‚Äû√á‚àë‚Äû√â¬∫‚Äû√â‚â•√à√Ö‚àè√ä√§√ª
     int sceneNum = ofRandom(2)+1;
     setNowScene((CONST::E_SCENE)sceneNum);
@@ -140,7 +155,7 @@ void ofApp::actionCurtain(){
 }
 
 void ofApp::closeCurtain(){
-    mLogDataFile << ofToString(getLogNumber()) + ",exit," + getLogDay() + "," + "curtain," + "NO" <<endl;
+  
     if(getNowScene()==CONST::PRISON){
       
         ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&ofApp::endMovie);

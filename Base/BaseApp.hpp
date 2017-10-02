@@ -37,13 +37,12 @@ public:
     virtual void freeToSceneMemory();
     static CONST::E_SCENE getNowScene();
     static void setNowScene(CONST::E_SCENE);
-    static int getLogNumber();
-    static void setLogNumber(int num);
+    static string getSceneName();
     static CONST::E_SCENE getPreScene();
     //void setArduinoManager(shared_ptr<ArduinoManager> manager);
     std::vector<BaseScene *> mScenes;
 protected:
-    static string getLogDay();
-    ofFile mLogDataFile;
+   
+    
     
 };

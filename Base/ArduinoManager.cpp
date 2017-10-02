@@ -8,8 +8,8 @@
 
 #include "ArduinoManager.hpp"
 
-
-
+ static int logNumber = 0;
+static int meisaiNum  = 0;
 
 void ArduinoManager::setup(){
     mSerial.listDevices();
@@ -18,7 +18,12 @@ void ArduinoManager::setup(){
     mValue.clear();
     mHasData = false;
     mIsCurtainOpen = false;
-    
+    mIsPlayBed = false;
+    mIsPlayChair = false;
+    mIsPlayShelf = false;
+    mLogDataFile.open("LogData.csv",ofFile::WriteOnly);
+    meisaiNum = 0;
+
 }
 
 void ArduinoManager::update(){
@@ -103,50 +108,104 @@ void ArduinoManager:: judgeData(){
     }
     std::vector <CONST::E_PARTS> isActionParts;
     //bed
-    if(mValue[0] > 1 || mValue[1] > 1 || mValue[2] > 1){
+    if(mValue[0] > 1 || mValue[1] > 1 ){
         mPastTimeData[0] ++;
-        if(mPastTimeData[0] > 10){
-            isActionParts.push_back(CONST::P_BED);
+        if(mPastTimeData[0] > 60){
+            meisaiNum++;
+            log = ofToString(getLogNumber())+ "," + ofToString(meisaiNum) + ",action," + getLogDay() + "," + "bed," + BaseApp::getSceneName();
+            
+            if(mIsCurtainOpen && !mIsPlayBed){
+//                isActionParts.push_back(CONST::P_BED);
+                mIsPlayBed = true;
+                mPastFalseTime[0] = 0;
+                log += ",YES";
+            }else{
+                log += ",NO";
+            }
+           mLogDataFile << log << endl;
         }
     }else{
         mPastTimeData[0] = 0;
+        mPastFalseTime[0] ++;
+
+        if(mIsPlayBed && mPastFalseTime[0] >= 60){
+            mIsPlayBed = false;
+        }
     }
     //chair
-    if(mValue[3] > 1){
-        isActionParts.push_back(CONST::P_CHAIR);
+    if(mValue[2] > 5){
         mPastTimeData[1] ++;
-        if(mPastTimeData[1] > 10){
-            isActionParts.push_back(CONST::P_CHAIR);
+        if(mPastTimeData[1] > 60){
+            meisaiNum++;
+            log = ofToString(getLogNumber())+ "," + ofToString(meisaiNum) + ",action," + getLogDay() + "," + "bed," + BaseApp::getSceneName();
+
+            
+            if(mIsCurtainOpen){
+                isActionParts.push_back(CONST::P_CHAIR);
+                log += ",YES";
+            }else{
+                log += ",NO";
+            }
+          mLogDataFile << log <<endl;
         }
     }else{
         mPastTimeData[1] = 0;
     }
 
     //shelf
-    if(mValue[5] > 1 ){
+    if(mValue[5] > 3 ){
         isActionParts.push_back(CONST::P_SHELF);
         mPastTimeData[2] ++;
-        if(mPastTimeData[2] > 10){
+        if(mPastTimeData[2] > 60){
+            meisaiNum++;
+           log = ofToString(getLogNumber())+ "," + ofToString(meisaiNum) + ",action," + getLogDay() + "," + "shelf," + BaseApp::getSceneName() ;
+            if(mIsCurtainOpen){
             isActionParts.push_back(CONST::P_SHELF);
+                log+= ",YES";
+            }else{
+                log+= ",NO";
+            }
+             mLogDataFile << log <<endl;
         }
     }else{
         mPastTimeData[2] = 0;
     }
 
     //curtain
-    if(mValue[4] > 2){
+    if(mValue[4] > 7){
         mPastTimeData[3] ++;
-        if(mPastTimeData[3] > 10){
-            mIsCurtainOpen = true;
+        if(mPastTimeData[3] > 60){
+          
+            logNumber++;
+            meisaiNum = 0;
+            log = ofToString(getLogNumber()) + "," + ofToString(meisaiNum) + ",setup," + getLogDay() + "," + "curtain," +  BaseApp::getSceneName();
+            if(!mIsCurtainOpen){
             isActionParts.push_back(CONST::P_CURTAIN_OPEN);
+                mIsCurtainOpen = true;
+                log += ",YES";
+            }else{
+                log += ",NO";
+            }
+            
+            mLogDataFile << log  <<endl;
+
         }
          }else{
              mPastTimeData[3] = 0;
              if(mValue[4] == 1 && mIsCurtainOpen){
                  mPastTimeData[3] ++;
-                 if(mPastTimeData[4] > 10){
-                     mIsCurtainOpen = false;
-                     isActionParts.push_back(CONST::P_CURTAIN_CLOSE);
+                 if(mPastTimeData[4] > 60){
+                    meisaiNum++;
+                     log = ofToString(getLogNumber()) + "," + ofToString(meisaiNum) + ",exit," + getLogDay() + "," + "curtain,"+ BaseApp::getSceneName();
+                     
+                     if(mIsCurtainOpen){
+                         mIsCurtainOpen = false;
+                        log += ",YES";
+                         isActionParts.push_back(CONST::P_CURTAIN_CLOSE);
+                     }else{
+                         log += ",NO";
+                     }
+                     mLogDataFile << log <<endl;
                  }
              }else{
                  mPastTimeData[4] = 0;
@@ -155,4 +214,17 @@ void ArduinoManager:: judgeData(){
 //    ofLogNotice() << "notify" << isActionParts;
     ofNotifyEvent(mSendEvent, isActionParts);
 }
+
+
+
+string ArduinoManager::getLogDay(){
+
+    string logDay = ofToString(ofGetMonth()) + "/" + ofToString(ofGetDay()) + " " + ofToString(ofGetHours()) + ":" + ofToString(ofGetMinutes()) + ":" + ofToString(ofGetSeconds());
+    return logDay;
+}
+int ArduinoManager::getLogNumber(){return logNumber;}
+void ArduinoManager::setLogNumber(int num){logNumber = num;}
+//void BaseApp::setArduinoManager(shared_ptr<ArduinoManager> manager){mArduinoManager = manager;}
+
+
 

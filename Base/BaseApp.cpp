@@ -10,10 +10,10 @@
 
 static CONST::E_SCENE nowScene = CONST::NONE;
 static CONST::E_SCENE preScene;
- static int logNumber;
+
 
 void BaseApp::setup(){
-    mLogDataFile.open("LogData.csv",ofFile::Append);
+    
 
 }
 
@@ -117,28 +117,33 @@ CONST::E_SCENE BaseApp::getNowScene(){
     return nowScene;
 }
 
-string BaseApp::getLogDay(){
-    logNumber++;
-    string logDay = ofToString(ofGetMonth()) + "/" + ofToString(ofGetDay()) + " " + ofToString(ofGetHours()) + ":" + ofToString(ofGetMinutes()) + ":" + ofToString(ofGetSeconds());
-    return logDay;
-}
-
 void BaseApp::setNowScene(CONST::E_SCENE scene){
     preScene = nowScene;
     nowScene = scene;
-}
-
-int BaseApp::getLogNumber(){return logNumber;}
-void BaseApp::setLogNumber(int num){logNumber = num;}
-//void BaseApp::setArduinoManager(shared_ptr<ArduinoManager> manager){mArduinoManager = manager;}
-void BaseApp::freeToSceneMemory(){
-//    for(int i = 0; i< mScenes.size();i++){
-//        delete mScenes.at(i);
-//    }
-//    mScenes.clear();
 }
 
 CONST::E_SCENE BaseApp::getPreScene(){
     return preScene;
 }
 
+void BaseApp::freeToSceneMemory(){
+    //    for(int i = 0; i< mScenes.size();i++){
+    //        delete mScenes.at(i);
+    //    }
+    //    mScenes.clear();
+}
+
+string BaseApp::getSceneName(){
+    switch (getNowScene()) {
+        case CONST::PRISON:
+            return "prison";
+            break;
+            
+        case CONST::MAGIC:
+            return "magic";
+            break;
+        default:
+            return "none";
+            break;
+    }
+}

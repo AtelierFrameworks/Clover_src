@@ -12,6 +12,7 @@ void M_BedScene::setup(){
     isShowFont = false;
     mIsPlayBookShelf = false;
     mIsPrevious = false;
+    mStairPlayer.load("Magic/M_warp1.mp3");
     mVideo = new EventVideo();
     mVideo->setup("Magic/M_bookshelf.mp4", OF_LOOP_NONE, CONST::G_M_BED);
     ofAddListener(mVideo->mEndEvent, this, &M_BedScene::endMovieEvent);
@@ -28,7 +29,8 @@ void M_BedScene::setup(){
 void M_BedScene::setupStair(){
     magic_kabe2 = new ofImage();
     magic_kabe3 = new ofImage();
-    
+    preWall = new ofImage();
+    preWall -> load("Magic/M_bookshelf.png");
     magic_kabe.load("Magic/M_fullBook.png");
     magic_kabe2 = &magic_kabe;
     magic_kabe3 = &magic_kabe;
@@ -49,6 +51,7 @@ void M_BedScene::update(){
     }
     if (isMove) {
         mPosition.y +=  20;
+        ofSoundUpdate();
 //        if(
     }
 }
@@ -92,6 +95,7 @@ void M_BedScene::draw(){
     if(isMove){
         drawWall();
     }else{
+        preWall -> draw(0, 0, ofGetWidth(),ofGetHeight());
         mVideo->draw(0, 0, ofGetWidth(), ofGetHeight());
     }
     drawFont();
@@ -114,6 +118,7 @@ void M_BedScene::drawWall(){
         mPosition.y = 0;
         isMove = false;
         mIsPlayBed = false;
+        mStairPlayer.stop();
     }
 }
 //--------------------------------------------------------------
@@ -188,6 +193,7 @@ void M_BedScene::actionBed(){
 void M_BedScene::actionBedNext(){
     if(!isMove){
         isMove = true;
+        mStairPlayer.play();
     }
 }
 

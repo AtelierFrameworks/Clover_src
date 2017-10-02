@@ -82,6 +82,7 @@ public:
     constexpr static const float gravity = 9.8;
     ofImage *magic_kabe2;
     ofImage *magic_kabe3;
+    ofVideoPlayer mSoseki;
     float stairPx;
     float stairPy;
     bool isMove = false;

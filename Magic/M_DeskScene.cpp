@@ -11,6 +11,8 @@ void M_DeskScene::setup(){
     mIsPlayShelf = false;
     mIsPlayBookShelf = false;
     mIsPrevious = true;
+    mSoseki.load("Magic/M_frame.mp4");
+    mSoseki.setLoopState(OF_LOOP_NONE);
 //    mBookPlayer.load("Magic/M_bookshelf.mp4");
     mBookPlayer.setLoopState(OF_LOOP_NONE);
     mBookPlayer.setVolume(0);
@@ -136,11 +138,15 @@ void M_DeskScene::draw(){
     }else{
          magic_kabe.draw(mPosition.x,mPosition.y,ofGetWidth(),ofGetHeight());
     }
+    
+    mSoseki.draw(ofGetWidth()-600, 300, 400, 600);
+    
     if(mIsPlayShelf){
         drawBat();
         drawCurse();
     }
    }
+
 
 void M_DeskScene::drawBat(){
     for (int i = 0; i < BATCOUNT; i++) {
@@ -239,6 +245,7 @@ void M_DeskScene::actionShelf(){
         BatSound.play();
         out = 0;
         particle = 3000;
+        mSoseki.play();
     }
 }
 

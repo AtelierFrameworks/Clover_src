@@ -15,6 +15,7 @@
 #include <vector>
 #include <array>
 #endif /* ArduinoManager_hpp */
+#include "BaseApp.hpp"
 class ArduinoManager{
 public:
     void setup();
@@ -23,14 +24,21 @@ public:
     bool getIsSetup();
     void separateBytes();
     void judgeData();
+    static int getLogNumber();
+    static void setLogNumber(int num);
+    static string getLogDay();
     ofSerial mSerial;
     int nBytesRead = 0;
     string mBytesReadString;
     std::vector<int> mValue;
     bool mHasData;
     std::array<int,5> mPastTimeData{0,0,0,0,0};
+    std::array<int,5> mPastFalseTime{0,0,0,0,0};
     ofEvent<std::vector<CONST::E_PARTS>> mSendEvent;
     bool mIsMagicMove;
     bool mIsCurtainOpen;
-    
+    bool mIsPlayBed;
+    bool mIsPlayShelf;
+    bool mIsPlayChair;
+    ofFile mLogDataFile;
 };
