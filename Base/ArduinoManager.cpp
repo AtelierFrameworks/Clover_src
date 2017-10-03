@@ -40,12 +40,13 @@ void ArduinoManager::update(){
             while ((nRead = mSerial.readBytes(bytesReturned, 50)) > 0) {
                 nBytesRead = nRead;
                 ofLogNotice() << "nRead" << nRead;
-                ofLogNotice() << "value" <<  bytesReturned;
+               
                 mBytesReadString = string((char*)bytesReturned);
+                ofLogNotice() << "value" <<  bytesReturned;
                 separateBytes();
             };
 //            mSerial.flush();
-            
+        
         }
     }
     
@@ -58,7 +59,7 @@ void ArduinoManager::separateBytes(){
        
         if(stringData=="{"){
             mHasData = true;
-             ofLogNotice() << "string" << stringData;
+           
             mValue.clear();
             
         }else if(stringData == "}" && mHasData){
@@ -108,14 +109,14 @@ void ArduinoManager:: judgeData(){
     }
     std::vector <CONST::E_PARTS> isActionParts;
     //bed
-    if(mValue[0] > 1 || mValue[1] > 1 ){
+    if(mValue[0] > 1 ){
         mPastTimeData[0] ++;
         if(mPastTimeData[0] > 60){
             meisaiNum++;
             log = ofToString(getLogNumber())+ "," + ofToString(meisaiNum) + ",action," + getLogDay() + "," + "bed," + BaseApp::getSceneName();
             
             if(mIsCurtainOpen && !mIsPlayBed){
-//                isActionParts.push_back(CONST::P_BED);
+                isActionParts.push_back(CONST::P_BED);
                 mIsPlayBed = true;
                 mPastFalseTime[0] = 0;
                 log += ",YES";
@@ -153,7 +154,7 @@ void ArduinoManager:: judgeData(){
     }
 
     //shelf
-    if(mValue[5] > 3 ){
+    if(mValue[1] > 3 ){
         isActionParts.push_back(CONST::P_SHELF);
         mPastTimeData[2] ++;
         if(mPastTimeData[2] > 60){
@@ -172,7 +173,7 @@ void ArduinoManager:: judgeData(){
     }
 
     //curtain
-    if(mValue[4] > 7){
+    if(mValue[3] > 7){
         mPastTimeData[3] ++;
         if(mPastTimeData[3] > 60){
           
@@ -183,18 +184,12 @@ void ArduinoManager:: judgeData(){
             isActionParts.push_back(CONST::P_CURTAIN_OPEN);
                 mIsCurtainOpen = true;
                 log += ",YES";
-            }else{
-                log += ",NO";
+                    mLogDataFile << log  <<endl;
             }
             
-            mLogDataFile << log  <<endl;
-
         }
          }else{
              mPastTimeData[3] = 0;
-             if(mValue[4] == 1 && mIsCurtainOpen){
-                 mPastTimeData[3] ++;
-                 if(mPastTimeData[4] > 60){
                     meisaiNum++;
                      log = ofToString(getLogNumber()) + "," + ofToString(meisaiNum) + ",exit," + getLogDay() + "," + "curtain,"+ BaseApp::getSceneName();
                      
@@ -202,14 +197,9 @@ void ArduinoManager:: judgeData(){
                          mIsCurtainOpen = false;
                         log += ",YES";
                          isActionParts.push_back(CONST::P_CURTAIN_CLOSE);
-                     }else{
-                         log += ",NO";
+                         mLogDataFile << log <<endl;
                      }
-                     mLogDataFile << log <<endl;
-                 }
-             }else{
-                 mPastTimeData[4] = 0;
-             }
+    
     }
 //    ofLogNotice() << "notify" << isActionParts;
     ofNotifyEvent(mSendEvent, isActionParts);
