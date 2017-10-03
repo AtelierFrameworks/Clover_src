@@ -61,13 +61,13 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     BaseApp::keyPressed(key);
-    if(key == 'a'){
+   if(key == 'a'){
         actionCurtain();
     }
     if(key == 'c'){
         closeCurtain();
     }
-    if(key == 'f'){
+  /*a  if(key == 'f'){
         switch (getNowScene()) {
             case CONST::PRISON:{
                 mScenes.at(0) -> actionBed();
@@ -86,7 +86,7 @@ void ofApp::keyPressed(int key){
         }
 
     }
-
+*/
 }
 
 //--------------------------------------------------------------
@@ -155,7 +155,7 @@ void ofApp::actionCurtain(){
 }
 
 void ofApp::closeCurtain(){
-  
+    ofBackground(255);
     if(getNowScene()==CONST::PRISON){
       
         ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&ofApp::endMovie);

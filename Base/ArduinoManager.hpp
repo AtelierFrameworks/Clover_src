@@ -33,7 +33,6 @@ public:
     std::vector<int> mValue;
     bool mHasData;
     std::array<int,5> mPastTimeData{0,0,0,0,0};
-    std::array<int,5> mPastFalseTime{0,0,0,0,0};
     ofEvent<std::vector<CONST::E_PARTS>> mSendEvent;
     bool mIsMagicMove;
     bool mIsCurtainOpen;

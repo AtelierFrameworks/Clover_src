@@ -95,12 +95,14 @@ void B_BedApp::changeScene(){
             ofAddListener(dynamic_cast<M_BedScene*>(mScenes[0])->mStairEvent,this,&B_BedApp::stairEvent);
             break;
         case CONST::NONE:
+            
             mScenes[0] -> exit();
             ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_BedApp::endMovie);
             if(getPreScene() == CONST::MAGIC){
                 ofRemoveListener(dynamic_cast<M_BedScene*>(mScenes[0])->mStairEvent,this,&B_BedApp::stairEvent);
             }
             mScenes.clear();
+            ofBackground(255);
             break;
         default:
             break;

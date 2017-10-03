@@ -36,7 +36,7 @@ mBackground.load("Prison/P_side.png");
   
 	//shadow
   fingersMovie.setLoopState(OF_LOOP_NONE);
-  fingersMovie.play();
+//  fingersMovie.play();
 }
 
 //--------------------------------------------------------------
