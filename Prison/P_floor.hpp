@@ -31,6 +31,7 @@ class P_floor : public BaseScene{
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void actionBed();
+private:
     ofVideoPlayer fingersMovie;
     ofImage mBackground;
     P_Crack mCrack;

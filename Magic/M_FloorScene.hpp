@@ -32,6 +32,7 @@ public:
     void endMovieEvent(CONST::E_GIMMICK & gimmick);
     void exit();
     void actionChair();
+private:
     ofVideoPlayer ofMovie;
     float px;
     float py;

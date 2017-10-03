@@ -41,19 +41,25 @@ public:
     void drawFont();
     void actionEndMovie();
     void updateBookShelf();
+    
+       //bookshelf and stair
+    ofEvent<bool> mStairEvent;
+private:
     ofImage magic_kabe;
     float px;
     float py;
     //desk Font
     int countTime;
+    ofSoundPlayer mLeap;
     static const int LETTER_COUNT = 20;
     Letter letters[LETTER_COUNT];
-      //bookshelf and stair
-    ofEvent<bool> mStairEvent;
-private:
+
+    
     bool isShowFont;
     ofEasyCam mCamera;
+    
     //movie bookshelf
+    
     EventVideo mBookPlayer;
     bool mIsPlayBookShelf;
     bool mIsPrevious;
@@ -70,4 +76,4 @@ private:
     float stairPy;
     bool isMove = false;
 
-   };
+};

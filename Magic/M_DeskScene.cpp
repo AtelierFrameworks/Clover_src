@@ -14,6 +14,7 @@ void M_DeskScene::setup(){
     mSoseki.load("Magic/M_frame.mp4");
     mSoseki.setLoopState(OF_LOOP_NONE);
     mNatsume.load("Magic/M_natsume.png");
+    
 //    mBookPlayer.load("Magic/M_bookshelf.mp4");
     mBookPlayer.setLoopState(OF_LOOP_NONE);
     mBookPlayer.setVolume(0);

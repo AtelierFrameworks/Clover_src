@@ -112,6 +112,7 @@ void B_DeskApp::changeScene(){
             if(getPreScene() == CONST::MAGIC){
                 ofRemoveListener(dynamic_cast<M_DeskScene*>(mScenes[0])->mShelfEvent, this, &B_DeskApp::magicShelf);
             }
+            delete mScenes[0];
             mScenes.clear();
             ofBackground(255);
             break;

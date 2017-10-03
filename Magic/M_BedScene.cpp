@@ -12,6 +12,8 @@ void M_BedScene::setup(){
     isShowFont = false;
     mIsPlayBookShelf = false;
     mIsPrevious = false;
+    mLeap.load("Magic/M_Leap.mp3");
+    
     mStairPlayer.load("Magic/M_warp1.mp3");
     mVideo = new EventVideo();
     mVideo->setup("Magic/M_bookshelf.mp4", OF_LOOP_NONE, CONST::G_M_BED);
@@ -21,6 +23,7 @@ void M_BedScene::setup(){
     mCamera.setOrientation(ofPoint(-20, 0, 0));
     for (int i = 0; i < LETTER_COUNT;i++) {
         letters[i].setup(-1000, -1000, 0);
+        letters[i].mSound = &mLeap;
     }
     mIsPlayBed = false;
     setupStair();

@@ -35,6 +35,8 @@ public:
     void endMovieEvent(CONST::E_GIMMICK & App);
     void soundCrack();
     void exit();
+     ofEvent<CONST::E_GIMMICK> mThunderEvent;
+private:
     ofVideoPlayer fingersMovie;
     bool mIsPlayChair;
     bool mIsPlayShelfSound;
@@ -47,5 +49,5 @@ public:
     P_Crack mCrack;
     bool mIsPlayCrackSound;
     ofImage mBackground;
-    ofEvent<CONST::E_GIMMICK> mThunderEvent;
+   
 };

@@ -31,25 +31,8 @@ void ofApp::setup(){
 void ofApp::update(){
     updateLeapMotion();
     mArduinoManager.update();
-    int data = 0;
-//    int data = mArduinoManager.getArduinoDatas();
-    if(mArduinoManager.getIsSetup()){
-//        if(data < 600 /*&& data > 0*/){
-//            if(!mIsAction[0]){
-//                //TODO::データの分解
-//                mBedApp -> actionBed();
-//            }
-//        }
-    
-        
-    }
     BaseApp::update();
 }
-
-//bool ofApp::judgeGimmick(){
-//    std::vector<int> value = mArduinoManager.getArduinoData();
-//    return true;
-//}
 
 //-----------------------
 
@@ -230,16 +213,17 @@ void ofApp::changeScene(){
             if(getPreScene() == CONST::PRISON){
                 ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&ofApp::endMovie);
             }
-           mScenes.clear();
+            delete mScenes[0];
+            mScenes.clear();
             break;
         default:
             break;
            
     }
-//    if(mScenes.size() > 1){
-//        delete mScenes[0];
-//        mScenes.erase(mScenes.begin());
-//    }
+    if(mScenes.size() > 1){
+        delete mScenes[0];
+        mScenes.erase(mScenes.begin());
+    }
     mBedApp   -> changeScene();
     mDeskApp  -> changeScene();
     mFloorApp -> changeScene();

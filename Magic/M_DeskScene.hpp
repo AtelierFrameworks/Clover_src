@@ -47,12 +47,14 @@ public:
     void actionBed();
     void actionStandBed();
     void actionBedNext();
+    ofEvent<bool> mShelfEvent;
+private:
     ofImage magic_kabe;
     float px;
     float py;
     //shelf
     bool mIsPlayShelf;
-    ofEvent<bool> mShelfEvent;
+
     //curse
     int check, angle;
     float range,add;
@@ -65,6 +67,7 @@ public:
     static const int BATCOUNT = 5;
     Bat bats[BATCOUNT];
     int separate;
+    
     //movie bookshelf
     ofVideoPlayer mBookPlayer;
     bool mIsPlayBookShelf;

@@ -35,6 +35,7 @@ class P_DeskScene : public BaseScene{
     void setupFire();
     void actionBed();
     void actionChair();
+private:
     ofVideoPlayer mShadowMovie;
     ofSoundPlayer mySound;
     bool frameByframe;

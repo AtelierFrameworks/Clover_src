@@ -39,6 +39,7 @@ class M_Scene : public BaseScene{
     void actionBed();
     void actionStandBed();
     void actionShelf();
+private:
     ofImage magic_kabe;
     float px;
     float py;

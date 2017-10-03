@@ -11,23 +11,29 @@ void Letter::setup(int _x,int _y,int _count_s){
 	myFont.loadFont("Magic/dq10font.ttf", 100);
 	int index = ofRandom(WORDS_COUNT);
 	text = WORDS[index];
+    mIsPlaySound = false;
 }
 
 
 void Letter::update(int _count_u){
-	countNow = _count_u;
-	countGap = countNow - countBorn;
-	alpha -= 4;
+    if(!mIsPlaySound){
+        mSound -> play();
+        mIsPlaySound =true;
+    }
     if(alpha<0){
         alpha = 0;
         x = -1000;
         y = -1000;
     }
+    countNow = _count_u;
+    countGap = countNow - countBorn;
+    alpha -= 4;
 }
 
 void Letter::draw(){
-    ofSetColor(255, 255, 255,alpha);
+        ofSetColor(255, 255, 255,alpha);
     myFont.drawString(text, x, y);
+    
 //    ofLogNotice() << "x" << x;
 //    ofLogNotice() << "y" << y;
 }

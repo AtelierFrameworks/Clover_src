@@ -14,9 +14,11 @@ public:
 	int countBorn;
 	int countNow;
 	int countGap;
+    bool mIsPlaySound;
 	ofxTrueTypeFontUC myFont;
 	int num;
 	string text;
 	int x, y;
+    ofSoundPlayer* mSound;
 };
 
