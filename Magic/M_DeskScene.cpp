@@ -13,6 +13,7 @@ void M_DeskScene::setup(){
     mIsPrevious = true;
     mSoseki.load("Magic/M_frame.mp4");
     mSoseki.setLoopState(OF_LOOP_NONE);
+    mNatsume.load("Magic/M_natsume.png");
 //    mBookPlayer.load("Magic/M_bookshelf.mp4");
     mBookPlayer.setLoopState(OF_LOOP_NONE);
     mBookPlayer.setVolume(0);
@@ -139,7 +140,7 @@ void M_DeskScene::draw(){
     }else{
          magic_kabe.draw(mPosition.x,mPosition.y,ofGetWidth(),ofGetHeight());
     }
-    
+    mNatsume.draw(ofGetWidth()-600,300,400,600);
     mSoseki.draw(ofGetWidth()-600, 300, 400, 600);
     
     if(mIsPlayShelf){

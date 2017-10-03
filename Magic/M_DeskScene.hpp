@@ -83,6 +83,7 @@ public:
     ofImage *magic_kabe2;
     ofImage *magic_kabe3;
     ofVideoPlayer mSoseki;
+    ofImage mNatsume;
     float stairPx;
     float stairPy;
     bool isMove = false;

@@ -95,11 +95,11 @@ void M_BedScene::draw(){
     if(isMove){
         drawWall();
     }else{
-//        if(!mIsPrevious){
-//            preWall -> draw(0, 0,ofGetWidth(), ofGetHeight());
-//        }else{
-//            magic_kabe.draw(0,0,ofGetWidth(), ofGetHeight());
-//        }
+        if(!mIsPrevious){
+            preWall -> draw(0, 0,ofGetWidth(), ofGetHeight());
+        }else{
+            magic_kabe.draw(0,0,ofGetWidth(), ofGetHeight());
+        }
         mVideo->draw(0, 0, ofGetWidth(), ofGetHeight());
 
     }
@@ -233,7 +233,7 @@ void M_BedScene::actionEndMovie(){
             mVideo->setFrame(mVideo->getTotalNumFrames());
             mVideo->setSpeed(-2);
         }else{
-//          mVideo->setFrame(0);
+
             mVideo->setSpeed(1.1);
           
     }

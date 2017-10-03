@@ -19,7 +19,7 @@ void M_Scene::setup(){
     setupStair();
     setupClock();
     mIsActionShelf = false;
-    mSosekiImage.load("a");
+   
 }
 
 void M_Scene::setupStair(){
