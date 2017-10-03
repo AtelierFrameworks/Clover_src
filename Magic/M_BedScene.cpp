@@ -95,10 +95,15 @@ void M_BedScene::draw(){
     if(isMove){
         drawWall();
     }else{
-        preWall -> draw(0, 0, ofGetWidth(),ofGetHeight());
+//        if(!mIsPrevious){
+//            preWall -> draw(0, 0,ofGetWidth(), ofGetHeight());
+//        }else{
+//            magic_kabe.draw(0,0,ofGetWidth(), ofGetHeight());
+//        }
         mVideo->draw(0, 0, ofGetWidth(), ofGetHeight());
+
     }
-    drawFont();
+      drawFont();
 }
 
 void M_BedScene::drawFont(){
@@ -178,16 +183,25 @@ void M_BedScene::dragEvent(ofDragInfo dragInfo){
 
 
 void M_BedScene::actionBed(){
-    mIsPlayBed = true;
-    if(!mIsPrevious){
-        mIsPrevious = !mIsPrevious; 
-        mVideo->setSpeed(1.1);
-        mVideo->play();
-        mIsPlayBookShelf = true;
-    }else{
-        bool a = true;
-        ofNotifyEvent(mStairEvent, a);
-    }
+    
+    
+        if(!mIsPrevious){
+            if(!mIsPlayBookShelf){
+                
+                mVideo->setSpeed(1.1);
+                mVideo->play();
+                mIsPlayBookShelf = true;
+                mIsPlayBed = true;
+            }
+        }else{
+            if(!mIsPlayBookShelf){
+                bool a = true;
+                mIsPlayBed = true;
+                ofNotifyEvent(mStairEvent, a);
+                
+            }
+        }
+
 }
 
 void M_BedScene::actionBedNext(){
@@ -201,6 +215,7 @@ void M_BedScene::actionStandBed(){
     isMove = false;
 }
 void M_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
+    mIsPrevious = !mIsPrevious;
     if(mIsPlayBookShelf){
         mIsPlayBookShelf = false;
     }
@@ -212,16 +227,20 @@ void M_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
 }
 
 void M_BedScene::actionEndMovie(){
-    mIsPlayBookShelf = true;
-    if(mIsPrevious){
-        mVideo->setFrame(mVideo->getTotalNumFrames());
-        mVideo->setSpeed(-2);
-    }else{
-        mVideo->setFrame(0);
-        mVideo->setSpeed(1.1);
+    if(!mIsPlayBookShelf){
+        mIsPlayBookShelf = true;
+        if(mIsPrevious){
+            mVideo->setFrame(mVideo->getTotalNumFrames());
+            mVideo->setSpeed(-2);
+        }else{
+//          mVideo->setFrame(0);
+            mVideo->setSpeed(1.1);
+          
     }
-    mIsPrevious = !mIsPrevious;
-    mVideo->play();
+    
+          mVideo->play();
+    }
+    
 }
 
 

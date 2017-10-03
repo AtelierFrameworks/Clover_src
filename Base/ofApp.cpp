@@ -67,7 +67,7 @@ void ofApp::keyPressed(int key){
     if(key == 'c'){
         closeCurtain();
     }
-  /*a  if(key == 'f'){
+   if(key == 'f'){
         switch (getNowScene()) {
             case CONST::PRISON:{
                 mScenes.at(0) -> actionBed();
@@ -86,7 +86,38 @@ void ofApp::keyPressed(int key){
         }
 
     }
-*/
+    
+    if(key == 'o'){
+        switch (getNowScene()) {
+            case CONST::PRISON:{
+                mScenes.at(0) -> actionShelf();
+                break;
+            }
+            case CONST::MAGIC:{
+                mDeskApp -> mScenes.at(0) -> actionShelf();
+                break;
+            }
+            default:
+                break;
+        }
+
+    }
+    if(key == 'e'){
+        switch (getNowScene()) {
+            case CONST::PRISON:{
+                mScenes.at(0) -> actionChair();
+                break;
+            }
+            case CONST::MAGIC:{
+                mFloorApp -> mScenes.at(0) -> actionChair();
+                break;
+            }
+            default:
+                break;
+        }
+
+    }
+
 }
 
 //--------------------------------------------------------------
@@ -162,11 +193,13 @@ void ofApp::closeCurtain(){
     }
     setNowScene(CONST::NONE);
     mBgm.stop();
+    if(mScenes.size() > 0){
     changeScene();
     freeToSceneMemory();
     mBedApp -> freeToSceneMemory();
     mDeskApp -> freeToSceneMemory();
     mFloorApp -> freeToSceneMemory();
+    }
 }
 
 

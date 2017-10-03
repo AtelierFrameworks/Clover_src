@@ -71,6 +71,7 @@ void M_DeskScene::update(){
     if(mIsPlayShelf){
         updateBat();
         updateCurse();
+        mSoseki.update();
     }
 //    if(mIsPlayBookShelf){
 //        updateBookShelf();
