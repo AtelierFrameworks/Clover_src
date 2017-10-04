@@ -235,6 +235,7 @@ void ofApp::setupLeapMotion(){
 
 void ofApp::updateLeapMotion(){
     simpleHands = mLeap.getSimpleHands();
+    ofLogNotice() << "a" << simpleHands.size();
     switch (getNowScene()) {
         case CONST::PRISON:
             mDeskApp -> setLeapData(simpleHands);

@@ -28,6 +28,10 @@ void Letter::update(int _count_u){
     countNow = _count_u;
     countGap = countNow - countBorn;
     alpha -= 4;
+    
+    if(!mIsAppear){
+        mIsAppear = true;
+    }
 }
 
 void Letter::draw(){

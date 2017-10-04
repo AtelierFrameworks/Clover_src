@@ -15,10 +15,12 @@ public:
 	int countNow;
 	int countGap;
     bool mIsPlaySound;
+    bool mIsAppear;
 	ofxTrueTypeFontUC myFont;
 	int num;
 	string text;
 	int x, y;
     ofSoundPlayer* mSound;
+    
 };
 

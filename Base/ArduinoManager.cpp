@@ -171,8 +171,8 @@ void ArduinoManager:: judgeData(){
             case 7:
                 mPastTimeData[3] = 0;
                 mPastTimeData[4] ++;
-                if( mPastTimeData[4] > 10){
-                     mIsCurtainOpen = false;
+                if( mPastTimeData[4] > 10 && mIsCurtainOpen){
+                    mIsCurtainOpen = false;
                     isActionParts.push_back(CONST::P_CURTAIN_CLOSE);
                 }
                
