@@ -7,7 +7,7 @@ void ofApp::setup(){
     BaseApp::setup();
     mBgm.setLoop(true);
     mBgm.setVolume(0.5);
-    
+   
     for(int i = 0; i < 5;i++){
         mIsAction[i] = false;
     }
@@ -20,6 +20,7 @@ void ofApp::setup(){
     mScenes.clear();
 //    actionCurtain();
     //TODO::setJudgeModel
+    mID = 0;
     ofAddListener(mBedApp ->mMovieEndEvent, this, &ofApp::endMovie);
     ofAddListener(mArduinoManager.mSendEvent,this,&ofApp::receiveData);
     ofAddListener(mBedApp -> mStairEvent,this,&ofApp::magicStair);
@@ -162,14 +163,15 @@ void ofApp::exit(){
 void ofApp::actionCurtain(){
     
     //TODO: ‚Äû√á‚àë‚Äû√â¬∫‚Äû√â‚â•√à√Ö‚àè√ä√§√ª
-    int sceneNum = ofRandom(2)+1;
-    setNowScene((CONST::E_SCENE)sceneNum);
+    mID ++;
+    int id = mID % 2 + 1;
+    setNowScene((CONST::E_SCENE)id);
 //    setNowScene(CONST::MAGIC);
     changeScene();
 }
 
 void ofApp::closeCurtain(){
-    ofBackground(255);
+    ofBackground(80);
     if(getNowScene()==CONST::PRISON){
       
         ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&ofApp::endMovie);
@@ -213,17 +215,14 @@ void ofApp::changeScene(){
             if(getPreScene() == CONST::PRISON){
                 ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&ofApp::endMovie);
             }
-            delete mScenes[0];
+//            delete mScenes[0];
             mScenes.clear();
             break;
         default:
             break;
            
     }
-    if(mScenes.size() > 1){
-        delete mScenes[0];
-        mScenes.erase(mScenes.begin());
-    }
+    
     mBedApp   -> changeScene();
     mDeskApp  -> changeScene();
     mFloorApp -> changeScene();

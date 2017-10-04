@@ -13,7 +13,7 @@ static CONST::E_SCENE preScene;
 
 
 void BaseApp::setup(){
-    ofBackground(255);
+    ofBackground(80);
 }
 
 //--------------------------------------------------------------

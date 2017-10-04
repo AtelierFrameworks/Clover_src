@@ -43,6 +43,7 @@ class ofApp : public BaseApp{
         shared_ptr<B_DeskApp> mDeskApp;
         shared_ptr<B_FloorApp> mFloorApp;
     ofSoundPlayer mBgm;
+    int mID;
     //0:ベッド 1:机 2:いす 3:棚 4:カーテン
     bool mIsAction[5];
 private:

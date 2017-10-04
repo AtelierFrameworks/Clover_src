@@ -161,10 +161,13 @@ void P_BedScene::dragEvent(ofDragInfo dragInfo){
 
 void P_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
 	mVideo->stop();
+   
 	if(!mIsPlayChair){
 		CONST::E_GIMMICK e_gimmick = gimmick;
 		ofNotifyEvent(mEndMovieEvent,e_gimmick);
-	}
+    }else{
+         mIsPlayChair = false;
+    }
 	
 }
 

@@ -96,9 +96,9 @@ void B_FloorApp::changeScene(){
            mScenes[0] -> exit();
             if(getPreScene() == CONST::MAGIC){
                 ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_FloorApp::endMovie);            }
-            delete mScenes[0];
+//            delete mScenes[0];
             mScenes.clear();
-            ofBackground(255);
+            ofBackground(80);
             break;
         default:
             break;

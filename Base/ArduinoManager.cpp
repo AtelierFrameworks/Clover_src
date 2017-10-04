@@ -21,7 +21,7 @@ void ArduinoManager::setup(){
     mIsPlayBed = false;
     mIsPlayChair = false;
     mIsPlayShelf = false;
-    mLogDataFile.open("LogData.csv",ofFile::WriteOnly);
+    mLogDataFile.open("LogData.csv",ofFile::Append);
     meisaiNum = 0;
 
 }
@@ -111,7 +111,7 @@ void ArduinoManager:: judgeData(){
                 break;
             case 2:
                 mPastTimeData[0] ++;
-                if(mPastTimeData[0] > 5){
+                if(mPastTimeData[0] > 1){
                     meisaiNum++;
                     log = ofToString(getLogNumber())+ "," + ofToString(meisaiNum) + ",action," + getLogDay() + "," + "bed," + BaseApp::getSceneName();
                 
@@ -127,18 +127,18 @@ void ArduinoManager:: judgeData(){
                 break;
             case 3:
                 mPastTimeData[1] = 0;
-                mIsPlayChair = false;
+                mIsPlayShelf = false;
                 break;
                 
             case 4:
                 mPastTimeData[1]++;
-                if(mPastTimeData[1] > 5){
+                if(mPastTimeData[1] > 1){
                     meisaiNum++;
                     log = ofToString(getLogNumber())+ "," + ofToString(meisaiNum) + ",action," + getLogDay() + "," + "bed," + BaseApp::getSceneName();
                     
-                    if(mIsCurtainOpen && !mIsPlayChair){
-                        isActionParts.push_back(CONST::P_CHAIR);
-                        mIsPlayChair = true;
+                    if(mIsCurtainOpen && !mIsPlayShelf){
+                        isActionParts.push_back(CONST::P_SHELF);
+                        mIsPlayShelf= true;
                         log += ",YES";
                     }else{
                         log += ",NO";
@@ -148,18 +148,18 @@ void ArduinoManager:: judgeData(){
                 break;
                 
             case 5:
-                mIsPlayShelf = false;
+                mIsPlayChair= false;
                 mPastTimeData[2] = 0;
                 break;
             case 6:
                 mPastTimeData[2]++;
-                if(mPastTimeData[2] > 5){
+                if(mPastTimeData[2] > 2){
                     meisaiNum++;
                     log = ofToString(getLogNumber())+ "," + ofToString(meisaiNum) + ",action," + getLogDay() + "," + "bed," + BaseApp::getSceneName();
                     
                     if(mIsCurtainOpen && !mIsPlayChair){
-                        isActionParts.push_back(CONST::P_SHELF);
-                        mIsPlayShelf = true;
+                        isActionParts.push_back(CONST::P_CHAIR);
+                        mIsPlayChair = true;
                                         log += ",YES";
                     }else{
                         log += ",NO";
@@ -171,7 +171,7 @@ void ArduinoManager:: judgeData(){
             case 7:
                 mPastTimeData[3] = 0;
                 mPastTimeData[4] ++;
-                if(mIsCurtainOpen && mPastTimeData[4] > 20){
+                if( mPastTimeData[4] > 10){
                      mIsCurtainOpen = false;
                     isActionParts.push_back(CONST::P_CURTAIN_CLOSE);
                 }
@@ -181,7 +181,7 @@ void ArduinoManager:: judgeData(){
             case 8:
                 mPastTimeData[3]++;
                 mPastTimeData[4] = 0;
-                if(mPastTimeData[3] > 20){
+                if(mPastTimeData[3] > 10){
                     meisaiNum++;
                     log = ofToString(getLogNumber())+ "," + ofToString(meisaiNum) + ",action," + getLogDay() + "," + "bed," + BaseApp::getSceneName();
                     
