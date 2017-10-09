@@ -1,18 +1,19 @@
 //
-//  M_Scene.hpp
+//  M_FloorScene.hpp
 //  Atelier_Room
 //
-//  Created by 池上綾乃 on 2017/06/11.
+//  Created by 池上綾乃 on 2017/09/07.
 //
 //
-//魔法図書館シーン
-#ifndef M_Scene_hpp
-#define M_Scene_hpp
-#include "BaseScene.hpp"
+#pragma once
+#ifndef M_FloorScene_hpp
+#define M_FloorScene_hpp
 #include <stdio.h>
+#include "BaseScene.hpp"
+#endif /* M_FloorScene_hpp */
 
-#endif /* M_Scene_hpp */
-class M_Scene : public BaseScene{
+class M_FloorScene : public BaseScene{
+public:
     void setup();
     void update();
     void draw();
@@ -28,5 +29,13 @@ class M_Scene : public BaseScene{
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-
+    void endMovieEvent(CONST::E_GIMMICK & gimmick);
+    void exit();
+    void actionChair();
+private:
+    ofVideoPlayer ofMovie;
+    float px;
+    float py;
+    ofImage magic_floor;
+    bool isPlayChair;
 };

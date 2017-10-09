@@ -1,23 +1,25 @@
 //
-//  P_Scene.hpp
+//  B_FloorApp.hpp
 //  Atelier_Room
 //
-//  Created by 池上綾乃 on 2017/06/11.
+//  Created by 池上綾乃 on 2017/08/10.
 //
 //
-//牢屋用シーン
 #pragma once
-#ifndef P_Scene_hpp
-#define P_Scene_hpp
-#include "BaseScene.hpp"
-#include <stdio.h>
-
-#endif /* P_Scene_hpp */
-class P_Scene : public BaseScene{
+#ifndef B_FloorApp_hpp
+#define B_FloorApp_hpp
+#include "ofMain.h"
+#endif /* B_FloorApp_hpp */
+#include "BaseApp.hpp"
+#include "P_floor.hpp"
+#include "M_FloorScene.hpp"
+class BaseApp;
+class B_FloorApp : public BaseApp{
+    
+public:
     void setup();
     void update();
     void draw();
-    
     void keyPressed(int key);
     void keyReleased(int key);
     void mouseMoved(int x, int y );
@@ -29,5 +31,9 @@ class P_Scene : public BaseScene{
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-
+    void changeScene();
+    void endMovie(CONST::E_GIMMICK & gimmick);
+    
+    ofEvent<CONST::E_GIMMICK> mMovieEndEvent;
+    
 };
