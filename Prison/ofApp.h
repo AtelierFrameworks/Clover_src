@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp {
     
 public:
     void setup();
@@ -11,7 +11,7 @@ public:
     
     void keyPressed(int key);
     void keyReleased(int key);
-    void mouseMoved(int x, int y );
+    void mouseMoved(int x, int y);
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
@@ -20,9 +20,20 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    bool mIsKeyPressed;
-    ofImage img;
-    int time;
-    int i;
-    int j;
+    
+    ofVec2f mPosition;
+    ofVec2f mVelocity;
+    constexpr static const float gravity = 9.8;
+    
+    ofImage town;
+    ofImage town2;
+    ofImage town3;
+    
+    float px;
+    float py;
+    float vx;
+    float vy;
+    
+    bool isMove;
+    
 };
