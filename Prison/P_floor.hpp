@@ -30,11 +30,7 @@ class P_floor : public BaseScene{
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    void actionBed();
-private:
-    ofVideoPlayer fingersMovie;
-    ofImage mBackground;
-    P_Crack mCrack;
-    bool mIsPlayBed;
+    ofImage floor;
+    bool move;
 };
 

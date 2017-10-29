@@ -11,7 +11,6 @@
 #define P_Scene_hpp
 #include "BaseScene.hpp"
 #include <stdio.h>
-#include "P_Crack.hpp"
 #endif /* P_Scene_hpp */
 class P_Scene : public BaseScene{
 public:
@@ -28,26 +27,39 @@ public:
     void mouseExited(int x, int y);
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
-    void gotMessage(ofMessage msg);
-    void actionShelf();
-    void actionChair();
-    void actionBed();
-    void endMovieEvent(CONST::E_GIMMICK & App);
-    void soundCrack();
-    void exit();
-     ofEvent<CONST::E_GIMMICK> mThunderEvent;
-private:
-    ofVideoPlayer fingersMovie;
-    bool mIsPlayChair;
-    bool mIsPlayShelfSound;
-    bool mIsPlayBed;
-    bool mIsPlayCrackVoice;
-    ofSoundPlayer mPlayer;
-    ofSoundPlayer mCrackPlayer;
-    ofSoundPlayer mLastCrackPlayer;
-    ofSoundPlayer mCrackVoicePlayer;
-    P_Crack mCrack;
-    bool mIsPlayCrackSound;
-    ofImage mBackground;
-   
+    
+    //Mission１
+    ofImage town;
+    
+    ofImage elephant;
+    ofImage dog;
+    
+    ofImage lamp;
+    ofImage houselight;
+    ofImage tree;
+    ofImage pampukin;
+    ofImage tower;
+    
+    bool mLamp;
+    bool eHouselight;
+    bool dTree;
+    bool rPampukin;
+    bool hTower;
+    
+    //Mission2
+    ofVec2f mPosition;
+    ofVec2f mVelocity;
+    
+    ofImage sky;
+    
+    float px;
+    float py;
+    float vx;
+    float vy;
+    
+    bool isMove;
+    
+    //Mission3
+
+    
 };
