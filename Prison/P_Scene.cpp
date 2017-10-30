@@ -22,7 +22,7 @@ void P_Scene::setup(){
     //階層移動
     isMove = false;
     
-    town.load("sky.png");
+    town1.load("sky.png");
     town2.load("sky.png");
     town3.load("town1.png");
     
@@ -36,15 +36,21 @@ void P_Scene::setup(){
     mVelocity = ofVec2f(vx, vy);
     
     //Mission2
-    isMove = false;
     ofBackground(0, 0, 0);
+    isBat = false;
+    isPumpkin = false;
     
+    //太陽月
+    isMoved = false;
+    ofBackground(0, 0, 0);
+
     //Mission3
     drawline1 = false;
     drawline2 = false;
     drawline3 = false;
     drawline4 = false;
     drawline5 = false;
+     isBat2 = false;
     
     ofBackground(0, 0, 0);
     
@@ -114,7 +120,7 @@ void P_Scene::update(){
     }
     
     //太陽月
-    if (isMove == true) {
+    if (isMoved == true) {
         sky.load("sky2.png");
         px = 0;
         py = 0;
@@ -131,10 +137,6 @@ void P_Scene::update(){
         mPosition += mVelocity;
     }
     
-    
-    //Mission3
-    
-    
     //満天の星
     if (mIsKeyPressed == false) {
         time++;
@@ -142,7 +144,7 @@ void P_Scene::update(){
     else if (mIsKeyPressed == true) {
         time --;
     }
-
+    
     
     }
 
@@ -162,7 +164,7 @@ void P_Scene::draw(){
     ofSetColor(255);
     
     //階層移動
-    town.draw(mPosition.x, mPosition.y - 1100, ofGetWidth(), ofGetHeight());
+    town1.draw(mPosition.x, mPosition.y - 1100, ofGetWidth(), ofGetHeight());
     town2.draw(mPosition.x, mPosition.y - 480, ofGetWidth(), ofGetHeight());
     town3.draw(mPosition.x, mPosition.y , ofGetWidth(), ofGetHeight());
     
@@ -178,35 +180,32 @@ void P_Scene::draw(){
     sky.draw(mPosition.x, mPosition.y, ofGetWidth(), ofGetHeight() * 4);
     
     //Mission3
-    ofSetColor(255, 0, 0);
-    ofDrawCircle(w, h, 5);
-    ofSetColor(120);
-    ofDrawCircle(w - 200 * p, h + 200 * q, 5);
-    ofDrawCircle(w + 100, h + 200 * q - t - v, 5);
-    ofDrawCircle(w - 100, h + 200 * q - t - v, 5);
-    ofDrawCircle(w + 200 * p, h + 200 * q, 5);
+    if(isBat2 == true){
+        ofSetColor(255, 0, 0);
+        bat.draw(w, h, 100, 100);
+        ofSetColor(0);
+        bat.draw(w - 200 * p, h + 200 * q, 100, 100);
+        bat.draw(w + 100, h + 200 * q - t - v, 100, 100);
+        bat.draw(w - 100, h + 200 * q - t - v, 100, 100);
+        bat.draw(w + 200 * p, h + 200 * q, 100, 100);
+    }
     
     
     ofSetColor(255, 255, 0);
     
     if(drawline1 == true){
-        //ofSetColor(255, 255, 0);
         ofDrawLine(w, h, w - 200 * p, h + 200 * q);
     }
     if(drawline2 == true){
-        //ofSetColor(255, 255, 0);
         ofDrawLine(w - 200 * p, h + 200 * q, w + 100, h + 200 * q - t - v);
     }
     if(drawline3 == true){
-        //ofSetColor(255, 255, 0);
         ofDrawLine(w + 100, h + 200 * q - t - v, w - 100, h + 200 * q - t - v);
     }
     if(drawline4 == true){
-        //ofSetColor(255, 255, 0);
         ofDrawLine(w - 100, h + 200 * q - t - v, w + 200 * p, h + 200 * q);
     }
     if(drawline5 == true){
-        //ofSetColor(255, 255, 0);
         ofDrawLine(w + 200 * p, h + 200 * q, w, h);
     }
 
@@ -280,6 +279,9 @@ void P_Scene::keyPressed(int key){
     
     if(key =='5'){
         drawline5 = true;
+    }
+    if(key = '6'){
+        isBat2 = true;
     }
 
     

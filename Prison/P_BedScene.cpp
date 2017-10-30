@@ -24,7 +24,7 @@ void P_BedScene::setup(){
     //階層移動
     isMove = false;
     
-    town.load("sky.png");
+    town1.load("sky.png");
     town2.load("sky.png");
     town3.load("town2.png");
     
@@ -43,7 +43,7 @@ void P_BedScene::setup(){
     isPumpkin = false;
     
     //太陽月
-    isMove = false;
+    isMoved = false;
     ofBackground(0, 0, 0);
     
     //満天の星
@@ -92,7 +92,7 @@ void P_BedScene::update(){
 
     
     //太陽月
-    if (isMove == true) {
+    if (isMoved == true) {
         sky.load("sky2.png");
         px = 0;
         py = 0;
@@ -134,7 +134,7 @@ void P_BedScene::draw(){
     ofSetColor(255);
     
     //階層移動
-    town.draw(mPosition.x, mPosition.y - 1100, ofGetWidth(), ofGetHeight());
+    town1.draw(mPosition.x, mPosition.y - 1100, ofGetWidth(), ofGetHeight());
     town2.draw(mPosition.x, mPosition.y - 480, ofGetWidth(), ofGetHeight());
     town3.draw(mPosition.x, mPosition.y , ofGetWidth(), ofGetHeight());
     
@@ -196,7 +196,7 @@ void P_BedScene::keyPressed(int key){
     
     //太陽月
     if (key == 'b') {
-        isMove = true;
+        isMoved = true;
     }
     
     //満天の星

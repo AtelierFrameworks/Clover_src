@@ -10,6 +10,7 @@
 
 void P_DeskScene::setup(){
     ofSetFrameRate(60);
+    
     //Mission1
     mLamp = false;
     rPampukin = false;
@@ -22,7 +23,7 @@ void P_DeskScene::setup(){
     //階層移動
     isMove = false;
     
-    town.load("sky.png");
+    town1.load("sky.png");
     town2.load("sky.png");
     town3.load("town3.png");
     
@@ -41,7 +42,7 @@ void P_DeskScene::setup(){
     isPumpkin = false;
     
     //太陽月
-    isMove = false;
+    isMoved = false;
     ofBackground(0, 0, 0);
     Sun.load("sun.png");
     
@@ -91,24 +92,24 @@ void P_DeskScene::update(){
     
     
     //太陽月
-    if (isMove == true) {
+    if (isMoved == true) {
         sky.load("sky2.png");
-        px = 0;
-        py = 0;
-        mPosition = ofVec2f(px, py);
-        vx = 0;
-        vy = 0;
-        mVelocity = ofVec2f(vx, vy);
+        x = 0;
+        y = 0;
+        nPosition = ofVec2f(x, y);
+        wx = 0;
+        wy = 0;
+        nVelocity = ofVec2f(wx, wy);
         
-        mVelocity.y += 0.01;
-        mPosition -= mVelocity;
+        nVelocity.y += 0.01;
+        nPosition -= nVelocity;
     }
     
-    if (mPosition.y <= -ofGetHeight() * 3) {
-        mPosition += mVelocity;
+    if (nPosition.y <= -ofGetHeight() * 3) {
+        nPosition += nVelocity;
     }
     
-    if (isMove == true) {
+    if (isMoved == true) {
         ny += 1.5;
         size_x -= 0.1;
         size_y -= 0.1;
@@ -140,7 +141,7 @@ void P_DeskScene::draw(){
     ofSetColor(255);
     
     //階層移動
-    town.draw(mPosition.x, mPosition.y - 1100, ofGetWidth(), ofGetHeight());
+    town1.draw(mPosition.x, mPosition.y - 1100, ofGetWidth(), ofGetHeight());
     town2.draw(mPosition.x, mPosition.y - 480, ofGetWidth(), ofGetHeight());
     town3.draw(mPosition.x, mPosition.y , ofGetWidth(), ofGetHeight());
     
@@ -154,11 +155,11 @@ void P_DeskScene::draw(){
 
     
     //太陽月
-    sky.draw(mPosition.x, mPosition.y, ofGetWidth(), ofGetHeight() * 4);
-    if(isMove == false){
+    sky.draw(nPosition.x, nPosition.y, ofGetWidth(), ofGetHeight() * 4);
+    if(isMoved == false){
         ofSetColor(130);
     }
-    if (isMove == true) {
+    if (isMoved == true) {
         ofSetColor(color, color, color);
     }
     Sun.draw(nx, ny, size_x, size_y);
@@ -212,7 +213,7 @@ void P_DeskScene::keyPressed(int key){
     
     //太陽月
     if (key == 'b') {
-        isMove = true;
+        isMoved = true;
     }
     
     //満天の星

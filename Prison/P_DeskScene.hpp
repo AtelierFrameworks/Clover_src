@@ -45,27 +45,46 @@ class P_DeskScene : public BaseScene{
     bool dTree;
     bool rPampukin;
     
-    
-    //Mission2
+    //階層移動
     ofVec2f mPosition;
     ofVec2f mVelocity;
     
-    ofImage sky;
-    
+    ofImage town1;
+    ofImage town2;
+    ofImage town3;
     
     float px;
     float py;
     float vx;
     float vy;
     
+    bool isMove;
+    
+    //Mission2
+    ofImage bat;
+    ofImage pumpkin;
+    bool isBat;
+    bool isPumpkin;
+    
+    //太陽月
+    ofVec2f nPosition;
+    ofVec2f nVelocity;
+    
+    ofImage sky;
+    
+    float x;
+    float y;
+    float wx;
+    float wy;
+    
     ofImage Sun;
-    float nx = ofGetWidth() / 2-200;
+    float nx = ofGetWidth() / 2 - 200;
     float ny;
     float size_x = 300;
     float size_y = 300;
     float color = 128;
     
-    bool isMove;
+    bool isMoved;
     
     //満天の星
     bool mIsKeyPressed;

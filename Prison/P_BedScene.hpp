@@ -49,11 +49,10 @@ class P_BedScene : public BaseScene{
     ofVec2f mPosition;
     ofVec2f mVelocity;
     
-    ofImage town;
+    ofImage town1;
     ofImage town2;
     ofImage town3;
     
-    ofImage sky;
     
     float px;
     float py;
@@ -70,7 +69,7 @@ class P_BedScene : public BaseScene{
     
     //太陽月
     ofImage sky;
-    bool isMove;
+    bool isMoved;
     
     //満天の星
     bool mIsKeyPressed;

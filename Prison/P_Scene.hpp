@@ -50,11 +50,9 @@ public:
     ofVec2f mPosition;
     ofVec2f mVelocity;
     
-    ofImage town;
+    ofImage town1;
     ofImage town2;
     ofImage town3;
-    
-    ofImage sky;
     
     float px;
     float py;
@@ -71,7 +69,7 @@ public:
     
     //太陽月
     ofImage sky;
-    bool isMove;
+    bool isMoved;
     
     //Mission3
     bool drawline1;
@@ -79,6 +77,9 @@ public:
     bool drawline3;
     bool drawline4;
     bool drawline5;
+    
+    bool isBat2;
+    
     float w = ofGetWidth() / 2;
     float h = ofGetHeight() / 2;
     
