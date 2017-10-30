@@ -11,7 +11,6 @@
 #define P_Scene_hpp
 #include "BaseScene.hpp"
 #include <stdio.h>
-#include "P_Crack.hpp"
 #endif /* P_Scene_hpp */
 class P_Scene : public BaseScene{
 public:
@@ -28,26 +27,75 @@ public:
     void mouseExited(int x, int y);
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
-    void gotMessage(ofMessage msg);
-    void actionShelf();
-    void actionChair();
-    void actionBed();
-    void endMovieEvent(CONST::E_GIMMICK & App);
-    void soundCrack();
-    void exit();
-     ofEvent<CONST::E_GIMMICK> mThunderEvent;
-private:
-    ofVideoPlayer fingersMovie;
-    bool mIsPlayChair;
-    bool mIsPlayShelfSound;
-    bool mIsPlayBed;
-    bool mIsPlayCrackVoice;
-    ofSoundPlayer mPlayer;
-    ofSoundPlayer mCrackPlayer;
-    ofSoundPlayer mLastCrackPlayer;
-    ofSoundPlayer mCrackVoicePlayer;
-    P_Crack mCrack;
-    bool mIsPlayCrackSound;
-    ofImage mBackground;
-   
+    
+    //Mission１
+    ofImage town;
+    
+    ofImage elephant;
+    ofImage dog;
+    
+    ofImage lamp;
+    ofImage houselight;
+    ofImage tree;
+    ofImage pampukin;
+    ofImage tower;
+    
+    bool mLamp;
+    bool eHouselight;
+    bool dTree;
+    bool rPampukin;
+    bool hTower;
+    
+    //階層移動
+    ofVec2f mPosition;
+    ofVec2f mVelocity;
+    
+    ofImage town;
+    ofImage town2;
+    ofImage town3;
+    
+    ofImage sky;
+    
+    float px;
+    float py;
+    float vx;
+    float vy;
+    
+    bool isMove;
+    
+    //Mission2
+    ofImage bat;
+    ofImage pumpkin;
+    bool isBat;
+    bool isPumpkin;
+    
+    //太陽月
+    ofImage sky;
+    bool isMove;
+    
+    //Mission3
+    bool drawline1;
+    bool drawline2;
+    bool drawline3;
+    bool drawline4;
+    bool drawline5;
+    float w = ofGetWidth() / 2;
+    float h = ofGetHeight() / 2;
+    
+    float p = cos(PI * 72 / 180);
+    float q = sin(PI * 72 / 180);
+    float r = tan(PI * 54 / 180);
+    float s = tan(PI * 36 / 180);
+    float t =  200 * p * s;
+    float v = 100/ r;
+
+    //満天の星
+    bool mIsKeyPressed;
+    ofImage img;
+    int time;
+    int i;
+    int j;
+
+
+    
 };

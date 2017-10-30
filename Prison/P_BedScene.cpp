@@ -9,107 +9,212 @@
 #include "P_BedScene.hpp"
 
 void P_BedScene::setup(){
-ofBackground(0,0,0);
-ofSetVerticalSync(true);
-mIsPlayChair = false;
-mIsPlayBed = false;
-mIsPlayShelf = false;
-ofEnableSmoothing();
-    mVideo = new EventVideo();
-mVideo->setup("Prison/P_bedshadow.mp4", OF_LOOP_NONE, CONST::G_P_BED);
-ofAddListener(mVideo->mEndEvent,this,&P_BedScene::endMovieEvent);
-	//背景
-mBackground.load("Prison/P_side.png");
-
-	//ヒビ
-	mCrack.setup();
-	
-  //人影現れて消えるだけ
-    ofSetFrameRate(60);
+     ofSetFrameRate(60);
+    
+    //Mission1
+    mLamp = false;
+    rPampukin = false;
+    dTree = false;
+    eHouselight = false;
+    
+    mouse.load("nezumi.png");
+    horse.load("uma.png");
+    town.load("town2.png");
+    
+    //階層移動
+    isMove = false;
+    
+    town.load("sky.png");
+    town2.load("sky.png");
+    town3.load("town2.png");
+    
+    px = 0;
+    py = 0;
+    
+    mPosition = ofVec2f(px, py);
+    
+    vx = 0;
+    vy = 0;
+    mVelocity = ofVec2f(vx, vy);
+    
+    //Mission2
+    ofBackground(0, 0, 0);
+    isBat = false;
+    isPumpkin = false;
+    
+    //太陽月
+    isMove = false;
+    ofBackground(0, 0, 0);
+    
+    //満天の星
+    ofSetBackgroundColor(0);
     ofEnableAlphaBlending();
+    img.load("star.png");
     mIsKeyPressed = false;
-    ofSetColor(255, 255, 255, 0);
-//    shadow.load("Prison/shadow.PNG");
-    x = ofRandom(ofGetWidth() - 250);
-    y = ofRandom(ofGetHeight() - 400);
-    time = -1;
-  
-	//shadow
-  fingersMovie.setLoopState(OF_LOOP_NONE);
-//  fingersMovie.play();
 }
 
 //--------------------------------------------------------------
 void P_BedScene::update(){
-    if(mIsPlayChair){
-        mVideo->update();
+    //Mission1
+    if (mLamp == true) {
+        lamp.load("lamp.png");
+    }
+    if (rPampukin == true) {
+        pampukin.load("pampukin.png");
+    }
+    if (dTree == true) {
+        tree.load("tree.png");
+    }
+    if (eHouselight == true) {
+        houselight.load("houselight.png");
     }
     
-    //人影(現れて消えるだけ)
-    if (!mIsKeyPressed) {
+    
+    //階層移動
+    if (isMove == true) {
+        mVelocity.y += 0.01;
+        mPosition += mVelocity;
+    }
+    
+    if (mPosition.y >= ofGetHeight()) {
+        mPosition -= mVelocity;
+    }
+
+    
+     //Mission2
+    if(isBat == true){
+        bat.load("bat.png");
+    }
+    
+    if(isPumpkin == true){
+        pumpkin.load("pumpkin.png");
+    }
+
+    
+    //太陽月
+    if (isMove == true) {
+        sky.load("sky2.png");
+        px = 0;
+        py = 0;
+        mPosition = ofVec2f(px, py);
+        vx = 0;
+        vy = 0;
+        mVelocity = ofVec2f(vx, vy);
+        
+        mVelocity.y += 0.01;
+        mPosition -= mVelocity;
+    }
+    
+    if (mPosition.y <= -ofGetHeight() * 3) {
+        mPosition += mVelocity;
+    }
+
+    
+    //満天の星
+    if (mIsKeyPressed == false) {
         time++;
     }
-    else if(mIsKeyPressed){
+    else if (mIsKeyPressed == true) {
         time --;
     }
-   
-}
+   }
 
 //--------------------------------------------------------------
 void P_BedScene::draw(){
-    //背景
-    mBackground.draw(0,0,ofGetWidth(),ofGetHeight());
-	
-	//shadow
-	if(mIsPlayChair){
-		mVideo->draw(0, 0, ofGetWidth(), ofGetHeight());
-	}
-	
-    //人影(現れて消えるだけ)
-	if(mIsPlayShelf){
-    i = (int)ofGetFrameNum();//frame数
+    //Mission1
+    town.draw(0, 0, ofGetWidth(), ofGetHeight());
+    lamp.draw(0, 0, ofGetWidth(), ofGetHeight());
+    pampukin.draw(0, 0, ofGetWidth(), ofGetHeight());
+    tree.draw(0, 0, ofGetWidth(), ofGetHeight());
+    houselight.draw(0, 0, ofGetWidth(), ofGetHeight());
+    
+    mouse.draw(50, 500, 50, 50);
+    horse.draw(290, 500, 50, 50);
+    
+    ofSetColor(255);
+    
+    //階層移動
+    town.draw(mPosition.x, mPosition.y - 1100, ofGetWidth(), ofGetHeight());
+    town2.draw(mPosition.x, mPosition.y - 480, ofGetWidth(), ofGetHeight());
+    town3.draw(mPosition.x, mPosition.y , ofGetWidth(), ofGetHeight());
+    
+    //Mission2
+    if(isBat == true){
+        bat.draw(50, 500, 100, 100);
+    }
+    if(isPumpkin == true){
+        pumpkin.draw(150, 500, 100, 100);
+    }
+    
+    //太陽月
+    sky.draw(mPosition.x, mPosition.y, ofGetWidth(), ofGetHeight() * 4);
+    
+    //満天の星
+    i = ofGetFrameNum();//frame数
     if (mIsKeyPressed == true) {
-        if (i - time < 256) {
-            ofSetColor(255, 255, 255, i - time);
+        if (i - time < 256*2-1) {
+            ofSetColor(255, 255, 255, (i - time)/2);
         }
-        else if (i - time < 511) {
-            j = i - time - 255;
-            ofSetColor(255, 255, 255, 255 - 2 * j);
-        }
+        
+        
         if (i == 3000) {
             i = i / 5;
         }
+        img.draw(0, 0, ofGetWidth(), ofGetHeight());
     }
-		
-	i = (int)ofGetFrameNum();
-	if (i < 256) {
-		ofSetColor(255, 255, 255, i);
-		shadow.draw(800, 300, 250, 400);
-	}else if (i < 510) {
-		j = i - 255;
-		ofSetColor(255, 255, 255, 255 - 2 * j);
-		shadow.draw(800, 300, 250, 400);
-	}
-	}
-	
-	//crack
-	if(mIsPlayBed){
-		if(P_Crack::getCount() == -1){
-			mIsPlayBed = false;
-		}else{
-			mCrack.draw();
-			ofLogNotice() << "crack!" << P_Crack::getCount();
-		}
-	}
-}
+    
+   }
 
 //--------------------------------------------------------------
 void P_BedScene::keyPressed(int key){
-	
+    //Mission1
+    if (key == 'm') {
+        mLamp = true;
+    }
+    if (key == 'r') {
+        rPampukin = true;
+    }
+    if (key == 'd') {
+        dTree = true;
+    }
+    if (key == 'e') {
+        eHouselight = true;
+    }
+    
+    //階層移動
+    if (key == 'b') {
+        isMove = true;
+    }
+
+    //Mission2
+    if(key == 'a'){
+        isBat = true;
+    }
+    if(key == 'p'){
+        isPumpkin = true;
+    }
+    
+    //太陽月
+    if (key == 'b') {
+        isMove = true;
+    }
+    
+    //満天の星
+    if (key == 's') {
+        mIsKeyPressed = true;
+    }
+    
 }
 
 //--------------------------------------------------------------
 void P_BedScene::keyReleased(int key){
+    //Mission2
+    if(key == 'a'){
+        isBat = false;
+    }
+    if(key == 'p'){
+        isPumpkin = false;
+    }
 
 }
 
@@ -159,31 +264,3 @@ void P_BedScene::dragEvent(ofDragInfo dragInfo){
 }
 
 
-void P_BedScene::endMovieEvent(CONST::E_GIMMICK & gimmick){
-	mVideo->stop();
-   
-	if(!mIsPlayChair){
-		CONST::E_GIMMICK e_gimmick = gimmick;
-		ofNotifyEvent(mEndMovieEvent,e_gimmick);
-    }else{
-         mIsPlayChair = false;
-    }
-	
-}
-
-void P_BedScene::actionChair(){
-	mIsPlayChair = true;
-	mVideo->play();
-}
-
-void P_BedScene::actionBed(){
-	mIsPlayBed = true;
-}
-
-void P_BedScene::actionShelf(){
-	mIsPlayShelf = true;
-}
-
-void P_BedScene:: exit(){
-    ofRemoveListener(mVideo->mEndEvent, this, &P_BedScene::endMovieEvent);
-}

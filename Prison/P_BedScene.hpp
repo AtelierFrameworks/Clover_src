@@ -10,7 +10,6 @@
 #define P_BedScene_hpp
 
 #include <stdio.h>
-#include "P_Crack.hpp"
 #endif /* P_BedScene_hpp */
 
 #include "BaseScene.hpp"
@@ -28,25 +27,57 @@ class P_BedScene : public BaseScene{
     void mouseExited(int x, int y);
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
-    void gotMessage(ofMessage msg);
-    void endMovieEvent(CONST::E_GIMMICK & gimmick);
-    void actionChair();
-    void actionBed();
-    void actionShelf();
-    void exit();
-private:
-    ofVideoPlayer fingersMovie;
-    ofImage mBackground;
-    bool mIsKeyPressed;
-    bool mIsPlayChair;
-    bool mIsPlayBed;
-    bool mIsPlayShelf;
-    ofImage shadow;
+    
+    //Mission1
+    ofImage town;
+    
+    ofImage lamp;
+    ofImage houselight;
+    ofImage tree;
+    ofImage pampukin;
+    
+    ofImage mouse;
+    ofImage horse;
+    
+    bool mLamp;
+    bool eHouselight;
+    bool dTree;
+    bool rPampukin;
+    bool hTower;
 
+   //階層移動
+    ofVec2f mPosition;
+    ofVec2f mVelocity;
+    
+    ofImage town;
+    ofImage town2;
+    ofImage town3;
+    
+    ofImage sky;
+    
+    float px;
+    float py;
+    float vx;
+    float vy;
+    
+    bool isMove;
+    
+     //Mission2
+    ofImage bat;
+    ofImage pumpkin;
+    bool isBat;
+    bool isPumpkin;
+    
+    //太陽月
+    ofImage sky;
+    bool isMove;
+    
+    //満天の星
+    bool mIsKeyPressed;
+    ofImage img;
+    int time;
     int i;
     int j;
     
-    float x,y,time;
-    
-    P_Crack mCrack;
+
 };

@@ -9,44 +9,26 @@
 #include "P_floor.hpp"
 
 void P_floor::setup(){
-
-    //床のひび割れ
-    ofBackground(0,0,0);
-    ofSetVerticalSync(true);
-    ofEnableSmoothing();
-//    fingersMovie.load("yuka.mov");
-//    fingersMovie.setLoopState(OF_LOOP_NONE);
-//    fingersMovie.play();
-    //背景
-    mBackground.load("Prison/P_floor.png");
-    
-    mCrack.setup();
-    mIsPlayBed = false;
-
+    move = false;
+    floor.load("floor1.png");
 }
 
 //--------------------------------------------------------------
-void P_floor::update(){
-//    fingersMovie.update();
-    //crack
-    if(mIsPlayBed){
-        if(P_Crack::getCount() == -1){
-            mIsPlayBed = false;
-        }else{
-            mCrack.draw();
-        }
+void ::update(){
+    if (move == true) {
+        floor.load("floor2.png");
     }
 }
 
 //--------------------------------------------------------------
 void P_floor::draw(){
-    mBackground.draw(0,0,ofGetWidth(),ofGetHeight());
-
-}
+    floor.draw(0, 0, ofGetWidth(), ofGetHeight()); }
 
 //--------------------------------------------------------------
 void P_floor::keyPressed(int key){
-
+    if (key = 'f') {
+        move = true;
+    }
 }
 
 //--------------------------------------------------------------

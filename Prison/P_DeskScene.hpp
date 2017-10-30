@@ -10,9 +10,7 @@
 #define P_DeskScene_hpp
 
 #include "BaseScene.hpp"
-#include "P_Crack.hpp"
 #include <stdio.h>
-#include "ofxSPK.h"
 #endif /* P_DeskScene_hpp */
 class P_DeskScene : public BaseScene{
     void setup();
@@ -31,34 +29,49 @@ class P_DeskScene : public BaseScene{
     void mouseExited(int x, int y);
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
-    void gotMessage(ofMessage msg);
-    void setupFire();
-    void actionBed();
-    void actionChair();
-private:
-    ofVideoPlayer mShadowMovie;
-    ofSoundPlayer mySound;
-    bool frameByframe;
-    ofImage mBackground;
-    bool gIsKeyPressed;
-    bool lIsKeyPressed;
-    bool mIsPlayBed;
-    bool mIsPlayDesk;
-    bool mIsPlayChair;
-    //fireBall
+    
+    //Mission1
+    ofImage town;
+    
+    ofImage lamp;
+    ofImage houselight;
+    ofImage tree;
+    ofImage pampukin;
+    
+    ofImage rabbit;
+    
+    bool mLamp;
+    bool eHouselight;
+    bool dTree;
+    bool rPampukin;
+    
+    
+    //Mission2
     ofVec2f mPosition;
     ofVec2f mVelocity;
-    float x;
-    float y;
+    
+    ofImage sky;
+    
+    
+    float px;
+    float py;
     float vx;
     float vy;
     
-    ofxSPK::System sys;
-    ofxSPK::Group group;
-    ofImage sprite;
-    ofxSPK::Modifier rot;
+    ofImage Sun;
+    float nx = ofGetWidth() / 2-200;
+    float ny;
+    float size_x = 300;
+    float size_y = 300;
+    float color = 128;
     
-    //bed crack
-    P_Crack mCrack;
+    bool isMove;
     
-    };
+    //満天の星
+    bool mIsKeyPressed;
+    ofImage img;
+    int time;
+    int i;
+    int j;
+
+};
