@@ -10,6 +10,7 @@
 
 void P_BedScene::setup(){
      ofSetFrameRate(60);
+     ofSetBackgroundColor(0);
     
     //Mission1
     mLamp = false;
@@ -38,16 +39,13 @@ void P_BedScene::setup(){
     mVelocity = ofVec2f(vx, vy);
     
     //Mission2
-    ofBackground(0, 0, 0);
     isBat = false;
     isPumpkin = false;
     
     //太陽月
     isMoved = false;
-    ofBackground(0, 0, 0);
     
     //満天の星
-    ofSetBackgroundColor(0);
     ofEnableAlphaBlending();
     img.load("star.png");
     mIsKeyPressed = false;

@@ -8,6 +8,7 @@
 #include "P_Scene.hpp"
 void P_Scene::setup(){
     ofSetFrameRate(60);
+     ofSetBackgroundColor(0);
     
     //Mission1
     mLamp = false;
@@ -36,13 +37,11 @@ void P_Scene::setup(){
     mVelocity = ofVec2f(vx, vy);
     
     //Mission2
-    ofBackground(0, 0, 0);
     isBat = false;
     isPumpkin = false;
     
     //太陽月
     isMoved = false;
-    ofBackground(0, 0, 0);
 
     //Mission3
     drawline1 = false;
@@ -52,10 +51,7 @@ void P_Scene::setup(){
     drawline5 = false;
      isBat2 = false;
     
-    ofBackground(0, 0, 0);
-    
     //満天の星
-    ofSetBackgroundColor(0);
     ofEnableAlphaBlending();
     img.load("star.png");
     mIsKeyPressed = false;
@@ -137,6 +133,12 @@ void P_Scene::update(){
         mPosition += mVelocity;
     }
     
+    //Mission3
+    if(isBat2 == true){
+        bat.load("bat.png");
+    }
+
+    
     //満天の星
     if (mIsKeyPressed == false) {
         time++;
@@ -182,12 +184,13 @@ void P_Scene::draw(){
     //Mission3
     if(isBat2 == true){
         ofSetColor(255, 0, 0);
-        bat.draw(w, h, 100, 100);
-        ofSetColor(0);
-        bat.draw(w - 200 * p, h + 200 * q, 100, 100);
-        bat.draw(w + 100, h + 200 * q - t - v, 100, 100);
-        bat.draw(w - 100, h + 200 * q - t - v, 100, 100);
-        bat.draw(w + 200 * p, h + 200 * q, 100, 100);
+        bat.draw(w - 50, h - 50, 100, 100);
+        ofSetColor(255);
+        bat.draw(w - 200 * p - 50, h + 200 * q - 50, 100, 100);
+        bat.draw(w + 100 - 50, h + 200 * q - t - v - 50, 100, 100);
+        bat.draw(w - 100 - 50, h + 200 * q - t - v - 50, 100, 100);
+        bat.draw(w + 200 * p - 50, h + 200 * q - 50, 100, 100);
+
     }
     
     
@@ -280,7 +283,7 @@ void P_Scene::keyPressed(int key){
     if(key =='5'){
         drawline5 = true;
     }
-    if(key = '6'){
+    if(key == '6'){
         isBat2 = true;
     }
 
