@@ -16,9 +16,12 @@ void P_Scene::setup(){
     dTree = false;
     hTower = false;
     eHouselight = false;
-    //ゾウ、イヌ
-    elephant.load("elephant.png");
-    dog.load("inu.png");
+   
+    //ウサギ
+    rabbit.load("usa.png");
+    town.load("town1.png");
+    bat.load("bat.png");
+
     
     //階層移動
     isMove = false;
@@ -160,8 +163,8 @@ void P_Scene::draw(){
     tower.draw(0, 0, ofGetWidth(), ofGetHeight());
     houselight.draw(0, 0, ofGetWidth(), ofGetHeight());
     
-    dog.draw(210, 500, 50, 50);
-    elephant.draw(370, 500, 50, 50);
+    rabbit.draw(w / 2 - size / 2, h + length * q - t - v - size / 2, size, size);
+    bat.draw(w / 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     
     ofSetColor(255);
     
@@ -172,10 +175,10 @@ void P_Scene::draw(){
     
     //Mission2
     if(isBat == true){
-        bat.draw(50, 500, 100, 100);
+        bat.draw(w - length / 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     }
     if(isPumpkin == true){
-        pumpkin.draw(150, 500, 100, 100);
+        pumpkin.draw(w + length / 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     }
     
     //太陽月
@@ -183,13 +186,14 @@ void P_Scene::draw(){
     
     //Mission3
     if(isBat2 == true){
+        
         ofSetColor(255, 0, 0);
-        bat.draw(w - 50, h - 50, 100, 100);
+        bat.draw(w - size / 2, h - size / 2, size, size);//上
         ofSetColor(255);
-        bat.draw(w - 200 * p - 50, h + 200 * q - 50, 100, 100);
-        bat.draw(w + 100 - 50, h + 200 * q - t - v - 50, 100, 100);
-        bat.draw(w - 100 - 50, h + 200 * q - t - v - 50, 100, 100);
-        bat.draw(w + 200 * p - 50, h + 200 * q - 50, 100, 100);
+        bat.draw(w - length * p - size / 2, h + length * q - size / 2, size, size);//左下
+        bat.draw(w + length / 2 - size / 2, h + length * q - t - v - size / 2, size, size);//右
+        bat.draw(w - length / 2 - size / 2, h + length * q - t - v - size / 2, size, size);//左
+        bat.draw(w + length * p - size / 2, h + length * q - size / 2, size, size);//右下
 
     }
     
@@ -197,19 +201,19 @@ void P_Scene::draw(){
     ofSetColor(255, 255, 0);
     
     if(drawline1 == true){
-        ofDrawLine(w, h, w - 200 * p, h + 200 * q);
+        ofDrawLine(w, h, w - length * p, h + length * q);
     }
     if(drawline2 == true){
-        ofDrawLine(w - 200 * p, h + 200 * q, w + 100, h + 200 * q - t - v);
+        ofDrawLine(w - length * p, h + length * q, w + length / 2, h + length * q - t - v);
     }
     if(drawline3 == true){
-        ofDrawLine(w + 100, h + 200 * q - t - v, w - 100, h + 200 * q - t - v);
+        ofDrawLine(w + length / 2, h + length * q - t - v, w - length / 2, h + length * q - t - v);
     }
     if(drawline4 == true){
-        ofDrawLine(w - 100, h + 200 * q - t - v, w + 200 * p, h + 200 * q);
+        ofDrawLine(w - length / 2, h + length * q - t - v, w + length * p, h + length * q);
     }
     if(drawline5 == true){
-        ofDrawLine(w + 200 * p, h + 200 * q, w, h);
+        ofDrawLine(w + length * p, h + length * q, w, h);
     }
 
     

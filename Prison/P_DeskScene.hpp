@@ -30,6 +30,19 @@ class P_DeskScene : public BaseScene{
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     
+    float size = 100;//反応箇所の画像サイズ（カボチャ、コウモリ）
+    float length = 200;//星の一辺の長さ
+    float w = ofGetWidth() / 2;
+    float h = ofGetHeight() / 2;
+    
+    float p = cos(PI * 72 / 180);
+    float q = sin(PI * 72 / 180);
+    float r = tan(PI * 54 / 180);
+    float s = tan(PI * 36 / 180);
+    float t =  200 * p * s;
+    float v = 100/ r;
+
+    
     //Mission1
     ofImage town;
     
@@ -38,7 +51,8 @@ class P_DeskScene : public BaseScene{
     ofImage tree;
     ofImage pampukin;
     
-    ofImage rabbit;
+    ofImage elephant;
+    ofImage dog;
     
     bool mLamp;
     bool eHouselight;

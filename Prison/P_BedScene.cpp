@@ -18,8 +18,11 @@ void P_BedScene::setup(){
     dTree = false;
     eHouselight = false;
     
+   
     mouse.load("nezumi.png");
     horse.load("uma.png");
+    bat.load("bat.png");
+    pumpkin.load("pumpkin.png");
     town.load("town2.png");
     
     //階層移動
@@ -44,6 +47,9 @@ void P_BedScene::setup(){
     
     //太陽月
     isMoved = false;
+    
+    moon.load("moon.png");
+    cloud.load("black.png");
     
     //満天の星
     ofEnableAlphaBlending();
@@ -106,6 +112,17 @@ void P_BedScene::update(){
     if (mPosition.y <= -ofGetHeight() * 3) {
         mPosition += mVelocity;
     }
+    
+    if (m_py <= 0 && c_px < ofGetWidth() / 2 - 230) {
+        c_px += 0.5;
+    }
+    
+    if (m_py > 0) {
+        m_px -= 0.25;
+        m_py -= 1;
+        m2_px += 0.5;
+        m2_py += 0.5;
+    }
 
     
     //満天の星
@@ -126,8 +143,11 @@ void P_BedScene::draw(){
     tree.draw(0, 0, ofGetWidth(), ofGetHeight());
     houselight.draw(0, 0, ofGetWidth(), ofGetHeight());
     
-    mouse.draw(50, 500, 50, 50);
-    horse.draw(290, 500, 50, 50);
+    mouse.draw(w / 3 - size / 2, h + length * q - t - v - size /2, size, size);
+    horse.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
+    bat.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
+    pumpkin.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
+
     
     ofSetColor(255);
     
@@ -138,14 +158,19 @@ void P_BedScene::draw(){
     
     //Mission2
     if(isBat == true){
-        bat.draw(50, 500, 100, 100);
+        bat.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     }
     if(isPumpkin == true){
-        pumpkin.draw(150, 500, 100, 100);
+        pumpkin.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
     }
     
     //太陽月
     sky.draw(mPosition.x, mPosition.y, ofGetWidth(), ofGetHeight() * 4);
+    
+    moon.draw(m_px, m_py, m2_px, m2_py);
+    if (m_py <= 0) {
+        cloud.draw(c_px, c_py, 450, 450);
+    }
     
     //満天の星
     i = ofGetFrameNum();//frame数

@@ -18,7 +18,12 @@ void P_DeskScene::setup(){
     dTree = false;
     eHouselight = false;
     
-    rabbit.load("usa.png");
+    //ゾウ、イヌ
+    elephant.load("elephant.png");
+    dog.load("inu.png");
+    bat.load("bat.png");
+    pumpkin.load("pumpkin.png");
+   
     town.load("town3.png");
     
     //階層移動
@@ -134,7 +139,10 @@ void P_DeskScene::draw(){
     tree.draw(0, 0, ofGetWidth(), ofGetHeight());
     houselight.draw(0, 0, ofGetWidth(), ofGetHeight());
     
-    rabbit.draw(130, 500, 50, 50);
+    dog.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
+    elephant.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
+    bat.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
+    pumpkin.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     
     ofSetColor(255);
     
@@ -145,10 +153,10 @@ void P_DeskScene::draw(){
     
     //Mission2
     if(isBat == true){
-        bat.draw(50, 500, 100, 100);
+        bat.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     }
     if(isPumpkin == true){
-        pumpkin.draw(150, 500, 100, 100);
+        pumpkin.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
     }
 
     
