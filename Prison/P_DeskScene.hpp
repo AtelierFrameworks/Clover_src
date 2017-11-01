@@ -53,7 +53,7 @@ class P_DeskScene : public BaseScene{
     
     ofImage elephant;
     ofImage dog;
-    
+        
     bool mLamp;
     bool eHouselight;
     bool dTree;

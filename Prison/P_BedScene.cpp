@@ -21,8 +21,8 @@ void P_BedScene::setup(){
    
     mouse.load("nezumi.png");
     horse.load("uma.png");
-    bat.load("bat.png");
-    pumpkin.load("pumpkin.png");
+    bat.load("bat2.png");
+    pumpkin.load("pumpkin2.png");
     town.load("town2.png");
     
     //階層移動

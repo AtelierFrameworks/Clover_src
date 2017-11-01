@@ -40,6 +40,10 @@ public:
     float t =  200 * p * s;
     float v = 100/ r;
 
+    //挑戦状
+    ofVideoPlayer challenge_Movie;
+    bool  frameByframe;
+    
     //Mission１
     ofImage town;
     

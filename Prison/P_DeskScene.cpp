@@ -21,8 +21,8 @@ void P_DeskScene::setup(){
     //ゾウ、イヌ
     elephant.load("elephant.png");
     dog.load("inu.png");
-    bat.load("bat.png");
-    pumpkin.load("pumpkin.png");
+    bat.load("bat2.png");
+    pumpkin.load("pumpkin2.png");
    
     town.load("town3.png");
     

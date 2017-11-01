@@ -10,6 +10,13 @@ void P_Scene::setup(){
     ofSetFrameRate(60);
      ofSetBackgroundColor(0);
     
+    //挑戦状
+    ofSetVerticalSync(true);
+    frameByframe = false;
+    ofEnableSmoothing();
+    challenge_Movie.loadMovie("challenge_Movie.m4v");
+    challenge_Movie.play();
+    
     //Mission1
     mLamp = false;
     rPampukin = false;
@@ -20,7 +27,7 @@ void P_Scene::setup(){
     //ウサギ
     rabbit.load("usa.png");
     town.load("town1.png");
-    bat.load("bat.png");
+    bat.load("bat2.png");
 
     
     //階層移動
@@ -64,6 +71,9 @@ void P_Scene::setup(){
 
 //--------------------------------------------------------------
 void P_Scene::update(){
+    //挑戦状
+    challenge_Movie.update();
+    
     //Mission1
     if (mLamp == true) {
         lamp.load("lamp.png");
@@ -155,6 +165,12 @@ void P_Scene::update(){
 
 //--------------------------------------------------------------
 void P_Scene::draw(){
+    //挑戦状
+    ofSetColor(0xFFFFFF);
+    challenge_Movie.draw(0, 0, ofGetWidth(), ofGetHeight());
+    ofSetHexColor(0x000000);
+
+    
     //Mission1
     town.draw(0, 0, ofGetWidth(), ofGetHeight());
     lamp.draw(0, 0, ofGetWidth(), ofGetHeight());
