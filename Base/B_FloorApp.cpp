@@ -9,22 +9,30 @@
 #include "B_FloorApp.hpp"
 void B_FloorApp::setup(){
     BaseApp::setup();
-    
+    move = false;
+    floor.load("floor1.png");
 }
 
 //--------------------------------------------------------------
 void B_FloorApp::update(){
     BaseApp::update();
+    if (move == true) {
+        floor.load("floor2.png");
+    }
 }
 
 //--------------------------------------------------------------
 void B_FloorApp::draw(){
     BaseApp::draw();
+    floor.draw(0, 0, ofGetWidth(), ofGetHeight()); 
 }
 
 //--------------------------------------------------------------
 void B_FloorApp::keyPressed(int key){
     BaseApp::keyPressed(key);
+    if (key == 'f') {
+        move = true;
+    }
 }
 
 //--------------------------------------------------------------
@@ -78,36 +86,7 @@ void B_FloorApp::dragEvent(ofDragInfo dragInfo){
 }
 
 void B_FloorApp::changeScene(){
-    BaseScene *newScene;
-
-    switch (getNowScene()) {
-        case CONST::PRISON:
-            newScene = new P_floor();
-            mScenes.push_back(newScene);
-            mScenes[0]->setup();
-            break;
-        case CONST::MAGIC:
-            newScene = new M_FloorScene();
-            mScenes.push_back(newScene);
-            mScenes[0]->setup();
-            ofAddListener(mScenes[0]->mEndMovieEvent,this,&B_FloorApp::endMovie);
-            break;
-        case CONST::NONE:
-           mScenes[0] -> exit();
-            if(getPreScene() == CONST::MAGIC){
-                ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_FloorApp::endMovie);            }
-//            delete mScenes[0];
-            mScenes.clear();
-            ofBackground(80);
-            break;
-        default:
-            break;
-    }
-//    if(mScenes.size() > 1){
-//        delete mScenes[0];
-//        mScenes.erase(mScenes.begin());
-//    }
-    }
+}
 
 
 void B_FloorApp::endMovie(CONST::E_GIMMICK & gimmick){

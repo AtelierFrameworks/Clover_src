@@ -207,110 +207,7 @@ void ArduinoManager:: judgeData(){
                 break;
         }
     }
-    
-//    ofLogNotice() << "judge" << mValue.size() ;
-//    string log ;
-//    if(mValue.size() > 9){
-//        for(int value :mValue){
-//            log += ofToString(value) + ",";
-//        }
-//        ofLogNotice() << "over" << log;
-//    }
-//    std::vector <CONST::E_PARTS> isActionParts;
-//    //bed
-//    if(mValue[0] > 1 ){
-//        mPastTimeData[0] ++;
-//        if(mPastTimeData[0] > 60){
-//            meisaiNum++;
-//            log = ofToString(getLogNumber())+ "," + ofToString(meisaiNum) + ",action," + getLogDay() + "," + "bed," + BaseApp::getSceneName();
-//            
-//            if(mIsCurtainOpen && !mIsPlayBed){
-//                isActionParts.push_back(CONST::P_BED);
-//                mIsPlayBed = true;
-//                mPastFalseTime[0] = 0;
-//                log += ",YES";
-//            }else{
-//                log += ",NO";
-//            }
-//           mLogDataFile << log << endl;
-//        }
-//    }else{
-//        mPastTimeData[0] = 0;
-//        mPastFalseTime[0] ++;
-//
-//        if(mIsPlayBed && mPastFalseTime[0] >= 60){
-//            mIsPlayBed = false;
-//        }
-//    }
-//    //chair
-//    if(mValue[2] > 5){
-//        mPastTimeData[1] ++;
-//        if(mPastTimeData[1] > 60){
-//            meisaiNum++;
-//            log = ofToString(getLogNumber())+ "," + ofToString(meisaiNum) + ",action," + getLogDay() + "," + "bed," + BaseApp::getSceneName();
-//
-//            
-//            if(mIsCurtainOpen){
-//                isActionParts.push_back(CONST::P_CHAIR);
-//                log += ",YES";
-//            }else{
-//                log += ",NO";
-//            }
-//          mLogDataFile << log <<endl;
-//        }
-//    }else{
-//        mPastTimeData[1] = 0;
-//    }
-//
-//    //shelf
-//    if(mValue[1] > 3 ){
-//        isActionParts.push_back(CONST::P_SHELF);
-//        mPastTimeData[2] ++;
-//        if(mPastTimeData[2] > 60){
-//            meisaiNum++;
-//           log = ofToString(getLogNumber())+ "," + ofToString(meisaiNum) + ",action," + getLogDay() + "," + "shelf," + BaseApp::getSceneName() ;
-//            if(mIsCurtainOpen){
-//            isActionParts.push_back(CONST::P_SHELF);
-//                log+= ",YES";
-//            }else{
-//                log+= ",NO";
-//            }
-//             mLogDataFile << log <<endl;
-//        }
-//    }else{
-//        mPastTimeData[2] = 0;
-//    }
-//
-//    //curtain
-//    if(mValue[3] > 7){
-//        mPastTimeData[3] ++;
-//        if(mPastTimeData[3] > 60){
-//          
-//            logNumber++;
-//            meisaiNum = 0;
-//            log = ofToString(getLogNumber()) + "," + ofToString(meisaiNum) + ",setup," + getLogDay() + "," + "curtain," +  BaseApp::getSceneName();
-//            if(!mIsCurtainOpen){
-//            isActionParts.push_back(CONST::P_CURTAIN_OPEN);
-//                mIsCurtainOpen = true;
-//                log += ",YES";
-//                    mLogDataFile << log  <<endl;
-//            }
-//            
-//        }
-//         }else{
-//             mPastTimeData[3] = 0;
-//                    meisaiNum++;
-//                     log = ofToString(getLogNumber()) + "," + ofToString(meisaiNum) + ",exit," + getLogDay() + "," + "curtain,"+ BaseApp::getSceneName();
-//                     
-//                     if(mIsCurtainOpen){
-//                         mIsCurtainOpen = false;
-//                        log += ",YES";
-//                         isActionParts.push_back(CONST::P_CURTAIN_CLOSE);
-//                         mLogDataFile << log <<endl;
-//                     }
-//    
-//    }
-//    ofLogNotice() << "notify" << isActionParts;
+  
     ofNotifyEvent(mSendEvent, isActionParts);
 }
 
@@ -323,7 +220,6 @@ string ArduinoManager::getLogDay(){
 }
 int ArduinoManager::getLogNumber(){return logNumber;}
 void ArduinoManager::setLogNumber(int num){logNumber = num;}
-//void BaseApp::setArduinoManager(shared_ptr<ArduinoManager> manager){mArduinoManager = manager;}
 
 
 

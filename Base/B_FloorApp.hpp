@@ -11,9 +11,6 @@
 #include "ofMain.h"
 #endif /* B_FloorApp_hpp */
 #include "BaseApp.hpp"
-#include "P_floor.hpp"
-#include "M_FloorScene.hpp"
-class BaseApp;
 class B_FloorApp : public BaseApp{
     
 public:
@@ -35,5 +32,6 @@ public:
     void endMovie(CONST::E_GIMMICK & gimmick);
     
     ofEvent<CONST::E_GIMMICK> mMovieEndEvent;
-    
+    ofImage floor;
+    bool move;
 };

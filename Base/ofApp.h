@@ -2,19 +2,36 @@
 
 
 #include "P_Scene.hpp"
-#include "Magic/M_Scene.hpp"
 #include "B_BedApp.hpp"
 #include "BaseApp.hpp"
 #include "B_DeskApp.hpp"
 #include "B_FloorApp.hpp"
-#include "ofxLeapMotion2.h"
 #include "ArduinoManager.hpp"
 class ofApp : public BaseApp{
     
 	public:
-		void setup();
-		void update();
-		void draw();
+    void setup();
+    void setupMission1();
+    void setupStair();
+    void setupMission2();
+    void setupSun();
+    void setupMission3();
+    void setupStar();
+    void update();
+    void updateMission1();
+    void updateStair();
+    void updateMission2();
+    void updateSun();
+    void updateMission3();
+    void updateStar();
+    void draw();
+    void drawMission1();
+    void drawStair();
+    void drawMission2();
+    void drawSun();
+    void drawMission3();
+    void drawStar();
+
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -34,8 +51,6 @@ class ofApp : public BaseApp{
         void changeScene();
         void endMovie(CONST::E_GIMMICK & app);
         void receiveData(std::vector<CONST::E_PARTS> & isActionParts);
-        void magicStair(bool & flg);
-        void magicShelf(bool & flg);
 //      bool judgeGimmick();
         ofFile mLogDataFile;
         ArduinoManager mArduinoManager;
@@ -49,7 +64,85 @@ class ofApp : public BaseApp{
 private:
    // std::vector<GimmickDataModel> mGimmckModels;
     ofxLeapMotion mLeap; // Leap Motionのメインクラスをインスタンス化
-    std::vector <ofxLeapMotionSimpleHand> simpleHands; // シンプルな手のモデルのvector配列
+
     
     ofEasyCam mCam;
+    
+    //
+    float size = 100;//反応箇所の画像サイズ（カボチャ、コウモリ）
+    float length = 200;//星の一辺の長さ
+    float w = ofGetWidth() / 2;
+    float h = ofGetHeight() / 2;
+    
+    float p = cos(PI * 72 / 180);
+    float q = sin(PI * 72 / 180);
+    float r = tan(PI * 54 / 180);
+    float s = tan(PI * 36 / 180);
+    float t =  200 * p * s;
+    float v = 100/ r;
+    
+    //挑戦状
+    ofVideoPlayer challenge_Movie;
+    bool  frameByframe;
+    
+    //Mission１
+    ofImage town;
+    
+    ofImage rabbit;
+    
+    
+    ofImage lamp;
+    ofImage houselight;
+    ofImage tree;
+    ofImage pampukin;
+    ofImage tower;
+    
+    bool mLamp;
+    bool eHouselight;
+    bool dTree;
+    bool rPampukin;
+    bool hTower;
+    
+    //階層移動
+    ofVec2f mPosition;
+    ofVec2f mVelocity;
+    
+    ofImage town1;
+    ofImage town2;
+    ofImage town3;
+    
+    float px;
+    float py;
+    float vx;
+    float vy;
+    
+    bool isMove;
+    
+    //Mission2
+    ofImage bat;
+    ofImage pumpkin;
+    bool isBat;
+    bool isPumpkin;
+    
+    //太陽月
+    ofImage sky;
+    bool isMoved;
+    
+    //Mission3
+    bool drawline1;
+    bool drawline2;
+    bool drawline3;
+    bool drawline4;
+    bool drawline5;
+    
+    bool isBat2;
+    
+    
+    //満天の星
+    bool mIsKeyPressed;
+    ofImage img;
+    int time;
+    int i;
+    int j;
+
 };
