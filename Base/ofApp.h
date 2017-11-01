@@ -31,7 +31,7 @@ class ofApp : public BaseApp{
     void drawSun();
     void drawMission3();
     void drawStar();
-
+    void drawTimer();
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -144,5 +144,15 @@ private:
     int time;
     int i;
     int j;
+    
+    //Timer
+    double sec = 0;
+    
+    float min = 3;
+    
+    string time;
+    
+    ofxTrueTypeFontUC Timer;
+    bool isTimer = true;
 
 };

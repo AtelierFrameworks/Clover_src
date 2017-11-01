@@ -39,7 +39,7 @@ void ofApp::setup(){
  
     
     
-    
+    Timer.loadFont("MountainsofChristmas.ttf", 200);
     
    
 }
@@ -118,6 +118,10 @@ void ofApp::update(){
     
     //挑戦状
     challenge_Movie.update();
+    
+    if (isTimer) {
+        sec = sec -0.016666;
+    }
 }
 
 void ofApp::updateMission1(){
@@ -320,6 +324,43 @@ void ofApp::drawStar(){
     }
 
 }
+
+void ofApp::drawTimer(){
+    
+    if (min<=0&&sec<=30) {
+        ofSetColor(255, 0, 0);
+        if (sec<=9.5) {
+            time = "0" + ofToString(min, 0) + ":" + "0" + ofToString(sec, 0);
+        }
+        else {
+            time = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
+        }
+        Timer.drawString(time, (ofGetWidth() / 2) - 150, ofGetHeight() / 2);
+    }
+    
+    else {
+        ofSetColor(255, 255, 255);
+        if (sec <=9.5) {
+            time = "0" + ofToString(min, 0) + ":" + "0" +ofToString(sec, 0);
+        }
+        else {
+            time = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
+        }
+        Timer.drawString(time, (ofGetWidth() / 2) - 150, ofGetHeight() / 2);
+    }
+    if (sec <= 0.5 && min == 0) {
+        
+        isTimer = false;
+    }
+    if (isTimer) {
+        if (sec <= 0.5) {
+            min--;
+            sec = 59;
+        }
+    }
+
+}
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     BaseApp::keyPressed(key);
@@ -441,6 +482,14 @@ void ofApp::keyPressed(int key){
     //満天の星
     if (key == 's') {
         mIsKeyPressed = true;
+    }
+
+    if (key=='n') {
+        isTimer = false;
+        
+    }
+    if (key=='v') {
+        isTimer = true;
     }
 
 
