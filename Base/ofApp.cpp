@@ -346,7 +346,7 @@ void ofApp::drawTimer(){
         else {
             time = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
         }
-        Timer.drawString(time, (ofGetWidth() / 2) - 150, ofGetHeight() / 2);
+        Timer.drawString(time, (ofGetWidth() / 2) - 150, 50);
     }
     if (sec <= 0.5 && min == 0) {
         
