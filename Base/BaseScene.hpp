@@ -10,7 +10,6 @@
 #define BaseScene_hpp
 #include <stdio.h>
 #include "ofMain.h"
-#include "ofxLeapMotion2.h"
 #include <vector>
 #include "EventVideo.hpp"
 #include "CONST.h"
@@ -34,8 +33,6 @@ public:
     virtual void windowResized(int w, int h);
     virtual void dragEvent(ofDragInfo dragInfo);
     virtual void gotMessage(ofMessage msg);
-    
-    virtual void setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands);
     virtual void actionDesk();
     virtual void actionChair();
     virtual void actionBed();
@@ -50,6 +47,6 @@ public:
     EventVideo* mVideo;
     ofEvent<CONST::E_GIMMICK> mEndMovieEvent;
     bool isAction = false;
-    std::vector <ofxLeapMotionSimpleHand> mSimpleHands;
+  
 
 };

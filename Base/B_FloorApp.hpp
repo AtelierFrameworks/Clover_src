@@ -29,9 +29,9 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void changeScene();
-    void endMovie(CONST::E_GIMMICK & gimmick);
+    void endMovie(CONST::E_MOVIE & movie);
     
-    ofEvent<CONST::E_GIMMICK> mMovieEndEvent;
+    ofEvent<CONST::E_MOVIE> mMovieEndEvent;
     ofImage floor;
     bool move;
 };

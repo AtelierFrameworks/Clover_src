@@ -45,10 +45,10 @@ public:
     void gotMessage(ofMessage msg);
     void changeScene();
     void actionBed();
-    void endMovie(CONST::E_GIMMICK & gimmick);
-    void setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands);
+    void endMovie(CONST::E_MOVIE & movie);
+  
     void stairEvent(bool & flg);
-    ofEvent<CONST::E_GIMMICK> mMovieEndEvent;
+    ofEvent<CONST::E_MOVIE> mMovieEndEvent;
     ofEvent<bool>  mStairEvent;
     
     float size = 100;//反応箇所の画像サイズ（カボチャ、コウモリ）

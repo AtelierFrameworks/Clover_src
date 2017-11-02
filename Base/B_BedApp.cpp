@@ -323,23 +323,21 @@ void B_BedApp::dragEvent(ofDragInfo dragInfo){
 }
 
 void B_BedApp::changeScene(){
-    BaseScene *newScene;
+   
    
 }
 
 void B_BedApp::actionBed(){
-    mScenes[0] -> actionBed();
+   
 }
 
-void B_BedApp::endMovie(CONST::E_GIMMICK & gimmick){
+void B_BedApp::endMovie(CONST::E_MOVIE &  movie){
 //  ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_BedApp::endMovie);
-    CONST::E_GIMMICK e_gimmick = gimmick;
-    ofNotifyEvent(mMovieEndEvent, e_gimmick);
+    CONST::E_MOVIE e_movie = movie;
+    ofNotifyEvent(mMovieEndEvent, e_movie);
 }
 
-void B_BedApp::setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands){
-    mScenes[0] -> setLeapData(simpleHands);
-}
+
 
 void B_BedApp::stairEvent(bool & flg){
     bool a = flg;

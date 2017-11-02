@@ -8,9 +8,8 @@
 
 #include "BaseApp.hpp"
 
-static CONST::E_SCENE nowScene = CONST::NONE;
-static CONST::E_SCENE preScene;
-
+static CONST::E_MISSION nowMission;
+static std::vector<CONST::E_SENSOR> nowSensor;
 
 void BaseApp::setup(){
     ofBackground(80);
@@ -18,112 +17,73 @@ void BaseApp::setup(){
 
 //--------------------------------------------------------------
 void BaseApp::update(){
-    if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->update();
-    }
+  
 }
 
 //-----------------------
 
 void BaseApp::draw(){
-if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->draw();
-    }
+
 }
 
 //--------------------------------------------------------------
 void BaseApp::keyPressed(int key){
- if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->keyPressed(key);
-    }
+ 
 }
 
 //--------------------------------------------------------------
 void BaseApp::keyReleased(int key){
- if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->keyReleased(key);
-    }
+ 
 }
 
 //--------------------------------------------------------------
 void BaseApp::mouseMoved(int x, int y ){
-  if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->mouseMoved(x, y);
-    }
+  
 }
 
 //--------------------------------------------------------------
 void BaseApp::mouseDragged(int x, int y, int button){
-  if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->mouseDragged(x, y, button);
-    }
+  
 }
 
 //--------------------------------------------------------------
 void BaseApp::mousePressed(int x, int y, int button){
- if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->mousePressed(x, y, button);
-    }
+ 
 }
 
 //--------------------------------------------------------------
 void BaseApp::mouseReleased(int x, int y, int button){
- if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->mouseReleased(x, y, button);
-    }
+
 }
 
 //--------------------------------------------------------------
 void BaseApp::mouseEntered(int x, int y){
- if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->mouseEntered(x, y);
-    }
+
 }
 
 //--------------------------------------------------------------
 void BaseApp::mouseExited(int x, int y){
- if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->mouseExited(x, y);
-    }
+ 
 }
 
 //--------------------------------------------------------------
 void BaseApp::windowResized(int w, int h){
-if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->windowResized(w, h);
-    }
+
 }
 
 //--------------------------------------------------------------
 void BaseApp::gotMessage(ofMessage msg){
- if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->gotMessage(msg);
-    }
+
 }
 
 //--------------------------------------------------------------
 void BaseApp::dragEvent(ofDragInfo dragInfo){
-   if(nowScene != CONST::NONE && mScenes.size() > 0){
-        mScenes.at(0)->dragEvent(dragInfo);
-    }
-}
+   }
 
 void BaseApp::exit(){
-    nowScene = CONST::NONE;
-}
+  }
 
-CONST::E_SCENE BaseApp::getNowScene(){
-    return nowScene;
-}
 
-void BaseApp::setNowScene(CONST::E_SCENE scene){
-    preScene = nowScene;
-    nowScene = scene;
-}
-
-CONST::E_SCENE BaseApp::getPreScene(){
-    return preScene;
-}
 
 void BaseApp::freeToSceneMemory(){
     //    for(int i = 0; i< mScenes.size();i++){
@@ -132,17 +92,46 @@ void BaseApp::freeToSceneMemory(){
     //    mScenes.clear();
 }
 
-string BaseApp::getSceneName(){
-    switch (getNowScene()) {
-        case CONST::PRISON:
-            return "prison";
+
+
+void BaseApp::setMission(CONST::E_MISSION mission){
+    nowMission = mission;
+}
+
+CONST::E_MISSION BaseApp::getNowMission(){
+    return nowMission;
+}
+
+void BaseApp::setSensor(CONST::E_SENSOR sensor){
+    nowSensor.push_back(sensor);
+}
+
+std::vector<CONST::E_SENSOR> BaseApp::getNowSensor(){
+    return nowSensor;
+}
+
+std::vector<CONST::E_SENSOR> BaseApp::getJudgeArray(){
+    std::vector<CONST::E_SENSOR> array;
+    switch (getNowMission()) {
+        case CONST::MISSION1:
+            for (CONST::E_SENSOR sensor:CONST::ORDER_MISSION1) {
+                array.push_back(sensor);
+            }
             break;
-            
-        case CONST::MAGIC:
-            return "magic";
+        case CONST::MISSION2:
+            for (CONST::E_SENSOR sensor:CONST::ORDER_MISSION2) {
+                array.push_back(sensor);
+            }
+            break;
+            case CONST::MISSION3:
+            for (CONST::E_SENSOR sensor:CONST::ORDER_MISSION3) {
+                array.push_back(sensor);
+            }
             break;
         default:
-            return "none";
             break;
     }
+    return array;
 }
+
+

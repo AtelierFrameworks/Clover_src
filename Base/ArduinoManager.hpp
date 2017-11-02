@@ -32,12 +32,6 @@ public:
     string mBytesReadString;
     std::vector<int> mValue;
     bool mHasData;
-    std::array<int,5> mPastTimeData{0,0,0,0,0};
-    ofEvent<std::vector<CONST::E_PARTS>> mSendEvent;
-    
-    bool mIsCurtainOpen;
-    bool mIsPlayBed;
-    bool mIsPlayShelf;
-    bool mIsPlayChair;
+    ofEvent<std::vector<CONST::E_SENSOR>> mSendEvent;
     ofFile mLogDataFile;
 };

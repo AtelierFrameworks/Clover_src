@@ -17,10 +17,6 @@ void ArduinoManager::setup(){
     mSerial.setup(1,38400);
     mValue.clear();
     mHasData = false;
-    mIsCurtainOpen = false;
-    mIsPlayBed = false;
-    mIsPlayChair = false;
-    mIsPlayShelf = false;
     mLogDataFile.open("LogData.csv",ofFile::Append);
     meisaiNum = 0;
 
@@ -99,14 +95,15 @@ bool ArduinoManager::getIsSetup(){
 
 void ArduinoManager:: judgeData(){
     ofLogNotice() << "judge" << mValue.size() ;
-    std::vector <CONST::E_PARTS> isActionParts;
+    std::vector <CONST::E_SENSOR> isActionParts;
     for(int data :mValue){
         int modData = data % 2;
+        
         //反応あるかどうか
         if(modData == 0){
-            isPush = true;
             data = data / 2 -1;
-            sensor = (CONST::E_SENSOR)data;
+            CONST::E_SENSOR sensor = (CONST::E_SENSOR)data;
+            isActionParts.push_back(sensor);
         }
     }
     ofNotifyEvent(mSendEvent, isActionParts);

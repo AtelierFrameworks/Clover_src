@@ -5,19 +5,19 @@ static bool isStartScene;
 //--------------------------------------------------------------
 void ofApp::setup(){
     BaseApp::setup();
+    changeMission(CONST::MISSION1);
     mBgm.setLoop(true);
     mBgm.setVolume(0.5);
-   
+    mBgm.load("cloverBGM.mp3");
+    mBgm.play();
     for(int i = 0; i < 5;i++){
         mIsAction[i] = false;
     }
-    setupLeapMotion();
+
     mArduinoManager.setup();
-    setNowScene(CONST::NONE);
     //„É≠„Ç∞„Éï„Ç°„Ç§„É´‰ΩúÊàê
     isStartScene=false;
     //„Ç∑„Éº„É≥ÂàùÊúüÂåñ
-    mScenes.clear();
 //    actionCurtain();
     //TODO::setJudgeModel
     mID = 0;
@@ -39,7 +39,7 @@ void ofApp::setup(){
  
     
     
-    Timer.loadFont("MountainsofChristmas.ttf", 200);
+    Timer.load("MountainsofChristmas.ttf", 200);
     
    
 }
@@ -111,7 +111,6 @@ void ofApp::setupStar(){
 }
 //--------------------------------------------------------------
 void ofApp::update(){
-    updateLeapMotion();
     mArduinoManager.update();
     BaseApp::update();
     
@@ -330,23 +329,23 @@ void ofApp::drawTimer(){
     if (min<=0&&sec<=30) {
         ofSetColor(255, 0, 0);
         if (sec<=9.5) {
-            time = "0" + ofToString(min, 0) + ":" + "0" + ofToString(sec, 0);
+            timerText = "0" + ofToString(min, 0) + ":" + "0" + ofToString(sec, 0);
         }
         else {
-            time = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
+            timerText = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
         }
-        Timer.drawString(time, (ofGetWidth() / 2) - 150, ofGetHeight() / 2);
+        Timer.drawString(timerText, (ofGetWidth() / 2) - 150, ofGetHeight() / 2);
     }
     
     else {
         ofSetColor(255, 255, 255);
         if (sec <=9.5) {
-            time = "0" + ofToString(min, 0) + ":" + "0" +ofToString(sec, 0);
+           timerText  = "0" + ofToString(min, 0) + ":" + "0" +ofToString(sec, 0);
         }
         else {
-            time = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
+           timerText  = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
         }
-        Timer.drawString(time, (ofGetWidth() / 2) - 150, 50);
+        Timer.drawString(timerText, (ofGetWidth() / 2) - 150, 50);
     }
     if (sec <= 0.5 && min == 0) {
         
@@ -364,63 +363,7 @@ void ofApp::drawTimer(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     BaseApp::keyPressed(key);
-   if(key == 'a'){
-        actionCurtain();
-    }
-    if(key == 'c'){
-        closeCurtain();
-    }
-   if(key == 'f'){
-        switch (getNowScene()) {
-            case CONST::PRISON:{
-                mScenes.at(0) -> actionBed();
-                mBedApp -> mScenes.at(0) -> actionBed();
-                mDeskApp -> mScenes.at(0) -> actionBed();
-                mFloorApp -> mScenes.at(0) -> actionBed();
-                break;
-            }
-            case CONST::MAGIC:{
-                mBedApp -> mScenes.at(0) -> actionBed();
-                mDeskApp -> mScenes.at(0) -> actionBed();
-                break;
-            }
-            default:
-                break;
-        }
-
-    }
-    
-    if(key == 'o'){
-        switch (getNowScene()) {
-            case CONST::PRISON:{
-                mScenes.at(0) -> actionShelf();
-                break;
-            }
-            case CONST::MAGIC:{
-                mDeskApp -> mScenes.at(0) -> actionShelf();
-                break;
-            }
-            default:
-                break;
-        }
-
-    }
-    if(key == 'e'){
-        switch (getNowScene()) {
-            case CONST::PRISON:{
-                mScenes.at(0) -> actionChair();
-                break;
-            }
-            case CONST::MAGIC:{
-                mFloorApp -> mScenes.at(0) -> actionChair();
-                break;
-            }
-            default:
-                break;
-        }
-
-    }
-    
+ 
     
     //
     //Mission1
@@ -560,137 +503,83 @@ void ofApp::exit(){
 
 //„Ç´„Éº„ÉÜ„É≥
 void ofApp::actionCurtain(){
-    
-    //TODO: ‚Äû√á‚àë‚Äû√â¬∫‚Äû√â‚â•√à√Ö‚àè√ä√§√ª
-    mID ++;
-    int id = mID % 2 + 1;
-    setNowScene((CONST::E_SCENE)id);
-//    setNowScene(CONST::MAGIC);
-    changeScene();
-}
+ }
 
 void ofApp::closeCurtain(){
-    ofBackground(80);
-    if(getNowScene()==CONST::PRISON){
-      
-        ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&ofApp::endMovie);
-    }
-    setNowScene(CONST::NONE);
-    mBgm.stop();
-    if(mScenes.size() > 0){
-    changeScene();
-    freeToSceneMemory();
-    mBedApp -> freeToSceneMemory();
-    mDeskApp -> freeToSceneMemory();
-    mFloorApp -> freeToSceneMemory();
-    }
+
 }
 
 
-void ofApp::changeScene(){
-    BaseScene *newScene;
-   
-    mBedApp   -> changeScene();
-    mDeskApp  -> changeScene();
-    mFloorApp -> changeScene();
+void ofApp::changeMission(CONST::E_MISSION mission){
+    setMission(mission);
+    sensorIndex=0;
+    mJudgeArray.clear();
+    mJudgeArray = getJudgeArray();
 }
 
 
-void ofApp::setupLeapMotion(){
-    mLeap.open();
-}
 
-void ofApp::updateLeapMotion(){
-    simpleHands = mLeap.getSimpleHands();
-    ofLogNotice() << "a" << simpleHands.size();
-    if( mLeap.isFrameNew() && simpleHands.size()){
-        mLeap.setMappingX(-230, 230, -ofGetWidth()/2, ofGetWidth()/2);
-        mLeap.setMappingY(90, 490, -ofGetHeight()/2, ofGetHeight()/2);
-        mLeap.setMappingZ(-150, 150, -200, 200);
-    }
-    mLeap.markFrameAsOld();
-    
-}
 
-void ofApp::endMovie(CONST::E_GIMMICK & gimmick){
-    switch (gimmick) {
-        case CONST::G_M_CHAIR:
-            mBedApp -> mScenes.at(0) -> actionEndMovie();
+void ofApp::endMovie(CONST::E_MOVIE & movie){
+    switch (movie) {
+        case CONST::M1:
             break;
-        case CONST::G_M_BED:
-            mScenes.at(0) -> actionBed();
-            mDeskApp -> mScenes.at(0) -> actionBedNext();
-            mBedApp -> mScenes.at(0) -> actionBedNext();
-
-        case CONST::G_P_BED:
+        case CONST::M2:
             break;
-        case CONST::G_P_CHAIR:
-            mBedApp -> mScenes.at(0) -> actionChair();
+        case CONST::M3:
+            break;
+        case CONST::MWIN:
+            break;
+        case CONST::MLOSE:
             break;
         default:
             break;
         }
 }
 
-void ofApp:: receiveData(std::vector<CONST::E_PARTS> & isActionParts){
-    for(CONST::E_PARTS isAction :isActionParts){
-        switch(isAction){
-            case CONST::P_CURTAIN_OPEN:
-                actionCurtain();
-                break;
-            case CONST::P_CURTAIN_CLOSE:
-                closeCurtain();
-                break;
-            case CONST::P_SHELF:
-                switch (getNowScene()) {
-                    case CONST::PRISON:{
-                        mScenes.at(0) -> actionShelf();
-                        break;
-                    }
-                    case CONST::MAGIC:{
-                        mDeskApp -> mScenes.at(0) -> actionShelf();
-                        break;
-                    }
-                    default:
-                        break;
-                }
-                break;
-            case CONST::P_CHAIR:
-                switch (getNowScene()) {
-                    case CONST::PRISON:{
-                        mScenes.at(0) -> actionChair();
-                        break;
-                    }
-                    case CONST::MAGIC:{
-                        mFloorApp -> mScenes.at(0) -> actionChair();
-                        break;
-                    }
-                    default:
-                        break;
-                }
-                break;
-            case CONST::P_BED:
-                switch (getNowScene()) {
-                    case CONST::PRISON:{
-                        mScenes.at(0) -> actionBed();
-                        mBedApp -> mScenes.at(0) -> actionBed();
-                        mDeskApp -> mScenes.at(0) -> actionBed();
-                        mFloorApp -> mScenes.at(0) -> actionBed();
-                        break;
-                    }
-                    case CONST::MAGIC:{
-                        mBedApp -> mScenes.at(0) -> actionBed();
-                        mDeskApp -> mScenes.at(0) -> actionBed();
-                        break;
-                    }
-                    default:
-                        break;
-                }
-                break;
-            default:break;
+void ofApp:: receiveData(std::vector<CONST::E_SENSOR> & isActionParts){
+    for(CONST::E_SENSOR sensor:isActionParts){
+        if(sensor == mJudgeArray[sensorIndex]){
+            sensorIndex++;
+            if(sensorIndex == mJudgeArray.size()){
+                int mission = (int)getNowMission();
+                mission++;
+                changeMission((CONST::E_MISSION)mission);
+            }
+            //TODO:effect
+        }else{
+            //TODO:Miss effect
         }
+        
+        
+            switch(sensor){
+                case CONST::S1:
+                    break;
+                case CONST::S2:
+                    break;
+                case CONST::S3:
+                    break;
+                case CONST::S4:
+                    break;
+                case CONST::S5:
+                    break;
+                case CONST::S6:
+                    break;
+                case CONST::S7:
+                    break;
+                case CONST::S8:
+                    break;
+                
+                case CONST::S9:
+                    break;
+                case CONST::S10:
+                    break;
+                default:break;
+            }
     }
 }
+
+
 
 
 

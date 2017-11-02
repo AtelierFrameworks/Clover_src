@@ -11,8 +11,8 @@
 
 #include <stdio.h>
 #include <vector>
-#include "BaseScene.hpp"
 #include "CONST.h"
+#include "ofMain.h"
 #endif /* BaseApp_hpp */
 class BaseApp : public ofBaseApp{
     
@@ -33,14 +33,16 @@ public:
     virtual void gotMessage(ofMessage msg);
     virtual void exit();
     virtual void changeScene(){};
-    virtual void endMovie(CONST::E_GIMMICK & app){};
+    virtual void endMovie(CONST::E_MOVIE & movie){};
     virtual void freeToSceneMemory();
-    static CONST::E_SCENE getNowScene();
-    static void setNowScene(CONST::E_SCENE);
-    static string getSceneName();
-    static CONST::E_SCENE getPreScene();
+    static void setMission(CONST::E_MISSION mission);
+    static CONST::E_MISSION getNowMission();
+    static void setSensor(CONST::E_SENSOR sensor);
+    static std::vector<CONST::E_SENSOR> getNowSensor();
+    static std::vector<CONST::E_SENSOR> getJudgeArray();
+    static int sensorIndex;
     //void setArduinoManager(shared_ptr<ArduinoManager> manager);
-    std::vector<BaseScene *> mScenes;
+    
 protected:
    
     

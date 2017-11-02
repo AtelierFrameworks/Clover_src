@@ -123,7 +123,6 @@ void B_DeskApp::updateMission2(){
     if(isBat == true){
         bat.load("bat.png");
     }
-    
     if(isPumpkin == true){
         pumpkin.load("pumpkin.png");
     }
@@ -170,11 +169,7 @@ void B_DeskApp::updateStar(){
 //--------------------------------------------------------------
 void B_DeskApp::draw(){
     BaseApp::draw();
-    
-    
-    
-    
-  }
+}
 
 void B_DeskApp::drawMission1(){
     //Mission1
@@ -343,23 +338,16 @@ void B_DeskApp::dragEvent(ofDragInfo dragInfo){
 }
 
 void B_DeskApp::changeScene(){
-    BaseScene *newScene;
-    int index;
-
-    switch (getNowScene()) {
-        
-    }
+  
 }
 
-void B_DeskApp::endMovie(CONST::E_GIMMICK & gimmick){
-    CONST::E_GIMMICK e_gimmick = gimmick;
-    ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_DeskApp::endMovie);
-    ofNotifyEvent(mMovieEndEvent, e_gimmick);
+void B_DeskApp::endMovie(CONST::E_MOVIE & movie){
+    CONST::E_MOVIE e_movie = movie;
+  
+    ofNotifyEvent(mMovieEndEvent, e_movie);
 }
 
-void B_DeskApp::setLeapData(std::vector <ofxLeapMotionSimpleHand> simpleHands){
-    mScenes.at(0) -> setLeapData(simpleHands);
-}
+
 
 
 

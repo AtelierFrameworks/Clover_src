@@ -7,6 +7,7 @@
 #include "B_DeskApp.hpp"
 #include "B_FloorApp.hpp"
 #include "ArduinoManager.hpp"
+#include "ofxTrueTypeFontUC.h"
 class ofApp : public BaseApp{
     
 	public:
@@ -44,13 +45,11 @@ class ofApp : public BaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
         void exit();
-        void setupLeapMotion();
-        void updateLeapMotion();
         void actionCurtain();
         void closeCurtain();
-        void changeScene();
-        void endMovie(CONST::E_GIMMICK & app);
-        void receiveData(std::vector<CONST::E_PARTS> & isActionParts);
+    void changeMission(CONST::E_MISSION mission);
+        void endMovie(CONST::E_MOVIE & movie);
+        void receiveData(std::vector<CONST::E_SENSOR> & isActionParts);
 //      bool judgeGimmick();
         ofFile mLogDataFile;
         ArduinoManager mArduinoManager;
@@ -60,10 +59,10 @@ class ofApp : public BaseApp{
     ofSoundPlayer mBgm;
     int mID;
     //0:ベッド 1:机 2:いす 3:棚 4:カーテン
-    bool mIsAction[5];
+    //s
+    bool mIsAction[10];
 private:
-   // std::vector<GimmickDataModel> mGimmckModels;
-    ofxLeapMotion mLeap; // Leap Motionのメインクラスをインスタンス化
+    std::vector<CONST::E_SENSOR> mJudgeArray;
 
     
     ofEasyCam mCam;
@@ -142,6 +141,7 @@ private:
     bool mIsKeyPressed;
     ofImage img;
     int time;
+    string timerText;
     int i;
     int j;
     
@@ -149,8 +149,6 @@ private:
     double sec = 0;
     
     float min = 3;
-    
-    string time;
     
     ofxTrueTypeFontUC Timer;
     bool isTimer = true;

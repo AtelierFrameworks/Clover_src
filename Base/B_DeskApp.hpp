@@ -49,10 +49,10 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void changeScene();
-    void endMovie(CONST::E_GIMMICK & app);
+    void endMovie(CONST::E_MOVIE & movie);
     void magicShelf(bool & flg);
     ofEvent<bool> mShelfEvent;
-    ofEvent<CONST::E_GIMMICK> mMovieEndEvent;
+    ofEvent<CONST::E_MOVIE> mMovieEndEvent;
     
     float size = 100;//反応箇所の画像サイズ（カボチャ、コウモリ）
     float length = 200;//星の一辺の長さ

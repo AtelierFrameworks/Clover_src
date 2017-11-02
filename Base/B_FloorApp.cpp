@@ -89,9 +89,9 @@ void B_FloorApp::changeScene(){
 }
 
 
-void B_FloorApp::endMovie(CONST::E_GIMMICK & gimmick){
-    CONST::E_GIMMICK e_gimmick = gimmick;
-    ofNotifyEvent(mMovieEndEvent, e_gimmick);
+void B_FloorApp::endMovie(CONST::E_MOVIE & movie){
+    CONST::E_MOVIE e_movie = movie;
+    ofNotifyEvent(mMovieEndEvent, e_movie);
 }
 
 
