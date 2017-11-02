@@ -61,6 +61,8 @@ class ofApp : public BaseApp{
     //0:ベッド 1:机 2:いす 3:棚 4:カーテン
     //s
     bool mIsAction[10];
+    bool mIsStartMission;
+    bool mIsVideoPlaying;
 private:
     std::vector<CONST::E_SENSOR> mJudgeArray;
 
@@ -81,10 +83,10 @@ private:
     float v = 100/ r;
     
     //挑戦状
-    ofVideoPlayer challenge_Movie;
+    EventVideo challenge_Movie;
     bool  frameByframe;
     
-    //Mission１
+    //Mission1
     ofImage town;
     
     ofImage rabbit;

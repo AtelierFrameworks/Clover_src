@@ -10,6 +10,10 @@
 
 static CONST::E_MISSION nowMission;
 static std::vector<CONST::E_SENSOR> nowSensor;
+static int sensorIndex;
+static const std::array<CONST::E_SENSOR,5> ORDER_MISSION1 = {CONST::S9,CONST::S6,CONST::S7,CONST::S10,CONST::S8};
+static const std::array<CONST::E_SENSOR,6> ORDER_MISSION2 = {CONST::S4,CONST::S7,CONST::S9,CONST::S8,CONST::S10};
+static const std::array<CONST::E_SENSOR,6> ORDER_MISSION3 = {CONST::S1,CONST::S2,CONST::S3,CONST::S4,CONST::S5,CONST::S1};
 
 void BaseApp::setup(){
     ofBackground(80);
@@ -81,18 +85,11 @@ void BaseApp::dragEvent(ofDragInfo dragInfo){
    }
 
 void BaseApp::exit(){
-  }
-
-
-
-void BaseApp::freeToSceneMemory(){
-    //    for(int i = 0; i< mScenes.size();i++){
-    //        delete mScenes.at(i);
-    //    }
-    //    mScenes.clear();
 }
 
-
+void BaseApp::freeToSceneMemory(){
+   
+}
 
 void BaseApp::setMission(CONST::E_MISSION mission){
     nowMission = mission;
@@ -114,17 +111,17 @@ std::vector<CONST::E_SENSOR> BaseApp::getJudgeArray(){
     std::vector<CONST::E_SENSOR> array;
     switch (getNowMission()) {
         case CONST::MISSION1:
-            for (CONST::E_SENSOR sensor:CONST::ORDER_MISSION1) {
+            for (CONST::E_SENSOR sensor:ORDER_MISSION1) {
                 array.push_back(sensor);
             }
             break;
         case CONST::MISSION2:
-            for (CONST::E_SENSOR sensor:CONST::ORDER_MISSION2) {
+            for (CONST::E_SENSOR sensor:ORDER_MISSION2) {
                 array.push_back(sensor);
             }
             break;
             case CONST::MISSION3:
-            for (CONST::E_SENSOR sensor:CONST::ORDER_MISSION3) {
+            for (CONST::E_SENSOR sensor:ORDER_MISSION3) {
                 array.push_back(sensor);
             }
             break;
@@ -132,6 +129,14 @@ std::vector<CONST::E_SENSOR> BaseApp::getJudgeArray(){
             break;
     }
     return array;
+}
+
+void BaseApp::setIndex(int index){
+    sensorIndex = index;
+}
+
+int BaseApp::getIndex(){
+    return sensorIndex;
 }
 
 

@@ -41,8 +41,6 @@ void ArduinoManager::update(){
                 ofLogNotice() << "value" <<  bytesReturned;
                 separateBytes();
             };
-//            mSerial.flush();
-        
         }
     }
     
@@ -50,7 +48,6 @@ void ArduinoManager::update(){
 
 void ArduinoManager::separateBytes(){
     std::vector<string> result = ofSplitString(mBytesReadString, ",");
-    
     for (string stringData:result) {
        
         if(stringData=="{"){
@@ -68,7 +65,6 @@ void ArduinoManager::separateBytes(){
                         int data = std::stoi(stringData);
                         mValue.push_back(data);
                     }catch(const invalid_argument& e){
-                         
                         ofLogNotice() << "error" << stringData;
                         if(stringData == "}0" || stringData == "}1"){
                             judgeData();
@@ -98,7 +94,6 @@ void ArduinoManager:: judgeData(){
     std::vector <CONST::E_SENSOR> isActionParts;
     for(int data :mValue){
         int modData = data % 2;
-        
         //反応あるかどうか
         if(modData == 0){
             data = data / 2 -1;
@@ -112,7 +107,6 @@ void ArduinoManager:: judgeData(){
 
 
 string ArduinoManager::getLogDay(){
-
     string logDay = ofToString(ofGetMonth()) + "/" + ofToString(ofGetDay()) + " " + ofToString(ofGetHours()) + ":" + ofToString(ofGetMinutes()) + ":" + ofToString(ofGetSeconds());
     return logDay;
 }

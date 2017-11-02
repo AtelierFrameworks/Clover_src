@@ -47,7 +47,7 @@ public:
     void actionBed();
     void endMovie(CONST::E_MOVIE & movie);
   
-    void stairEvent(bool & flg);
+   
     ofEvent<CONST::E_MOVIE> mMovieEndEvent;
     ofEvent<bool>  mStairEvent;
     

@@ -19,29 +19,22 @@ void B_BedApp::setupMission1(){
     rPampukin = false;
     dTree = false;
     eHouselight = false;
-    
-    
     mouse.load("nezumi.png");
     horse.load("uma.png");
     bat.load("bat2.png");
     pumpkin.load("pumpkin2.png");
     town.load("town2.png");
-
 }
 
 void B_BedApp::setupStair(){
     //階層移動
     isMove = false;
-    
     town1.load("sky.png");
     town2.load("sky.png");
     town3.load("town2.png");
-    
     px = 0;
     py = 0;
-    
     mPosition = ofVec2f(px, py);
-    
     vx = 0;
     vy = 0;
     mVelocity = ofVec2f(vx, vy);
@@ -57,7 +50,6 @@ void B_BedApp::setupMission2(){
 void B_BedApp::setupSun(){
     //太陽月
     isMoved = false;
-    
     moon.load("moon.png");
     cloud.load("black.png");
 }
@@ -92,13 +84,11 @@ void B_BedApp::updateMission1(){
 }
 
 void B_BedApp::updateStair(){
-    
     //階層移動
     if (isMove == true) {
         mVelocity.y += 0.01;
         mPosition += mVelocity;
     }
-    
     if (mPosition.y >= ofGetHeight()) {
         mPosition -= mVelocity;
     }
@@ -109,7 +99,6 @@ void B_BedApp::updateMission2(){
     if(isBat == true){
         bat.load("bat.png");
     }
-    
     if(isPumpkin == true){
         pumpkin.load("pumpkin.png");
     }
@@ -125,19 +114,15 @@ void B_BedApp::updateSun(){
         vx = 0;
         vy = 0;
         mVelocity = ofVec2f(vx, vy);
-        
         mVelocity.y += 0.01;
         mPosition -= mVelocity;
     }
-    
     if (mPosition.y <= -ofGetHeight() * 3) {
         mPosition += mVelocity;
     }
-    
     if (m_py <= 0 && c_px < ofGetWidth() / 2 - 230) {
         c_px += 0.5;
     }
-    
     if (m_py > 0) {
         m_px -= 0.25;
         m_py -= 1;
@@ -159,8 +144,7 @@ void B_BedApp::updateStar(){
 //--------------------------------------------------------------
 void B_BedApp::draw(){
     BaseApp::draw();
-    
-   }
+}
 
 void B_BedApp::drawMission1(){
     //Mission1
@@ -169,13 +153,10 @@ void B_BedApp::drawMission1(){
     pampukin.draw(0, 0, ofGetWidth(), ofGetHeight());
     tree.draw(0, 0, ofGetWidth(), ofGetHeight());
     houselight.draw(0, 0, ofGetWidth(), ofGetHeight());
-    
     mouse.draw(w / 3 - size / 2, h + length * q - t - v - size /2, size, size);
     horse.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     bat.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
     pumpkin.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
-    
-    
     ofSetColor(255);
 }
 
@@ -199,7 +180,6 @@ void B_BedApp::drawMission2(){
 void B_BedApp::drawSun(){
     //太陽月
     sky.draw(mPosition.x, mPosition.y, ofGetWidth(), ofGetHeight() * 4);
-    
     moon.draw(m_px, m_py, m2_px, m2_py);
     if (m_py <= 0) {
         cloud.draw(c_px, c_py, 450, 450);
@@ -208,13 +188,13 @@ void B_BedApp::drawSun(){
 
 void B_BedApp::drawStar(){
     //満天の星
+    //勝利動画のタイミング
+    //負け→タイムアップになった瞬間真っ暗のち動画再生
     i = ofGetFrameNum();//frame数
     if (mIsKeyPressed == true) {
         if (i - time < 256*2-1) {
             ofSetColor(255, 255, 255, (i - time)/2);
         }
-        
-        
         if (i == 3000) {
             i = i / 5;
         }
@@ -261,8 +241,6 @@ void B_BedApp::keyPressed(int key){
     if (key == 's') {
         mIsKeyPressed = true;
     }
-    
-
 }
 
 //--------------------------------------------------------------
@@ -324,7 +302,6 @@ void B_BedApp::dragEvent(ofDragInfo dragInfo){
 
 void B_BedApp::changeScene(){
    
-   
 }
 
 void B_BedApp::actionBed(){
@@ -332,14 +309,6 @@ void B_BedApp::actionBed(){
 }
 
 void B_BedApp::endMovie(CONST::E_MOVIE &  movie){
-//  ofRemoveListener(mScenes[0]->mEndMovieEvent,this,&B_BedApp::endMovie);
     CONST::E_MOVIE e_movie = movie;
     ofNotifyEvent(mMovieEndEvent, e_movie);
-}
-
-
-
-void B_BedApp::stairEvent(bool & flg){
-    bool a = flg;
-    ofNotifyEvent(mStairEvent,a);
 }

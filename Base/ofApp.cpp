@@ -13,39 +13,30 @@ void ofApp::setup(){
     for(int i = 0; i < 5;i++){
         mIsAction[i] = false;
     }
-
+    mIsVideoPlaying = false;
     mArduinoManager.setup();
     //„É≠„Ç∞„Éï„Ç°„Ç§„É´‰ΩúÊàê
     isStartScene=false;
-    //„Ç∑„Éº„É≥ÂàùÊúüÂåñ
-//    actionCurtain();
     //TODO::setJudgeModel
     mID = 0;
     ofAddListener(mBedApp ->mMovieEndEvent, this, &ofApp::endMovie);
     ofAddListener(mArduinoManager.mSendEvent,this,&ofApp::receiveData);
     ofAddListener(mFloorApp -> mMovieEndEvent,this,&ofApp::endMovie);
-    
-    
     ofSetFrameRate(60);
     ofSetBackgroundColor(0);
-    
     //挑戦状
     ofSetVerticalSync(true);
-    frameByframe = false;
     ofEnableSmoothing();
-    challenge_Movie.load("challenge_Movie.m4v");
-    challenge_Movie.play();
-    
- 
-    
-    
     Timer.load("MountainsofChristmas.ttf", 200);
-    
-   
+    setupMission1();
 }
 
 void ofApp::setupMission1(){
-    
+    mIsStartMission = false;
+    challenge_Movie.setup("challenge_Movie.m4v", OF_LOOP_NONE, CONST::M1);
+    ofAddListener(challenge_Movie.mMovie, this, &ofApp::endMovie);
+    challenge_Movie.play();
+    mIsVideoPlaying = true;
     //Mission1
     mLamp = false;
     rPampukin = false;
@@ -56,31 +47,33 @@ void ofApp::setupMission1(){
     rabbit.load("usa.png");
     town.load("town1.png");
     bat.load("bat2.png");
-    
-
+    lamp.load("lamp.png");
+     pampukin.load("pampukin.png");
+    tree.load("tree.png");
+    tower.load("tower.png");
+    houselight.load("houselight.png");
 }
 
 void ofApp::setupStair(){
-    
     //階層移動
     isMove = false;
-    
     town1.load("sky.png");
     town2.load("sky.png");
     town3.load("town1.png");
-    
     px = 0;
     py = 0;
-    
     mPosition = ofVec2f(px, py);
-    
     vx = 0;
     vy = 0;
     mVelocity = ofVec2f(vx, vy);
 }
 
 void ofApp::setupMission2(){
-    
+    sky.load("sky2.png");
+    challenge_Movie.closeMovie();
+    challenge_Movie.setup("challenge_Movie.m4v", OF_LOOP_NONE, CONST::M2);
+    challenge_Movie.play();
+    mIsVideoPlaying = true;
     //Mission2
     isBat = false;
     isPumpkin = false;
@@ -99,6 +92,8 @@ void ofApp::setupMission3(){
     drawline4 = false;
     drawline5 = false;
     isBat2 = false;
+    challenge_Movie.closeMovie();
+    challenge_Movie.setup("challenge_Movie.m4v", OF_LOOP_NONE, CONST::M3);
 }
 
 void ofApp::setupStar(){
@@ -107,67 +102,71 @@ void ofApp::setupStar(){
     img.load("star.png");
     mIsKeyPressed = false;
     
-
 }
 //--------------------------------------------------------------
 void ofApp::update(){
     mArduinoManager.update();
     BaseApp::update();
-    
-    
-    //挑戦状
-    challenge_Movie.update();
-    
+  
     if (isTimer) {
-        sec = sec -0.016666;
+        sec -= 0.016666;
     }
+    if (mIsVideoPlaying){
+        //挑戦状
+        challenge_Movie.update();
+    }else{
+        switch (getNowMission()) {
+            case CONST::MISSION1:
+                updateMission1();
+                break;
+            case CONST::STAIR:
+                updateStair();
+                break;
+            case CONST::MISSION2:
+                updateMission2();
+                break;
+            case CONST::SUN:
+                updateSun();
+                break;
+            case CONST::MISSION3:
+                updateMission3();
+                break;
+            case CONST::LOSE:
+                //play movie
+                break;
+            case CONST::WIN:
+                //play movie
+                break;
+                
+            default:
+                break;
+
+    }
+    }
+    
+    
+    
+    
 }
 
 void ofApp::updateMission1(){
-    //Mission1
-    if (mLamp == true) {
-        lamp.load("lamp.png");
-    }
-    if (rPampukin == true) {
-        pampukin.load("pampukin.png");
-    }
-    if (dTree == true) {
-        tree.load("tree.png");
-    }
-    if (hTower == true) {
-        tower.load("tower.png");
-    }
-    if (eHouselight == true) {
-        houselight.load("houselight.png");
-    }
-    
-    if (isMove == true) {
-        mVelocity.y += 0.01;
-        mPosition += mVelocity;
-    }
-    
-    if (mPosition.y >= ofGetHeight()) {
-        mPosition -= mVelocity;
-    }
 }
 
 void ofApp::updateStair(){
-    //階層移動
-    if (isMove == true) {
+    //階層移動の終わりは1回したら止まるようにしてる。
+    if (isMove) {
         mVelocity.y += 0.01;
         mPosition += mVelocity;
+        if (mPosition.y >= ofGetHeight()) {
+            isMove=false;
+        }
     }
-    
-    if (mPosition.y >= ofGetHeight()) {
-        mPosition -= mVelocity;
-    }
-
 }
 
 void ofApp::updateMission2(){
     //Mission2
-    if (isMove == true) {
-        sky.load("sky2.png");
+    if (isMove) {
+        
         px = 0;
         py = 0;
         mPosition = ofVec2f(px, py);
@@ -186,16 +185,15 @@ void ofApp::updateMission2(){
 }
 
 void ofApp::updateSun(){
-    //太陽月
-    if (isMoved == true) {
-        sky.load("sky2.png");
+    //太陽→月は要実装
+    if (isMoved) {
+      
         px = 0;
         py = 0;
         mPosition = ofVec2f(px, py);
         vx = 0;
         vy = 0;
         mVelocity = ofVec2f(vx, vy);
-        
         mVelocity.y += 0.01;
         mPosition -= mVelocity;
     }
@@ -208,7 +206,7 @@ void ofApp::updateSun(){
 
 void ofApp::updateMission3(){
     //Mission3
-    if(isBat2 == true){
+    if(isBat2){
         bat.load("bat.png");
     }
 }
@@ -227,21 +225,61 @@ void ofApp::updateStar(){
 
 void ofApp::draw(){
     BaseApp::draw();
-    //挑戦状
-    ofSetColor(0xFFFFFF);
-    challenge_Movie.draw(0, 0, ofGetWidth(), ofGetHeight());
-    ofSetHexColor(0x000000);
+    if (mIsVideoPlaying){
+        //挑戦状
+        ofSetColor(0xFFFFFF);
+        challenge_Movie.draw(0, 0, ofGetWidth(), ofGetHeight());
+        ofSetHexColor(0x000000);
+    }else{
+    switch (getNowMission()) {
+        case CONST::MISSION1:
+            drawMission1();
+            break;
+        case CONST::STAIR:
+            drawStair();
+            break;
+        case CONST::MISSION2:
+            drawMission2();
+            break;
+        case CONST::SUN:
+            drawSun();
+            break;
+        case CONST::MISSION3:
+            drawMission3();
+            break;
+        case CONST::LOSE:
+            //play movie
+            break;
+        case CONST::WIN:
+            //play movie
+            break;
+            
+        default:
+            break;
+    }
+    }
+    drawTimer();
 }
 
 void ofApp::drawMission1(){
     //Mission1
+    if (mLamp) {
+         lamp.draw(0, 0, ofGetWidth(), ofGetHeight());
+    }
+    if (rPampukin) {
+       pampukin.draw(0, 0, ofGetWidth(), ofGetHeight());
+    }
+    if (dTree) {
+         tree.draw(0, 0, ofGetWidth(), ofGetHeight());
+    }
+    if (hTower) {
+        tower.draw(0, 0, ofGetWidth(), ofGetHeight());
+    }
+    if (eHouselight) {
+        houselight.draw(0, 0, ofGetWidth(), ofGetHeight());
+    }
+
     town.draw(0, 0, ofGetWidth(), ofGetHeight());
-    lamp.draw(0, 0, ofGetWidth(), ofGetHeight());
-    pampukin.draw(0, 0, ofGetWidth(), ofGetHeight());
-    tree.draw(0, 0, ofGetWidth(), ofGetHeight());
-    tower.draw(0, 0, ofGetWidth(), ofGetHeight());
-    houselight.draw(0, 0, ofGetWidth(), ofGetHeight());
-    
     rabbit.draw(w / 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     bat.draw(w / 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     
@@ -302,11 +340,7 @@ void ofApp::drawMission3(){
     if(drawline5 == true){
         ofDrawLine(w + length * p, h + length * q, w, h);
     }
-    
-    
-
 }
-
 void ofApp::drawStar(){
     //満天の星
     i = ofGetFrameNum();//frame数
@@ -314,8 +348,6 @@ void ofApp::drawStar(){
         if (i - time < 256*2-1) {
             ofSetColor(255, 255, 255, (i - time)/2);
         }
-        
-        
         if (i == 3000) {
             i = i / 5;
         }
@@ -335,9 +367,7 @@ void ofApp::drawTimer(){
             timerText = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
         }
         Timer.drawString(timerText, (ofGetWidth() / 2) - 150, ofGetHeight() / 2);
-    }
-    
-    else {
+    }else {
         ofSetColor(255, 255, 255);
         if (sec <=9.5) {
            timerText  = "0" + ofToString(min, 0) + ":" + "0" +ofToString(sec, 0);
@@ -348,7 +378,7 @@ void ofApp::drawTimer(){
         Timer.drawString(timerText, (ofGetWidth() / 2) - 150, 50);
     }
     if (sec <= 0.5 && min == 0) {
-        
+        changeMission(CONST::LOSE);
         isTimer = false;
     }
     if (isTimer) {
@@ -363,8 +393,7 @@ void ofApp::drawTimer(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     BaseApp::keyPressed(key);
- 
-    
+
     //
     //Mission1
     if (key == 'm') {
@@ -420,7 +449,6 @@ void ofApp::keyPressed(int key){
     if(key == '6'){
         isBat2 = true;
     }
-    
     
     //満天の星
     if (key == 's') {
@@ -497,7 +525,6 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 }
 
 void ofApp::exit(){
-    closeCurtain();
     ofRemoveListener(mArduinoManager.mSendEvent,this,&ofApp::receiveData);
 }
 
@@ -512,7 +539,7 @@ void ofApp::closeCurtain(){
 
 void ofApp::changeMission(CONST::E_MISSION mission){
     setMission(mission);
-    sensorIndex=0;
+    setIndex(0);
     mJudgeArray.clear();
     mJudgeArray = getJudgeArray();
 }
@@ -521,12 +548,22 @@ void ofApp::changeMission(CONST::E_MISSION mission){
 
 
 void ofApp::endMovie(CONST::E_MOVIE & movie){
+    mIsVideoPlaying = false;
     switch (movie) {
         case CONST::M1:
+            isTimer = true;
+            ofRemoveListener(challenge_Movie.mMovie, this, &ofApp::endMovie);
+            mIsStartMission =true;
             break;
         case CONST::M2:
+            isTimer = true;
+            ofRemoveListener(challenge_Movie.mMovie, this, &ofApp::endMovie);
+            mIsStartMission = true;
             break;
         case CONST::M3:
+            isTimer = true;
+            ofRemoveListener(challenge_Movie.mMovie, this, &ofApp::endMovie);
+            mIsStartMission = true;
             break;
         case CONST::MWIN:
             break;
@@ -534,47 +571,58 @@ void ofApp::endMovie(CONST::E_MOVIE & movie){
             break;
         default:
             break;
-        }
+    }
 }
 
 void ofApp:: receiveData(std::vector<CONST::E_SENSOR> & isActionParts){
     for(CONST::E_SENSOR sensor:isActionParts){
-        if(sensor == mJudgeArray[sensorIndex]){
-            sensorIndex++;
-            if(sensorIndex == mJudgeArray.size()){
+        if(sensor == mJudgeArray[getIndex()]){
+            int index = getIndex();
+            index++;
+            setIndex(index);
+            if(getIndex() == mJudgeArray.size()){
+                switch (getNowMission()) {
+                    case CONST::MISSION1:
+                        setupStair();
+                        break;
+                    case CONST::MISSION2:
+                        setupSun();
+                        break;
+                    case CONST::MISSION3:
+                    default:
+                        break;
+                }
                 int mission = (int)getNowMission();
                 mission++;
                 changeMission((CONST::E_MISSION)mission);
             }
+            
             //TODO:effect
         }else{
             //TODO:Miss effect
         }
-        
-        
-            switch(sensor){
-                case CONST::S1:
-                    break;
-                case CONST::S2:
-                    break;
-                case CONST::S3:
-                    break;
-                case CONST::S4:
-                    break;
-                case CONST::S5:
-                    break;
-                case CONST::S6:
-                    break;
-                case CONST::S7:
-                    break;
-                case CONST::S8:
-                    break;
-                
-                case CONST::S9:
-                    break;
-                case CONST::S10:
-                    break;
-                default:break;
+        switch(sensor){
+            case CONST::S1:
+                break;
+            case CONST::S2:
+                break;
+            case CONST::S3:
+                break;
+            case CONST::S4:
+                break;
+            case CONST::S5:
+                break;
+            case CONST::S6:
+                break;
+            case CONST::S7:
+                break;
+            case CONST::S8:
+                break;
+            case CONST::S9:
+                break;
+            case CONST::S10:
+                break;
+            default:break;
             }
     }
 }

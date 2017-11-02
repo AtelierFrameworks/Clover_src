@@ -40,7 +40,8 @@ public:
     static void setSensor(CONST::E_SENSOR sensor);
     static std::vector<CONST::E_SENSOR> getNowSensor();
     static std::vector<CONST::E_SENSOR> getJudgeArray();
-    static int sensorIndex;
+    static void setIndex(int index);
+    static int getIndex();
     //void setArduinoManager(shared_ptr<ArduinoManager> manager);
     
 protected:

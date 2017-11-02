@@ -8,19 +8,9 @@
 
 #include "B_DeskApp.hpp"
 void B_DeskApp::setup(){
-    
-
-//    mCam.setOrientation(ofPoint(-20, 0, 0));
-//
     BaseApp::setup();
     ofSetFrameRate(60);
     ofSetBackgroundColor(0);
-  
-    
-    
-    
-   
-
 }
 
 void B_DeskApp::setupMission1(){
@@ -29,29 +19,23 @@ void B_DeskApp::setupMission1(){
     rPampukin = false;
     dTree = false;
     eHouselight = false;
-    
     //ゾウ、イヌ
     elephant.load("elephant.png");
     dog.load("inu.png");
     bat.load("bat2.png");
     pumpkin.load("pumpkin2.png");
-    
     town.load("town3.png");
 }
 
 void B_DeskApp::setupStair(){
     //階層移動
     isMove = false;
-    
     town1.load("sky.png");
     town2.load("sky.png");
     town3.load("town3.png");
-    
     px = 0;
     py = 0;
-    
     mPosition = ofVec2f(px, py);
-    
     vx = 0;
     vy = 0;
     mVelocity = ofVec2f(vx, vy);
@@ -79,13 +63,6 @@ void B_DeskApp::setupStar(){
 //--------------------------------------------------------------
 void B_DeskApp::update(){
     BaseApp::update();
-    
-    
-    
-    
-    
-   
-
 }
 
 void B_DeskApp::updateMission1(){
@@ -183,7 +160,6 @@ void B_DeskApp::drawMission1(){
     elephant.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     bat.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
     pumpkin.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
-    
     ofSetColor(255);
 }
 
@@ -205,7 +181,6 @@ void B_DeskApp::drawMission2(){
 }
 
 void B_DeskApp::drawSun(){
-    
     //太陽月
     sky.draw(nPosition.x, nPosition.y, ofGetWidth(), ofGetHeight() * 4);
     if(isMoved == false){
@@ -215,7 +190,6 @@ void B_DeskApp::drawSun(){
         ofSetColor(color, color, color);
     }
     Sun.draw(nx, ny, size_x, size_y);
-
 }
 
 void B_DeskApp::drawStar(){
@@ -225,15 +199,11 @@ void B_DeskApp::drawStar(){
         if (i - time < 256*2-1) {
             ofSetColor(255, 255, 255, (i - time)/2);
         }
-        
-        
         if (i == 3000) {
             i = i / 5;
         }
         img.draw(0, 0, ofGetWidth(), ofGetHeight());
     }
-    
-
 }
 
 //--------------------------------------------------------------
@@ -337,21 +307,8 @@ void B_DeskApp::dragEvent(ofDragInfo dragInfo){
     BaseApp::dragEvent(dragInfo);
 }
 
-void B_DeskApp::changeScene(){
-  
-}
-
 void B_DeskApp::endMovie(CONST::E_MOVIE & movie){
     CONST::E_MOVIE e_movie = movie;
-  
     ofNotifyEvent(mMovieEndEvent, e_movie);
 }
 
-
-
-
-
-void B_DeskApp::magicShelf(bool & flg){
-    bool a = true;
-    ofNotifyEvent(mShelfEvent, a);
-}

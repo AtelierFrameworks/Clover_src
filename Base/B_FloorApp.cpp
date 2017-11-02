@@ -17,7 +17,7 @@ void B_FloorApp::setup(){
 void B_FloorApp::update(){
     BaseApp::update();
     if (move == true) {
-        floor.load("floor2.png");
+//        floor.load("floor2.png");
     }
 }
 
@@ -87,7 +87,6 @@ void B_FloorApp::dragEvent(ofDragInfo dragInfo){
 
 void B_FloorApp::changeScene(){
 }
-
 
 void B_FloorApp::endMovie(CONST::E_MOVIE & movie){
     CONST::E_MOVIE e_movie = movie;

@@ -50,7 +50,6 @@ public:
     void gotMessage(ofMessage msg);
     void changeScene();
     void endMovie(CONST::E_MOVIE & movie);
-    void magicShelf(bool & flg);
     ofEvent<bool> mShelfEvent;
     ofEvent<CONST::E_MOVIE> mMovieEndEvent;
     
