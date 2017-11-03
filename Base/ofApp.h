@@ -69,7 +69,7 @@ private:
     ofEasyCam mCam;
     
     //
-    float size = 100;//反応箇所の画像サイズ（カボチャ、コウモリ）
+    float size = 90;//反応箇所の画像サイズ（カボチャ、コウモリ）
     float length = 200;//星の一辺の長さ
     float w = ofGetWidth() / 2;
     float h = ofGetHeight() / 2;
@@ -148,7 +148,7 @@ private:
     
     //Timer
     double sec = 0;
-    
+    float timer= 180;
     float min = 3;
     
     ofxTrueTypeFontUC Timer;

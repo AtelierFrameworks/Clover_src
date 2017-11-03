@@ -100,8 +100,7 @@ void B_FloorApp::dragEvent(ofDragInfo dragInfo){
     BaseApp::dragEvent(dragInfo);
 }
 
-void B_FloorApp::changeScene(){
-}
+
 
 
 

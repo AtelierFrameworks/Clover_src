@@ -53,7 +53,7 @@ public:
     ofEvent<bool> mShelfEvent;
     ofEvent<CONST::E_MOVIE> mMovieEndEvent;
     
-    float size = 100;//反応箇所の画像サイズ（カボチャ、コウモリ）
+    float size = 90;//反応箇所の画像サイズ（カボチャ、コウモリ）
     float length = 200;//星の一辺の長さ
     float w = ofGetWidth() / 2;
     float h = ofGetHeight() / 2;
@@ -100,8 +100,8 @@ public:
     //Mission2
     ofImage bat;
     ofImage pumpkin;
-    bool isBat1;
-    bool isPumpkin1;
+    bool isBat;
+    bool isPumpkin;
     
     //太陽月
     ofVec2f nPosition;

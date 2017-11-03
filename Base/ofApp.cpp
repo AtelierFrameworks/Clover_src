@@ -32,7 +32,7 @@ void ofApp::setup(){
 
 void ofApp::setupMission1(){
     mIsStartMission = false;
-    challenge_Movie.setup("challenge_Movie.m4v", OF_LOOP_NONE, CONST::M1);
+    challenge_Movie.setup("letter1.mp4", OF_LOOP_NONE, CONST::M1);
     ofAddListener(challenge_Movie.mEndEvent, this, &ofApp::endMovie);
     challenge_Movie.play();
     setIsMovie(true);
@@ -69,8 +69,7 @@ void ofApp::setupStair(){
 
 void ofApp::setupMission2(){
     sky.load("sky2.png");
-    challenge_Movie.closeMovie();
-    challenge_Movie.setup("challenge_Movie.m4v", OF_LOOP_NONE, CONST::M2);
+    challenge_Movie.setup("letter2.mp4", OF_LOOP_NONE, CONST::M2);
     ofAddListener(challenge_Movie.mEndEvent, this, &ofApp::endMovie);
     challenge_Movie.play();
     setIsMovie(true);
@@ -94,7 +93,7 @@ void ofApp::setupMission3(){
     isBat2 = false;
     bat.load("bat.png");
     challenge_Movie.closeMovie();
-    challenge_Movie.setup("challenge_Movie.m4v", OF_LOOP_NONE, CONST::M3);
+    challenge_Movie.setup("letter3.mp4", OF_LOOP_NONE, CONST::M3);
     challenge_Movie.play();
     setIsMovie(true);
     ofAddListener(challenge_Movie.mEndEvent, this, &ofApp::endMovie);
@@ -113,7 +112,7 @@ void ofApp::update(){
     BaseApp::update();
   
     if (isTimer) {
-        sec -= 0.01667;
+        timer -= 0.032;
     }
     if (getIsMovie()){
         //挑戦状
@@ -263,15 +262,21 @@ void ofApp::draw(){
     }
 
 void ofApp::drawMission1(){
+     ofSetColor(255);
     //Mission1
+        town.draw(0, 0, ofGetWidth(), ofGetHeight());
+    rabbit.draw(w - size / 2, h + length * q - t - v - size / 2, size, size);
+    bat.draw(w - size / 2 - 10, h + length * q - t - v - size / 2+20, size - 20, size);
+    
+   
     if (mLamp) {
-         lamp.draw(0, 0, ofGetWidth(), ofGetHeight());
+        lamp.draw(0, 0, ofGetWidth(), ofGetHeight());
     }
     if (rPampukin) {
-       pampukin.draw(0, 0, ofGetWidth(), ofGetHeight());
+        pampukin.draw(0, 0, ofGetWidth(), ofGetHeight());
     }
     if (dTree) {
-         tree.draw(0, 0, ofGetWidth(), ofGetHeight());
+        tree.draw(0, 0, ofGetWidth(), ofGetHeight());
     }
     if (hTower) {
         tower.draw(0, 0, ofGetWidth(), ofGetHeight());
@@ -279,13 +284,8 @@ void ofApp::drawMission1(){
     if (eHouselight) {
         houselight.draw(0, 0, ofGetWidth(), ofGetHeight());
     }
-
-    town.draw(0, 0, ofGetWidth(), ofGetHeight());
-    rabbit.draw(w / 2 - size / 2, h + length * q - t - v - size / 2, size, size);
-    bat.draw(w / 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     
-    ofSetColor(255);
-   
+
 }
 
 void ofApp::drawStair(){
@@ -298,10 +298,10 @@ void ofApp::drawStair(){
 void ofApp::drawMission2(){
     //Mission2
     if(isBat == true){
-        bat.draw(w - length / 2 - size / 2, h + length * q - t - v - size / 2, size, size);
+        bat.draw(w - length / 2 - size / 2, h + length * q - t - v - size / 2, size - 20, size);
     }
     if(isPumpkin == true){
-        pumpkin.draw(w + length / 2 - size / 2, h + length * q - t - v - size / 2, size, size);
+        pumpkin.draw(w + length / 2 - size / 2, h + length * q - t - v - size / 2, size - 20, size);
     }
 }
 
@@ -356,10 +356,12 @@ void ofApp::drawStar(){
 
 }
 
-void ofApp::drawTimer(){
+void ofApp::drawTimer(){    
+    sec = (int)timer % 60;
+    min = (int)timer / 60;
     
     if (min<=0&&sec<=30) {
-        ofSetColor(255, 0, 0,0);
+        ofSetColor(255, 0, 0);
         if (sec<=9.5) {
             timerText = "0" + ofToString(min, 0) + ":" + "0" + ofToString(sec, 0);
         }
@@ -367,28 +369,25 @@ void ofApp::drawTimer(){
             timerText = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
         }
         Timer.drawString(timerText, (ofGetWidth() / 2) - 150, 200);
-    }else {
+    }
+    
+    else {
         ofSetColor(255, 255, 255);
         if (sec <=9.5) {
-           timerText  = "0" + ofToString(min, 0) + ":" + "0" +ofToString(sec, 0);
+            timerText = "0" + ofToString(min, 0) + ":" + "0" +ofToString(sec, 0);
         }
         else {
-           timerText  = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
+            timerText = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
         }
         Timer.drawString(timerText, (ofGetWidth() / 2) - 150, 200);
     }
     if (sec <= 0.5 && min == 0) {
-        changeMission(CONST::LOSE);
         isTimer = false;
+        changeMission(CONST::LOSE);
     }
-    if (isTimer) {
-        if (sec <= 0.5) {
-            min--;
-            sec = 59;
-        }
-    }
-
+    
 }
+
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
@@ -558,13 +557,12 @@ void ofApp::changeMission(CONST::E_MISSION mission){
     }
 
     if(getNowMission() == CONST::WIN || getNowMission() == CONST::LOSE){
-        challenge_Movie.closeMovie();
+        
         if (getNowMission() == CONST::WIN) {
             challenge_Movie.setup("win.mp4", OF_LOOP_NONE, CONST::MWIN);
            
         }else{
             challenge_Movie.setup("lose.mp4", OF_LOOP_NONE, CONST::MLOSE);
-            
         }
          challenge_Movie.play();
         setIsMovie(true);
@@ -581,6 +579,7 @@ void ofApp::changeMission(CONST::E_MISSION mission){
 
 
 void ofApp::endMovie(CONST::E_MOVIE & movie){
+    challenge_Movie.closeMovie();
     setIsMovie(false);
     switch (movie) {
         case CONST::M1:

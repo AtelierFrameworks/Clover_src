@@ -10,7 +10,7 @@
 void B_DeskApp::setup(){
     BaseApp::setup();
     ofSetFrameRate(60);
-    ofSetBackgroundColor(0);
+    ofSetBackgroundColor(255);
     setupMission1();
 }
 
@@ -72,6 +72,32 @@ void B_DeskApp::setupStar(){
 //--------------------------------------------------------------
 void B_DeskApp::update(){
     BaseApp::update();
+    if(!getIsMovie()){
+        switch (getNowMission()) {
+            case CONST::MISSION1:
+                updateMission1();
+                break;
+            case CONST::STAIR:
+                updateStair();
+                break;
+            case CONST::MISSION2:
+                updateMission2();
+                break;
+            case CONST::SUN:
+                updateSun();
+                break;
+            case CONST::STAR:
+                updateStar();
+                break;
+            case CONST::LOSE:
+                //play movie
+                break;
+            default:
+                break;
+                
+        }
+    }
+
 }
 
 void B_DeskApp::updateMission1(){
@@ -138,6 +164,35 @@ void B_DeskApp::updateStar(){
 //--------------------------------------------------------------
 void B_DeskApp::draw(){
     BaseApp::draw();
+    if(!getIsMovie()){
+        switch (getNowMission()) {
+            case CONST::MISSION1:
+                drawMission1();
+                break;
+            case CONST::STAIR:
+                drawStair();
+                break;
+            case CONST::MISSION2:
+                drawMission2();
+                break;
+                
+            case CONST::SUN:
+                drawSun();
+                break;
+            case CONST::STAR:
+                drawStar();
+                break;
+            case CONST::LOSE:
+                ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+                ofSetColor(127,127,127,127);
+                ofDrawRectangle(0, 0, ofGetWidth(), ofGetWidth());
+                
+                break;
+            default:
+                break;
+        }
+    }
+
 }
 
 void B_DeskApp::drawMission1(){
@@ -148,10 +203,10 @@ void B_DeskApp::drawMission1(){
     tree.draw(0, 0, ofGetWidth(), ofGetHeight());
     houselight.draw(0, 0, ofGetWidth(), ofGetHeight());
     
-    dog.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
-    elephant.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
-    bat.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
-    pumpkin.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
+    dog.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
+    elephant.draw(w / 3 * 4 - size / 2, h + length * q - t - v - size / 2, size, size);
+    bat.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size - 20, size);
+    pumpkin.draw(w / 3 * 4 - size / 2, h + length * q - t - v - size / 2, size - 20, size);
     ofSetColor(255);
 }
 

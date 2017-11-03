@@ -46,7 +46,7 @@ public:
     void changeMission();
       
     
-    float size = 100;//反応箇所の画像サイズ（カボチャ、コウモリ）
+    float size = 80;//反応箇所の画像サイズ（カボチャ、コウモリ）
     float length = 200;//星の一辺の長さ
     float w = ofGetWidth() / 2;
     float h = ofGetHeight() / 2;

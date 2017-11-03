@@ -10,7 +10,7 @@
 void B_BedApp::setup(){
     BaseApp::setup();
     ofSetFrameRate(60);
-    ofSetBackgroundColor(0);
+    ofSetBackgroundColor(255,0,0);
     ofEnableAlphaBlending();
     setupMission1();
 }
@@ -29,7 +29,7 @@ void B_BedApp::setupMission1(){
     lamp.load("lamp.png");
     houselight.load("houselight.png");
     tree.load("tree.png");
-    pampukin.load("pumpkin.png");
+    pampukin.load("pampkin.png");
 }
 
 void B_BedApp::setupStair(){
@@ -197,10 +197,10 @@ void B_BedApp::drawMission1(){
     pampukin.draw(0, 0, ofGetWidth(), ofGetHeight());
     tree.draw(0, 0, ofGetWidth(), ofGetHeight());
     houselight.draw(0, 0, ofGetWidth(), ofGetHeight());
-    mouse.draw(w / 3 - size / 2, h + length * q - t - v - size /2, size, size);
-    horse.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
-    bat.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
-    pumpkin.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
+    mouse.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size /2, size, size);
+    horse.draw(w / 3 * 4 - size / 2, h + length * q - t - v - size / 2, size, size);
+    bat.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size - 20, size);
+    pumpkin.draw(w / 3 * 4 - size / 2, h + length * q - t - v - size / 2, size - 20, size);
     ofSetColor(255);
 }
 
