@@ -10,6 +10,7 @@
 
 static CONST::E_MISSION nowMission;
 static std::vector<CONST::E_SENSOR> nowSensor;
+static bool isMoviePlaying;
 static int sensorIndex;
 static const std::array<CONST::E_SENSOR,5> ORDER_MISSION1 = {CONST::S9,CONST::S6,CONST::S7,CONST::S10,CONST::S8};
 static const std::array<CONST::E_SENSOR,6> ORDER_MISSION2 = {CONST::S4,CONST::S7,CONST::S9,CONST::S8,CONST::S10};
@@ -139,4 +140,10 @@ int BaseApp::getIndex(){
     return sensorIndex;
 }
 
+void BaseApp::setIsMovie(bool isMovie){
+    isMoviePlaying = isMovie;
+}
 
+bool BaseApp::getIsMovie(){
+    return isMoviePlaying;
+}

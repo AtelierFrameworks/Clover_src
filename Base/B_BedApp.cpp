@@ -11,6 +11,8 @@ void B_BedApp::setup(){
     BaseApp::setup();
     ofSetFrameRate(60);
     ofSetBackgroundColor(0);
+    ofEnableAlphaBlending();
+    setupMission1();
 }
 
 void B_BedApp::setupMission1(){
@@ -24,6 +26,10 @@ void B_BedApp::setupMission1(){
     bat.load("bat2.png");
     pumpkin.load("pumpkin2.png");
     town.load("town2.png");
+    lamp.load("lamp.png");
+    houselight.load("houselight.png");
+    tree.load("tree.png");
+    pampukin.load("pumpkin.png");
 }
 
 void B_BedApp::setupStair(){
@@ -45,6 +51,8 @@ void B_BedApp::setupMission2(){
     //Mission2
     isBat = false;
     isPumpkin = false;
+    bat.load("bat.png");
+
 }
 
 void B_BedApp::setupSun(){
@@ -52,6 +60,8 @@ void B_BedApp::setupSun(){
     isMoved = false;
     moon.load("moon.png");
     cloud.load("black.png");
+    sky.load("sky2.png");
+
 }
 
 void B_BedApp::setupStar(){
@@ -64,50 +74,55 @@ void B_BedApp::setupStar(){
 //--------------------------------------------------------------
 void B_BedApp::update(){
     BaseApp::update();
+    if(!getIsMovie()){
+    switch (getNowMission()) {
+        case CONST::MISSION1:
+            updateMission1();
+            break;
+        case CONST::STAIR:
+            updateStair();
+            break;
+        case CONST::MISSION2:
+            updateMission2();
+            break;
+        case CONST::SUN:
+            updateSun();
+            break;
+        case CONST::STAR:
+            updateStar();
+            break;
+        case CONST::LOSE:
+            //play movie
+            break;
+        default:
+            break;
+            
+    }
+}
 }
 
 void B_BedApp::updateMission1(){
     //Mission1
-    if (mLamp == true) {
-        lamp.load("lamp.png");
-    }
-    if (rPampukin == true) {
-        pampukin.load("pampukin.png");
-    }
-    if (dTree == true) {
-        tree.load("tree.png");
-    }
-    if (eHouselight == true) {
-        houselight.load("houselight.png");
-    }
-
-}
+ }
 
 void B_BedApp::updateStair(){
     //階層移動
-    if (isMove == true) {
+    if (isMove) {
         mVelocity.y += 0.01;
         mPosition += mVelocity;
     }
     if (mPosition.y >= ofGetHeight()) {
-        mPosition -= mVelocity;
+        isMove = false;
     }
 }
 
 void B_BedApp::updateMission2(){
-    //Mission2
-    if(isBat == true){
-        bat.load("bat.png");
-    }
-    if(isPumpkin == true){
-        pumpkin.load("pumpkin.png");
-    }
+   
 }
 
 void B_BedApp::updateSun(){
     //太陽月
     if (isMoved == true) {
-        sky.load("sky2.png");
         px = 0;
         py = 0;
         mPosition = ofVec2f(px, py);
@@ -144,6 +159,35 @@ void B_BedApp::updateStar(){
 //--------------------------------------------------------------
 void B_BedApp::draw(){
     BaseApp::draw();
+    if(!getIsMovie()){
+        switch (getNowMission()) {
+            case CONST::MISSION1:
+                drawMission1();
+                break;
+            case CONST::STAIR:
+                drawStair();
+                break;
+            case CONST::MISSION2:
+                drawMission2();
+                break;
+                
+            case CONST::SUN:
+                drawSun();
+                break;
+            case CONST::STAR:
+                drawStar();
+                break;
+            case CONST::LOSE:
+                ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+                ofSetColor(127,127,127,127);
+                ofDrawRectangle(0, 0, ofGetWidth(), ofGetWidth());
+
+                break;
+            default:
+                break;
+        }
+    }
+    
 }
 
 void B_BedApp::drawMission1(){
@@ -169,10 +213,10 @@ void B_BedApp::drawStair(){
 
 void B_BedApp::drawMission2(){
     //Mission2
-    if(isBat == true){
+    if(isBat){
         bat.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     }
-    if(isPumpkin == true){
+    if(isPumpkin){
         pumpkin.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
     }
 }
@@ -300,15 +344,21 @@ void B_BedApp::dragEvent(ofDragInfo dragInfo){
     BaseApp::dragEvent(dragInfo);
 }
 
-void B_BedApp::changeScene(){
-   
+void B_BedApp::changeMission(){
+    switch (getNowMission()) {
+        case CONST::STAIR:
+            setupStair();
+            break;
+        case CONST::SUN:
+            setupSun();
+            break;
+        case CONST::STAR:
+            setupStar();
+            break;
+        case CONST::LOSE:
+           
+        default:
+            break;
+    }
 }
 
-void B_BedApp::actionBed(){
-   
-}
-
-void B_BedApp::endMovie(CONST::E_MOVIE &  movie){
-    CONST::E_MOVIE e_movie = movie;
-    ofNotifyEvent(mMovieEndEvent, e_movie);
-}

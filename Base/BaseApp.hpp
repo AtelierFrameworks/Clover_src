@@ -32,7 +32,7 @@ public:
     virtual void dragEvent(ofDragInfo dragInfo);
     virtual void gotMessage(ofMessage msg);
     virtual void exit();
-    virtual void changeScene(){};
+    virtual void changeMission(){};
     virtual void endMovie(CONST::E_MOVIE & movie){};
     virtual void freeToSceneMemory();
     static void setMission(CONST::E_MISSION mission);
@@ -42,6 +42,8 @@ public:
     static std::vector<CONST::E_SENSOR> getJudgeArray();
     static void setIndex(int index);
     static int getIndex();
+    static void setIsMovie(bool isMovie);
+    static bool getIsMovie();
     //void setArduinoManager(shared_ptr<ArduinoManager> manager);
     
 protected:

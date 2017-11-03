@@ -17,11 +17,10 @@ void ofApp::setup(){
     mArduinoManager.setup();
     //„É≠„Ç∞„Éï„Ç°„Ç§„É´‰ΩúÊàê
     isStartScene=false;
+    isTimer = false;
     //TODO::setJudgeModel
     mID = 0;
-    ofAddListener(mBedApp ->mMovieEndEvent, this, &ofApp::endMovie);
     ofAddListener(mArduinoManager.mSendEvent,this,&ofApp::receiveData);
-    ofAddListener(mFloorApp -> mMovieEndEvent,this,&ofApp::endMovie);
     ofSetFrameRate(60);
     ofSetBackgroundColor(0);
     //挑戦状
@@ -34,9 +33,9 @@ void ofApp::setup(){
 void ofApp::setupMission1(){
     mIsStartMission = false;
     challenge_Movie.setup("challenge_Movie.m4v", OF_LOOP_NONE, CONST::M1);
-    ofAddListener(challenge_Movie.mMovie, this, &ofApp::endMovie);
+    ofAddListener(challenge_Movie.mEndEvent, this, &ofApp::endMovie);
     challenge_Movie.play();
-    mIsVideoPlaying = true;
+    setIsMovie(true);
     //Mission1
     mLamp = false;
     rPampukin = false;
@@ -72,8 +71,9 @@ void ofApp::setupMission2(){
     sky.load("sky2.png");
     challenge_Movie.closeMovie();
     challenge_Movie.setup("challenge_Movie.m4v", OF_LOOP_NONE, CONST::M2);
+    ofAddListener(challenge_Movie.mEndEvent, this, &ofApp::endMovie);
     challenge_Movie.play();
-    mIsVideoPlaying = true;
+    setIsMovie(true);
     //Mission2
     isBat = false;
     isPumpkin = false;
@@ -92,8 +92,12 @@ void ofApp::setupMission3(){
     drawline4 = false;
     drawline5 = false;
     isBat2 = false;
+    bat.load("bat.png");
     challenge_Movie.closeMovie();
     challenge_Movie.setup("challenge_Movie.m4v", OF_LOOP_NONE, CONST::M3);
+    challenge_Movie.play();
+    setIsMovie(true);
+    ofAddListener(challenge_Movie.mEndEvent, this, &ofApp::endMovie);
 }
 
 void ofApp::setupStar(){
@@ -109,9 +113,9 @@ void ofApp::update(){
     BaseApp::update();
   
     if (isTimer) {
-        sec -= 0.016666;
+        sec -= 0.01667;
     }
-    if (mIsVideoPlaying){
+    if (getIsMovie()){
         //挑戦状
         challenge_Movie.update();
     }else{
@@ -137,7 +141,6 @@ void ofApp::update(){
             case CONST::WIN:
                 //play movie
                 break;
-                
             default:
                 break;
 
@@ -205,10 +208,7 @@ void ofApp::updateSun(){
 }
 
 void ofApp::updateMission3(){
-    //Mission3
-    if(isBat2){
-        bat.load("bat.png");
-    }
+    
 }
 
 void ofApp::updateStar(){
@@ -225,7 +225,7 @@ void ofApp::updateStar(){
 
 void ofApp::draw(){
     BaseApp::draw();
-    if (mIsVideoPlaying){
+    if (getIsMovie()){
         //挑戦状
         ofSetColor(0xFFFFFF);
         challenge_Movie.draw(0, 0, ofGetWidth(), ofGetHeight());
@@ -257,9 +257,10 @@ void ofApp::draw(){
         default:
             break;
     }
+        drawTimer();
+
     }
-    drawTimer();
-}
+    }
 
 void ofApp::drawMission1(){
     //Mission1
@@ -312,8 +313,7 @@ void ofApp::drawSun(){
 
 void ofApp::drawMission3(){
     //Mission3
-    if(isBat2 == true){
-        
+    if(isBat2){
         ofSetColor(255, 0, 0);
         bat.draw(w - size / 2, h - size / 2, size, size);//上
         ofSetColor(255);
@@ -325,19 +325,19 @@ void ofApp::drawMission3(){
     }
     ofSetColor(255, 255, 0);
     
-    if(drawline1 == true){
+    if(drawline1){
         ofDrawLine(w, h, w - length * p, h + length * q);
     }
-    if(drawline2 == true){
+    if(drawline2 ){
         ofDrawLine(w - length * p, h + length * q, w + length / 2, h + length * q - t - v);
     }
-    if(drawline3 == true){
+    if(drawline3){
         ofDrawLine(w + length / 2, h + length * q - t - v, w - length / 2, h + length * q - t - v);
     }
-    if(drawline4 == true){
+    if(drawline4){
         ofDrawLine(w - length / 2, h + length * q - t - v, w + length * p, h + length * q);
     }
-    if(drawline5 == true){
+    if(drawline5){
         ofDrawLine(w + length * p, h + length * q, w, h);
     }
 }
@@ -359,14 +359,14 @@ void ofApp::drawStar(){
 void ofApp::drawTimer(){
     
     if (min<=0&&sec<=30) {
-        ofSetColor(255, 0, 0);
+        ofSetColor(255, 0, 0,0);
         if (sec<=9.5) {
             timerText = "0" + ofToString(min, 0) + ":" + "0" + ofToString(sec, 0);
         }
         else {
             timerText = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
         }
-        Timer.drawString(timerText, (ofGetWidth() / 2) - 150, ofGetHeight() / 2);
+        Timer.drawString(timerText, (ofGetWidth() / 2) - 150, 200);
     }else {
         ofSetColor(255, 255, 255);
         if (sec <=9.5) {
@@ -375,7 +375,7 @@ void ofApp::drawTimer(){
         else {
            timerText  = "0" + ofToString(min, 0) + ":" + ofToString(sec, 0);
         }
-        Timer.drawString(timerText, (ofGetWidth() / 2) - 150, 50);
+        Timer.drawString(timerText, (ofGetWidth() / 2) - 150, 200);
     }
     if (sec <= 0.5 && min == 0) {
         changeMission(CONST::LOSE);
@@ -540,58 +540,80 @@ void ofApp::closeCurtain(){
 void ofApp::changeMission(CONST::E_MISSION mission){
     setMission(mission);
     setIndex(0);
-    mJudgeArray.clear();
-    mJudgeArray = getJudgeArray();
+    
+    switch (getNowMission()) {
+        case CONST::STAIR:
+            setupStair();
+            mIsStartMission = false;
+            break;
+        case CONST::SUN:
+            setupSun();
+            mIsStartMission = false;
+            break;
+        case CONST::STAR:
+            setupStar();
+            mIsStartMission = false;
+        default:
+            break;
+    }
+
+    if(getNowMission() == CONST::WIN || getNowMission() == CONST::LOSE){
+        challenge_Movie.closeMovie();
+        if (getNowMission() == CONST::WIN) {
+            challenge_Movie.setup("win.mp4", OF_LOOP_NONE, CONST::MWIN);
+           
+        }else{
+            challenge_Movie.setup("lose.mp4", OF_LOOP_NONE, CONST::MLOSE);
+            
+        }
+         challenge_Movie.play();
+        setIsMovie(true);
+    }else{
+        mJudgeArray.clear();
+        mJudgeArray = getJudgeArray();
+    }
+    mBedApp -> changeMission();
+    mDeskApp -> changeMission();
+    mFloorApp -> changeMission();
 }
 
 
 
 
 void ofApp::endMovie(CONST::E_MOVIE & movie){
-    mIsVideoPlaying = false;
+    setIsMovie(false);
     switch (movie) {
         case CONST::M1:
             isTimer = true;
-            ofRemoveListener(challenge_Movie.mMovie, this, &ofApp::endMovie);
             mIsStartMission =true;
             break;
         case CONST::M2:
             isTimer = true;
-            ofRemoveListener(challenge_Movie.mMovie, this, &ofApp::endMovie);
             mIsStartMission = true;
             break;
         case CONST::M3:
             isTimer = true;
-            ofRemoveListener(challenge_Movie.mMovie, this, &ofApp::endMovie);
             mIsStartMission = true;
             break;
         case CONST::MWIN:
+            
             break;
         case CONST::MLOSE:
             break;
         default:
             break;
     }
+    ofRemoveListener(challenge_Movie.mEndEvent, this, &ofApp::endMovie);
 }
 
 void ofApp:: receiveData(std::vector<CONST::E_SENSOR> & isActionParts){
+    if(mIsStartMission){
     for(CONST::E_SENSOR sensor:isActionParts){
         if(sensor == mJudgeArray[getIndex()]){
             int index = getIndex();
             index++;
             setIndex(index);
             if(getIndex() == mJudgeArray.size()){
-                switch (getNowMission()) {
-                    case CONST::MISSION1:
-                        setupStair();
-                        break;
-                    case CONST::MISSION2:
-                        setupSun();
-                        break;
-                    case CONST::MISSION3:
-                    default:
-                        break;
-                }
                 int mission = (int)getNowMission();
                 mission++;
                 changeMission((CONST::E_MISSION)mission);
@@ -624,6 +646,7 @@ void ofApp:: receiveData(std::vector<CONST::E_SENSOR> & isActionParts){
                 break;
             default:break;
             }
+    }
     }
 }
 

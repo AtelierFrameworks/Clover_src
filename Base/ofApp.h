@@ -1,13 +1,12 @@
 #pragma once
 
-
-#include "P_Scene.hpp"
 #include "B_BedApp.hpp"
 #include "BaseApp.hpp"
 #include "B_DeskApp.hpp"
 #include "B_FloorApp.hpp"
 #include "ArduinoManager.hpp"
 #include "ofxTrueTypeFontUC.h"
+#include "EventVideo.hpp"
 class ofApp : public BaseApp{
     
 	public:

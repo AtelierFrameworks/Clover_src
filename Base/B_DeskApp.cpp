@@ -11,6 +11,7 @@ void B_DeskApp::setup(){
     BaseApp::setup();
     ofSetFrameRate(60);
     ofSetBackgroundColor(0);
+    setupMission1();
 }
 
 void B_DeskApp::setupMission1(){
@@ -25,6 +26,11 @@ void B_DeskApp::setupMission1(){
     bat.load("bat2.png");
     pumpkin.load("pumpkin2.png");
     town.load("town3.png");
+    lamp.load("lamp.png");
+    pampukin.load("pampukin.png");
+    tree.load("tree.png");
+    houselight.load("houselight.png");
+
 }
 
 void B_DeskApp::setupStair(){
@@ -45,12 +51,15 @@ void B_DeskApp::setupMission2(){
     //Mission2
     isBat = false;
     isPumpkin = false;
+    bat.load("bat.png");
+    pumpkin.load("pumpkin.png");
 }
 
 void B_DeskApp::setupSun(){
     //太陽月
     isMoved = false;
     Sun.load("sun.png");
+    sky.load("sky2.png");
 }
 
 void B_DeskApp::setupStar(){
@@ -67,18 +76,7 @@ void B_DeskApp::update(){
 
 void B_DeskApp::updateMission1(){
     //Mission1
-    if (mLamp == true) {
-        lamp.load("lamp.png");
-    }
-    if (rPampukin == true) {
-        pampukin.load("pampukin.png");
-    }
-    if (dTree == true) {
-        tree.load("tree.png");
-    }
-    if (eHouselight == true) {
-        houselight.load("houselight.png");
-    }
+    
 
 }
 
@@ -96,20 +94,14 @@ void B_DeskApp::updateStair(){
 }
 
 void B_DeskApp::updateMission2(){
-    //Mission2
-    if(isBat == true){
-        bat.load("bat.png");
-    }
-    if(isPumpkin == true){
-        pumpkin.load("pumpkin.png");
-    }
+    
 
 }
 
 void B_DeskApp::updateSun(){
     //太陽月
-    if (isMoved == true) {
-        sky.load("sky2.png");
+    if (isMoved) {
+        
         x = 0;
         y = 0;
         nPosition = ofVec2f(x, y);
@@ -125,7 +117,7 @@ void B_DeskApp::updateSun(){
         nPosition += nVelocity;
     }
     
-    if (isMoved == true) {
+    if (isMoved) {
         ny += 1.5;
         size_x -= 0.1;
         size_y -= 0.1;
@@ -135,10 +127,10 @@ void B_DeskApp::updateSun(){
 
 void B_DeskApp::updateStar(){
     //満天の星
-    if (mIsKeyPressed == false) {
+    if (mIsKeyPressed) {
         time++;
     }
-    else if (mIsKeyPressed == true) {
+    else if (mIsKeyPressed) {
         time --;
     }
 }
@@ -172,10 +164,10 @@ void B_DeskApp::drawStair(){
 
 void B_DeskApp::drawMission2(){
     //Mission2
-    if(isBat == true){
+    if(isBat){
         bat.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
     }
-    if(isPumpkin == true){
+    if(isPumpkin){
         pumpkin.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
     }
 }
@@ -183,10 +175,10 @@ void B_DeskApp::drawMission2(){
 void B_DeskApp::drawSun(){
     //太陽月
     sky.draw(nPosition.x, nPosition.y, ofGetWidth(), ofGetHeight() * 4);
-    if(isMoved == false){
+    if(isMoved){
         ofSetColor(130);
     }
-    if (isMoved == true) {
+    if (isMoved) {
         ofSetColor(color, color, color);
     }
     Sun.draw(nx, ny, size_x, size_y);
@@ -195,7 +187,7 @@ void B_DeskApp::drawSun(){
 void B_DeskApp::drawStar(){
     //満天の星
     i = ofGetFrameNum();//frame数
-    if (mIsKeyPressed == true) {
+    if (mIsKeyPressed) {
         if (i - time < 256*2-1) {
             ofSetColor(255, 255, 255, (i - time)/2);
         }

@@ -29,9 +29,14 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void changeScene();
-    void endMovie(CONST::E_MOVIE & movie);
-    
-    ofEvent<CONST::E_MOVIE> mMovieEndEvent;
     ofImage floor;
-    bool move;
+    ofImage floor2;
+    bool floorchange;
+    ofVec2f mPosition;
+    float x = -ofGetWidth() *3 /  2;
+    float y = -ofGetHeight() * 3 / 2 ;
+    ofVec2f mVelocity;
+    int i;
+    int j;
+    float w, h;
 };

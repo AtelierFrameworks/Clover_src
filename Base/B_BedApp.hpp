@@ -43,13 +43,8 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    void changeScene();
-    void actionBed();
-    void endMovie(CONST::E_MOVIE & movie);
-  
-   
-    ofEvent<CONST::E_MOVIE> mMovieEndEvent;
-    ofEvent<bool>  mStairEvent;
+    void changeMission();
+      
     
     float size = 100;//反応箇所の画像サイズ（カボチャ、コウモリ）
     float length = 200;//星の一辺の長さ

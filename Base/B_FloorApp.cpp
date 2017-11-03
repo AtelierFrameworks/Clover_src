@@ -9,29 +9,44 @@
 #include "B_FloorApp.hpp"
 void B_FloorApp::setup(){
     BaseApp::setup();
-    move = false;
+    floorchange = false;
     floor.load("floor1.png");
+    floor2.load("floor3.png");
 }
 
 //--------------------------------------------------------------
 void B_FloorApp::update(){
     BaseApp::update();
-    if (move == true) {
-//        floor.load("floor2.png");
+    if (floorchange == true) {
+        mPosition = ofVec2f(x, y);
+        i += ofGetWidth() * 3 / 2 / 30 ;
+        j += ofGetHeight() * 3 / 2 / 30;
+        mVelocity = ofVec2f(i, j);
+        mPosition += mVelocity;
+        w = ofGetWidth() * 4 - i * 2;
+        h = ofGetHeight() * 4 - j * 2;
     }
-}
+    
+    if (mPosition.x >= 0 && mPosition.y >= 0) {
+        mPosition -= mVelocity;
+        
+    }}
 
 //--------------------------------------------------------------
 void B_FloorApp::draw(){
     BaseApp::draw();
-    floor.draw(0, 0, ofGetWidth(), ofGetHeight()); 
+    floor.draw(0, 0, ofGetWidth(), ofGetHeight());
+    if (floorchange == true) {
+        floor2.draw(mPosition, w, h);
+        
+    }
 }
 
 //--------------------------------------------------------------
 void B_FloorApp::keyPressed(int key){
     BaseApp::keyPressed(key);
     if (key == 'f') {
-        move = true;
+        floorchange = true;
     }
 }
 
@@ -88,10 +103,6 @@ void B_FloorApp::dragEvent(ofDragInfo dragInfo){
 void B_FloorApp::changeScene(){
 }
 
-void B_FloorApp::endMovie(CONST::E_MOVIE & movie){
-    CONST::E_MOVIE e_movie = movie;
-    ofNotifyEvent(mMovieEndEvent, e_movie);
-}
 
 
 

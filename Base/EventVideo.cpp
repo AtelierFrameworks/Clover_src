@@ -56,3 +56,4 @@ void EventVideo::closeMovie(){
 int EventVideo::getTotalNumFrames(){
     return mPlayer.getTotalNumFrames();
 }
+

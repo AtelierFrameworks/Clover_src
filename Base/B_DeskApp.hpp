@@ -100,8 +100,8 @@ public:
     //Mission2
     ofImage bat;
     ofImage pumpkin;
-    bool isBat;
-    bool isPumpkin;
+    bool isBat1;
+    bool isPumpkin1;
     
     //太陽月
     ofVec2f nPosition;
