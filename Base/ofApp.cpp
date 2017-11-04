@@ -5,7 +5,7 @@ static bool isStartScene;
 //--------------------------------------------------------------
 void ofApp::setup(){
     BaseApp::setup();
-    changeMission(CONST::MISSION1);
+    
     mBgm.setLoop(true);
     mBgm.setVolume(0.5);
     mBgm.load("cloverBGM.mp3");
@@ -27,9 +27,6 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     ofEnableSmoothing();
     Timer.load("MountainsofChristmas.ttf", 200);
-    setupMission1();
-
-   
 }
 
 void ofApp::setupMission1(){
@@ -127,9 +124,6 @@ void ofApp::setupStar(){
     mIsKeyPressed = true;
     i = ofGetFrameNum();//frameÊï∞
     time = i;
-    
-
-    
 }
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -404,69 +398,6 @@ void ofApp::drawTimer(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     BaseApp::keyPressed(key);
-
-    //
-    //Mission1
-    if (key == 'm') {
-        mLamp = true;
-    }
-    if (key == 'r') {
-        rPampukin = true;
-        isPumpkin = true;
-    }
-    if (key == 'd') {
-        dTree = true;
-    }
-    if (key == 'h') {
-        hTower = true;
-    }
-    if (key == 'e') {
-        eHouselight = true;
-    }
-    
-    //ÈöéÂ±§ÁßªÂãï
-    if (key == 'b') {
-        isMove = true;
-    }
-    
-    //Mission2
-    if (key == 'b') {
-        isMove = true;
-    }
-    
-    //Â§™ÈôΩÊúà
-    if (key == 'b') {
-        isMove = true;
-    }
-    
-    //Mission3
-    if(key =='1'){
-        drawline1 = true;
-    }
-    if(key =='2'){
-        drawline2 = true;
-    }
-    
-    if(key =='3'){
-        drawline3 = true;
-    }
-    
-    if(key =='4'){
-        drawline4 = true;
-    }
-    
-    if(key =='5'){
-        drawline5 = true;
-    }
-    if(key == '6'){
-        isBat2 = true;
-    }
-    
-    //Ê∫ÄÂ§©„ÅÆÊòü
-    if (key == 's') {
-        mIsKeyPressed = true;
-    }
-
     if (key=='n') {
         isTimer = false;
         
@@ -474,7 +405,10 @@ void ofApp::keyPressed(int key){
     if (key=='v') {
         isTimer = true;
     }
-
+    
+    if (key == 'f'){
+        changeMission(CONST::MISSION1);
+    }
 
 }
 
@@ -572,6 +506,9 @@ void ofApp::changeMission(CONST::E_MISSION mission){
             setupStar();
             break;
             
+        case CONST::MISSION1:
+            setupMission1();
+            break;
         case CONST::MISSION2:
             setupMission2();
             break;
