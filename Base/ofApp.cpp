@@ -1,5 +1,5 @@
 #include "ofApp.h"
-//カーテンゾーン
+//„Ç´„Éº„ÉÜ„É≥„Çæ„Éº„É≥
 static bool isStartScene;
 
 //--------------------------------------------------------------
@@ -15,7 +15,7 @@ void ofApp::setup(){
     }
     mIsVideoPlaying = false;
     mArduinoManager.setup();
-    //„É≠„Ç∞„Éï„Ç°„Ç§„É´‰ΩúÊàê
+    //‚Äû√â‚â†‚Äû√á‚àû‚Äû√â√Ø‚Äû√á¬∞‚Äû√á¬ß‚Äû√â¬¥‚Ä∞Œ©√∫√ä√†√™
     isStartScene=false;
     isTimer = false;
     //TODO::setJudgeModel
@@ -23,11 +23,13 @@ void ofApp::setup(){
     ofAddListener(mArduinoManager.mSendEvent,this,&ofApp::receiveData);
     ofSetFrameRate(60);
     ofSetBackgroundColor(0);
-    //挑戦状
+    //ÊåëÊà¶Áä∂
     ofSetVerticalSync(true);
     ofEnableSmoothing();
     Timer.load("MountainsofChristmas.ttf", 200);
     setupMission1();
+
+   
 }
 
 void ofApp::setupMission1(){
@@ -42,7 +44,7 @@ void ofApp::setupMission1(){
     dTree = false;
     hTower = false;
     eHouselight = false;
-    //ウサギ
+    //„Ç¶„Çµ„ÇÆ
     rabbit.load("usa.png");
     town.load("town1.png");
     bat.load("bat2.png");
@@ -51,14 +53,18 @@ void ofApp::setupMission1(){
     tree.load("tree.png");
     tower.load("tower.png");
     houselight.load("houselight.png");
+    mSound.load("sound1.mp3");
+    mSound.setLoop(false);
+    mSound.setVolume(0.8f);
+    mSound.setMultiPlay(true);
 }
 
 void ofApp::setupStair(){
-    //階層移動
-    isMove = false;
+    //ÈöéÂ±§ÁßªÂãï
+    isMove = true;
     town1.load("sky.png");
     town2.load("sky.png");
-    town3.load("town1.png");
+    town3.load("ontown1.png");
     px = 0;
     py = 0;
     mPosition = ofVec2f(px, py);
@@ -68,19 +74,30 @@ void ofApp::setupStair(){
 }
 
 void ofApp::setupMission2(){
+    
     sky.load("sky2.png");
     challenge_Movie.setup("letter2.mp4", OF_LOOP_NONE, CONST::M2);
     ofAddListener(challenge_Movie.mEndEvent, this, &ofApp::endMovie);
     challenge_Movie.play();
     setIsMovie(true);
+    pumpkin.load("pumpkin.png");
     //Mission2
-    isBat = false;
+    isBat = true;
     isPumpkin = false;
+    //isPumpkin = true;
+    mSound.unload();
+    mSound.load("sound2.mp3");
 }
 
 void ofApp::setupSun(){
-    //太陽月
-    isMoved = false;
+    //Â§™ÈôΩÊúà
+    isMoved = true;
+    px = 0;
+    py = 0;
+    mPosition = ofVec2f(px, py);
+    vx = 0;
+    vy = 0;
+    mVelocity = ofVec2f(vx, vy);
 }
 
 void ofApp::setupMission3(){
@@ -92,35 +109,42 @@ void ofApp::setupMission3(){
     drawline5 = false;
     isBat2 = false;
     bat.load("bat.png");
+    pumpkin.load("pumpkin.png");
+
     challenge_Movie.closeMovie();
     challenge_Movie.setup("letter3.mp4", OF_LOOP_NONE, CONST::M3);
     challenge_Movie.play();
     setIsMovie(true);
     ofAddListener(challenge_Movie.mEndEvent, this, &ofApp::endMovie);
+    mSound.unload();
+    mSound.load("sound3.mp3");
 }
 
 void ofApp::setupStar(){
-    //満天の星
+    //Ê∫ÄÂ§©„ÅÆÊòü
     ofEnableAlphaBlending();
     img.load("star.png");
-    mIsKeyPressed = false;
+    mIsKeyPressed = true;
+    i = ofGetFrameNum();//frameÊï∞
+    time = i;
+    
+
     
 }
 //--------------------------------------------------------------
 void ofApp::update(){
     mArduinoManager.update();
     BaseApp::update();
-  
+    ofSoundUpdate();
     if (isTimer) {
-        timer -= 0.032;
+        //timer -= 0.032;
     }
     if (getIsMovie()){
-        //挑戦状
+        //ÊåëÊà¶Áä∂
         challenge_Movie.update();
     }else{
         switch (getNowMission()) {
             case CONST::MISSION1:
-                updateMission1();
                 break;
             case CONST::STAIR:
                 updateStair();
@@ -133,6 +157,9 @@ void ofApp::update(){
                 break;
             case CONST::MISSION3:
                 updateMission3();
+                break;
+            case CONST::STAR:
+//                updateStar();
                 break;
             case CONST::LOSE:
                 //play movie
@@ -155,53 +182,31 @@ void ofApp::updateMission1(){
 }
 
 void ofApp::updateStair(){
-    //階層移動の終わりは1回したら止まるようにしてる。
+    //ÈöéÂ±§ÁßªÂãï„ÅÆÁµÇ„Çè„Çä„ÅØ1Âõû„Åó„Åü„ÇâÊ≠¢„Åæ„Çã„Çà„ÅÜ„Å´„Åó„Å¶„Çã„ÄÇ
     if (isMove) {
         mVelocity.y += 0.01;
         mPosition += mVelocity;
         if (mPosition.y >= ofGetHeight()) {
             isMove=false;
+            changeMission(CONST::MISSION2);
         }
     }
 }
 
 void ofApp::updateMission2(){
-    //Mission2
-    if (isMove) {
-        
-        px = 0;
-        py = 0;
-        mPosition = ofVec2f(px, py);
-        vx = 0;
-        vy = 0;
-        mVelocity = ofVec2f(vx, vy);
-        
-        mVelocity.y += 0.01;
-        mPosition -= mVelocity;
-    }
-    
-    if (mPosition.y <= -ofGetHeight() * 3) {
-        mPosition += mVelocity;
-    }
-
+  
 }
 
 void ofApp::updateSun(){
-    //太陽→月は要実装
+    //Â§™ÈôΩ‚ÜíÊúà„ÅØË¶ÅÂÆüË£Ö
     if (isMoved) {
-      
-        px = 0;
-        py = 0;
-        mPosition = ofVec2f(px, py);
-        vx = 0;
-        vy = 0;
-        mVelocity = ofVec2f(vx, vy);
-        mVelocity.y += 0.01;
+        mVelocity.y += 0.05;
         mPosition -= mVelocity;
     }
     
-    if (mPosition.y <= -ofGetHeight() * 3) {
-        mPosition += mVelocity;
+    if (mPosition.y <= -ofGetHeight() * 3.5) {
+        isMoved = false;
+        changeMission(CONST::MISSION3);
     }
 
 }
@@ -211,11 +216,8 @@ void ofApp::updateMission3(){
 }
 
 void ofApp::updateStar(){
-    //満天の星
-    if (mIsKeyPressed == false) {
-        time++;
-    }
-    else if (mIsKeyPressed == true) {
+    //Ê∫ÄÂ§©„ÅÆÊòü
+   if (mIsKeyPressed == true) {
         time --;
     }
 
@@ -225,7 +227,7 @@ void ofApp::updateStar(){
 void ofApp::draw(){
     BaseApp::draw();
     if (getIsMovie()){
-        //挑戦状
+        //ÊåëÊà¶Áä∂
         ofSetColor(0xFFFFFF);
         challenge_Movie.draw(0, 0, ofGetWidth(), ofGetHeight());
         ofSetHexColor(0x000000);
@@ -246,6 +248,10 @@ void ofApp::draw(){
         case CONST::MISSION3:
             drawMission3();
             break;
+        
+        case CONST::STAR:
+            drawStar();
+            break;
         case CONST::LOSE:
             //play movie
             break;
@@ -265,8 +271,9 @@ void ofApp::drawMission1(){
      ofSetColor(255);
     //Mission1
         town.draw(0, 0, ofGetWidth(), ofGetHeight());
-    rabbit.draw(w - size / 2, h + length * q - t - v - size / 2, size, size);
-    bat.draw(w - size / 2 - 10, h + length * q - t - v - size / 2+20, size - 20, size);
+    rabbit.draw(w - size / 2, h - size / 2, size, size);
+    ofSetColor(255, 255, 255);
+    bat.draw(w - size / 2 - 10, h - size / 2+20, size - 20, size);
     
    
     if (mLamp) {
@@ -289,74 +296,79 @@ void ofApp::drawMission1(){
 }
 
 void ofApp::drawStair(){
-    //階層移動
+    //ÈöéÂ±§ÁßªÂãï
     town1.draw(mPosition.x, mPosition.y - 1100, ofGetWidth(), ofGetHeight());
     town2.draw(mPosition.x, mPosition.y - 480, ofGetWidth(), ofGetHeight());
     town3.draw(mPosition.x, mPosition.y , ofGetWidth(), ofGetHeight());
 }
 
 void ofApp::drawMission2(){
+    ofSetColor(255);
     //Mission2
     if(isBat == true){
-        bat.draw(w - length / 2 - size / 2, h + length * q - t - v - size / 2, size - 20, size);
+        pumpkin.draw(w - length / 2 - size / 2 + 10, h + length * q - t - v - size / 2-50, size - 20, size);
     }
     if(isPumpkin == true){
-        pumpkin.draw(w + length / 2 - size / 2, h + length * q - t - v - size / 2, size - 20, size);
+        pumpkin.draw(w + length / 2 - size / 2 + 10,h + length * q - t - v - size / 2-50, size - 20, size);
     }
 }
 
 void ofApp::drawSun(){
-    //太陽月
+    //Â§™ÈôΩÊúà
     sky.draw(mPosition.x, mPosition.y, ofGetWidth(), ofGetHeight() * 4);
 
 }
 
 void ofApp::drawMission3(){
     //Mission3
-    if(isBat2){
+ 
         ofSetColor(255, 0, 0);
-        bat.draw(w - size / 2, h - size / 2, size, size);//上
+        pumpkin.draw(w - size / 2 + 10, h - size / 2-50, size - 20, size);//‰∏ä
         ofSetColor(255);
-        bat.draw(w - length * p - size / 2, h + length * q - size / 2, size, size);//左下
-        bat.draw(w + length / 2 - size / 2, h + length * q - t - v - size / 2, size, size);//右
-        bat.draw(w - length / 2 - size / 2, h + length * q - t - v - size / 2, size, size);//左
-        bat.draw(w + length * p - size / 2, h + length * q - size / 2, size, size);//右下
+        bat.draw(w - length * p - size / 2 + 10, h + length * q - size / 2-50, size - 20, size);//Â∑¶‰∏ã
+        pumpkin.draw(w + length / 2 - size / 2 + 10, h + length * q - t - v - size / 2-50, size - 20, size);//Âè≥
+        pumpkin.draw(w - length / 2 - size / 2 + 10, h + length * q - t - v - size / 2-50, size - 20, size);//Â∑¶
+        bat.draw(w + length * p - size / 2 + 10, h + length * q - size / 2-50, size - 20, size);//Âè≥‰∏ã
         
-    }
-    ofSetColor(255, 255, 0);
     
+    ofSetColor(255, 255, 0);
+    ofSetLineWidth(5);
     if(drawline1){
-        ofDrawLine(w, h, w - length * p, h + length * q);
+        ofDrawLine(w, h-50, w - length * p, h + length * q-50);
     }
     if(drawline2 ){
-        ofDrawLine(w - length * p, h + length * q, w + length / 2, h + length * q - t - v);
+        ofDrawLine(w - length * p, h + length * q -50, w + length / 2, h + length * q - t - v-50);
     }
     if(drawline3){
-        ofDrawLine(w + length / 2, h + length * q - t - v, w - length / 2, h + length * q - t - v);
+        ofDrawLine(w + length / 2, h + length * q - t - v-50, w - length / 2, h + length * q - t - v-50);
     }
     if(drawline4){
-        ofDrawLine(w - length / 2, h + length * q - t - v, w + length * p, h + length * q);
+        ofDrawLine(w - length / 2, h + length * q - t - v-50, w + length * p, h + length * q-50);
     }
     if(drawline5){
-        ofDrawLine(w + length * p, h + length * q, w, h);
+        ofDrawLine(w + length * p, h + length * q-50, w, h-50);
     }
 }
 void ofApp::drawStar(){
-    //満天の星
-    i = ofGetFrameNum();//frame数
-    if (mIsKeyPressed == true) {
-        if (i - time < 256*2-1) {
-            ofSetColor(255, 255, 255, (i - time)/2);
-        }
-        if (i == 3000) {
-            i = i / 5;
-        }
-        img.draw(0, 0, ofGetWidth(), ofGetHeight());
-    }
+    //Ê∫ÄÂ§©„ÅÆÊòü
+    i = ofGetFrameNum();//frameÊï∞
+changeMission(CONST::WIN);
+//    if (mIsKeyPressed) {
+//        if (i - time < 256*2-1) {
+//            ofSetColor(255, 255, 255, (i - time)/2);
+//        }
+//        if (i == 3000) {
+//            i = i / 5;
+//        }
+//        img.draw(0, 0, ofGetWidth(), ofGetHeight());
+//        if(i - time >= 300){
+//            changeMission(CONST::WIN);
+//        }
+//    }
 
 }
 
-void ofApp::drawTimer(){    
+void ofApp::drawTimer(){
     sec = (int)timer % 60;
     min = (int)timer / 60;
     
@@ -400,6 +412,7 @@ void ofApp::keyPressed(int key){
     }
     if (key == 'r') {
         rPampukin = true;
+        isPumpkin = true;
     }
     if (key == 'd') {
         dTree = true;
@@ -411,7 +424,7 @@ void ofApp::keyPressed(int key){
         eHouselight = true;
     }
     
-    //階層移動
+    //ÈöéÂ±§ÁßªÂãï
     if (key == 'b') {
         isMove = true;
     }
@@ -421,7 +434,7 @@ void ofApp::keyPressed(int key){
         isMove = true;
     }
     
-    //太陽月
+    //Â§™ÈôΩÊúà
     if (key == 'b') {
         isMove = true;
     }
@@ -449,7 +462,7 @@ void ofApp::keyPressed(int key){
         isBat2 = true;
     }
     
-    //満天の星
+    //Ê∫ÄÂ§©„ÅÆÊòü
     if (key == 's') {
         mIsKeyPressed = true;
     }
@@ -527,7 +540,7 @@ void ofApp::exit(){
     ofRemoveListener(mArduinoManager.mSendEvent,this,&ofApp::receiveData);
 }
 
-//„Ç´„Éº„ÉÜ„É≥
+//‚Äû√á¬¥‚Äû√â¬∫‚Äû√â√ú‚Äû√â‚â•
 void ofApp::actionCurtain(){
  }
 
@@ -542,22 +555,37 @@ void ofApp::changeMission(CONST::E_MISSION mission){
     
     switch (getNowMission()) {
         case CONST::STAIR:
+             mIsStartMission = false;
+            isTimer = false;
             setupStair();
-            mIsStartMission = false;
+           
             break;
         case CONST::SUN:
-            setupSun();
+            isTimer = false;
             mIsStartMission = false;
+
+            setupSun();
             break;
         case CONST::STAR:
-            setupStar();
+            isTimer = false;
             mIsStartMission = false;
+            setupStar();
+            break;
+            
+        case CONST::MISSION2:
+            setupMission2();
+            break;
+            
+        case CONST::MISSION3:
+            isTimer = false;
+            setupMission3();
+            break;
         default:
             break;
     }
 
     if(getNowMission() == CONST::WIN || getNowMission() == CONST::LOSE){
-        
+        mBgm.stop();
         if (getNowMission() == CONST::WIN) {
             challenge_Movie.setup("win.mp4", OF_LOOP_NONE, CONST::MWIN);
            
@@ -567,7 +595,7 @@ void ofApp::changeMission(CONST::E_MISSION mission){
          challenge_Movie.play();
         setIsMovie(true);
     }else{
-        mJudgeArray.clear();
+//        mJudgeArray.clear();
         mJudgeArray = getJudgeArray();
     }
     mBedApp -> changeMission();
@@ -606,15 +634,173 @@ void ofApp::endMovie(CONST::E_MOVIE & movie){
 }
 
 void ofApp:: receiveData(std::vector<CONST::E_SENSOR> & isActionParts){
-    if(mIsStartMission){
+
+    if(mIsStartMission && mJudgeArray.size()>0){
     for(CONST::E_SENSOR sensor:isActionParts){
+        if(mJudgeArray.size() > 0){
         if(sensor == mJudgeArray[getIndex()]){
+            mSound.play();
+            ofLogNotice() << "sensor!" << sensor;
+            switch(sensor){
+                case CONST::S1:
+                    switch (getNowMission()) {
+                        case CONST::MISSION3:
+                            if(getIndex()==0){
+                                drawline1 = true;
+                            }
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    break;
+                case CONST::S2:
+                    switch (getNowMission()) {
+                        case CONST::MISSION3:
+                            drawline2 = true;
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    break;
+                case CONST::S3:
+                    switch (getNowMission()) {
+                        case CONST::MISSION3:
+                            drawline3 = true;
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    break;
+                case CONST::S4:
+                    switch (getNowMission()) {
+                        case CONST::MISSION2:
+                            isPumpkin = false;
+                            mBedApp -> isPumpkin = false;
+                            mDeskApp -> isPumpkin = true;
+                            isBat = false;
+                            mBedApp -> isBat = false;
+                            mDeskApp -> isBat = false;
+                            
+                            break;
+                        case CONST::MISSION3:
+                            drawline4 = true;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case CONST::S5:
+                    switch (getNowMission()) {
+                        case CONST::MISSION3:
+                            drawline5 = true;
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    break;
+                case CONST::S6:
+                    switch (getNowMission()) {
+                        case CONST::MISSION1:
+                            rPampukin = true;
+                            mBedApp -> rPampukin = true;
+                            mDeskApp -> rPampukin = true;
+                            break;
+                        case CONST::MISSION2:
+                            //
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case CONST::S7:
+                    switch (getNowMission()) {
+                        case CONST::MISSION1:
+                            dTree = true;
+                            mBedApp -> dTree = true;
+                            mDeskApp -> dTree = true;
+                            break;
+                        case CONST::MISSION2:
+                            isPumpkin=false;
+                            mBedApp -> isPumpkin = true;
+                            mDeskApp -> isPumpkin = false;
+                            isBat=false;
+                            mDeskApp->isBat=false;
+                            mBedApp->isBat=false;
+                            
+                        default:
+                            break;
+                    }
+                    break;
+                case CONST::S8:
+                    switch(getNowMission()){
+                        case CONST::MISSION1:
+                            eHouselight = true;
+                            mBedApp -> eHouselight = true;
+                            mDeskApp -> eHouselight = true;
+                            break;
+                        case CONST::MISSION2:
+                            isBat = false;
+                            mBedApp -> isBat = true;
+                            mDeskApp -> isBat = false;
+                            isPumpkin=false;
+                            mBedApp->isPumpkin=false;
+                            mDeskApp->isPumpkin=false;
+                            break;
+                        default:break;
+                    }
+                    break;
+                case CONST::S9:
+                    switch (getNowMission()) {
+                        case CONST::MISSION1:
+                            mLamp=true;
+                            mBedApp -> mLamp = true;
+                            mDeskApp -> mLamp = true;
+                            
+                            break;
+                            
+                        case CONST::MISSION2:
+                            isBat = false;
+                            mBedApp -> isBat =false;
+                            mDeskApp -> isBat = true;
+                            isPumpkin=false;
+                            mDeskApp->isPumpkin=false;
+                            mBedApp->isPumpkin=false;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case CONST::S10:
+                    switch (getNowMission()) {
+                        case CONST::MISSION1:
+                            hTower=true;
+                            mBedApp -> hTower = true;
+                            break;
+                        case CONST::MISSION2:
+                            isPumpkin = true;
+                            mBedApp -> isPumpkin = false;
+                            mDeskApp -> isPumpkin = false;
+                            isBat=false;
+                            mBedApp->isBat=false;
+                            mDeskApp->isBat=false;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:break;
+            }
             int index = getIndex();
             index++;
             setIndex(index);
             if(getIndex() == mJudgeArray.size()){
                 int mission = (int)getNowMission();
                 mission++;
+                mIsStartMission = false;
                 changeMission((CONST::E_MISSION)mission);
             }
             
@@ -622,29 +808,7 @@ void ofApp:: receiveData(std::vector<CONST::E_SENSOR> & isActionParts){
         }else{
             //TODO:Miss effect
         }
-        switch(sensor){
-            case CONST::S1:
-                break;
-            case CONST::S2:
-                break;
-            case CONST::S3:
-                break;
-            case CONST::S4:
-                break;
-            case CONST::S5:
-                break;
-            case CONST::S6:
-                break;
-            case CONST::S7:
-                break;
-            case CONST::S8:
-                break;
-            case CONST::S9:
-                break;
-            case CONST::S10:
-                break;
-            default:break;
-            }
+        }
     }
     }
 }

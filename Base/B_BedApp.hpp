@@ -101,12 +101,11 @@ public:
     //太陽月
     ofImage sky;
     bool isMoved;
-    
     ofImage moon;
     ofImage cloud;
     
     float m_px = ofGetWidth() / 2- 20;
-    float m_py = ofGetHeight() + 50;
+    float m_py = ofGetHeight() + 50 +ofGetHeight() / 2;
     float m2_px = 50;
     float m2_py = 50;
     

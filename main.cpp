@@ -4,13 +4,18 @@
 #include "Base/B_BedApp.hpp"
 #include "Base/B_DeskApp.hpp"
 #include "Base/B_FloorApp.hpp"
-
+#include "Base/blackWindow.hpp"
 //========================================================================
 int main( ){
 	//ofSetupOpenGL(1024,768,OF_WINDOW);			// <-------- setup the GL context
   
     ofGLFWWindowSettings settings;
-    
+    settings.width = 1280;
+    settings.height = 100;
+    settings.setPosition(ofVec2f(2560,1000));
+    shared_ptr<blackWindow> window (new blackWindow());
+    shared_ptr<ofAppBaseWindow> black = ofCreateWindow(settings);
+
     settings.width = 1280;
     settings.height = 1000;
     settings.setPosition(ofVec2f(2560,0));
@@ -38,11 +43,12 @@ int main( ){
     mainApp -> mBedApp = bedApp;
     mainApp -> mDeskApp = deskApp;
     mainApp -> mFloorApp = floorApp;
+    ofRunApp(black,window);
     ofRunApp(bedWindow,bedApp);
     ofRunApp(deskWindow,deskApp);
     ofRunApp(floorWindow,floorApp);
     ofRunApp(mainWindow,mainApp);
-
+    
     ofRunMainLoop();
     
 

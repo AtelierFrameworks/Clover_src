@@ -10,9 +10,11 @@
 
 void EventVideo::setup(string path,ofLoopType state,CONST::E_MOVIE movie){
     mIsPlayed = false;
+    
     mPlayer.load(path);
     mPlayer.setLoopState(state);
     mMovie = movie;
+   
 }
 
 void EventVideo::update(){
@@ -29,6 +31,7 @@ void EventVideo::draw(float x,float y,float width,float height){
 }
 
 void EventVideo::play(){
+    mPlayer.setSpeed(0.5f);
     mPlayer.play();
     mIsPlayed = false;
 }

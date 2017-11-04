@@ -48,7 +48,7 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    void changeScene();
+    void changeMission();
     void endMovie(CONST::E_MOVIE & movie);
     ofEvent<bool> mShelfEvent;
     ofEvent<CONST::E_MOVIE> mMovieEndEvent;

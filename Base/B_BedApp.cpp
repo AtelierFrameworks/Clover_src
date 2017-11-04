@@ -10,7 +10,7 @@
 void B_BedApp::setup(){
     BaseApp::setup();
     ofSetFrameRate(60);
-    ofSetBackgroundColor(255,0,0);
+    ofSetBackgroundColor(0);
     ofEnableAlphaBlending();
     setupMission1();
 }
@@ -34,10 +34,10 @@ void B_BedApp::setupMission1(){
 
 void B_BedApp::setupStair(){
     //階層移動
-    isMove = false;
+    isMove = true;
     town1.load("sky.png");
     town2.load("sky.png");
-    town3.load("town2.png");
+    town3.load("ontown2.png");
     px = 0;
     py = 0;
     mPosition = ofVec2f(px, py);
@@ -49,6 +49,7 @@ void B_BedApp::setupStair(){
 
 void B_BedApp::setupMission2(){
     //Mission2
+     town3.load("town2.png");
     isBat = false;
     isPumpkin = false;
     bat.load("bat.png");
@@ -57,10 +58,16 @@ void B_BedApp::setupMission2(){
 
 void B_BedApp::setupSun(){
     //太陽月
-    isMoved = false;
-    moon.load("moon.png");
-    cloud.load("black.png");
+    isMoved = true;
+    //moon.load("moon.png");
+    //cloud.load("black.png");
     sky.load("sky2.png");
+    px = 0;
+    py = 0;
+    mPosition = ofVec2f(px, py);
+    vx = 0;
+    vy = 0;
+    mVelocity = ofVec2f(vx, vy);
 
 }
 
@@ -68,7 +75,7 @@ void B_BedApp::setupStar(){
     //満天の星
     ofEnableAlphaBlending();
     img.load("star.png");
-    mIsKeyPressed = false;
+    mIsKeyPressed = true;
 }
 
 //--------------------------------------------------------------
@@ -122,21 +129,15 @@ void B_BedApp::updateMission2(){
 
 void B_BedApp::updateSun(){
     //太陽月
-    if (isMoved == true) {
-        px = 0;
-        py = 0;
-        mPosition = ofVec2f(px, py);
-        vx = 0;
-        vy = 0;
-        mVelocity = ofVec2f(vx, vy);
-        mVelocity.y += 0.01;
+    if (isMoved ) {
+        mVelocity.y += 0.05;
         mPosition -= mVelocity;
     }
-    if (mPosition.y <= -ofGetHeight() * 3) {
+    if (mPosition.y <= -ofGetHeight() * 3.5) {
         mPosition += mVelocity;
     }
-    if (m_py <= 0 && c_px < ofGetWidth() / 2 - 230) {
-        c_px += 0.5;
+       if (m_py <= 0 && c_px < ofGetWidth() / 2 - 230) {
+        c_px += 1.6;
     }
     if (m_py > 0) {
         m_px -= 0.25;
@@ -187,20 +188,33 @@ void B_BedApp::draw(){
                 break;
         }
     }
+    if(getNowMission() == CONST::WIN){
+        drawStar();
+    }
     
 }
 
 void B_BedApp::drawMission1(){
     //Mission1
     town.draw(0, 0, ofGetWidth(), ofGetHeight());
-    lamp.draw(0, 0, ofGetWidth(), ofGetHeight());
-    pampukin.draw(0, 0, ofGetWidth(), ofGetHeight());
-    tree.draw(0, 0, ofGetWidth(), ofGetHeight());
-    houselight.draw(0, 0, ofGetWidth(), ofGetHeight());
-    mouse.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size /2, size, size);
-    horse.draw(w / 3 * 4 - size / 2, h + length * q - t - v - size / 2, size, size);
-    bat.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size - 20, size);
-    pumpkin.draw(w / 3 * 4 - size / 2, h + length * q - t - v - size / 2, size - 20, size);
+    if (mLamp) {
+        lamp.draw(0, 0, ofGetWidth(), ofGetHeight());
+    }
+    if (rPampukin) {
+        pampukin.draw(0, 0, ofGetWidth(), ofGetHeight());
+    }
+    if (dTree) {
+        tree.draw(0, 0, ofGetWidth(), ofGetHeight());
+    }
+    if (eHouselight) {
+        houselight.draw(0, 0, ofGetWidth(), ofGetHeight());
+    }
+    ofSetColor(100);
+    mouse.draw(w / 3 * 2 - size / 2, h - size / 2, size, size);
+    horse.draw(w / 3 * 4 - size / 2, h - size / 2, size, size);
+    ofSetColor(255, 255, 255);
+    bat.draw(w / 3 * 2 - size / 2, h - size / 2, size - 20, size);
+    pumpkin.draw(w / 3 * 4 - size / 2, h - size / 2, size - 20, size);
     ofSetColor(255);
 }
 
@@ -214,20 +228,20 @@ void B_BedApp::drawStair(){
 void B_BedApp::drawMission2(){
     //Mission2
     if(isBat){
-        bat.draw(w / 3 * 2 - size / 2, h + length * q - t - v - size / 2, size, size);
+        pumpkin.draw(w / 3 * 4 - size / 2, h - size / 2, size - 20, size);
     }
     if(isPumpkin){
-        pumpkin.draw(w / 3 - size / 2, h + length * q - t - v - size / 2, size, size);
+        bat.draw(w / 3 * 2 - size / 2, h - size / 2, size - 20, size);
     }
 }
 
 void B_BedApp::drawSun(){
     //太陽月
     sky.draw(mPosition.x, mPosition.y, ofGetWidth(), ofGetHeight() * 4);
-    moon.draw(m_px, m_py, m2_px, m2_py);
+    /*moon.draw(m_px, m_py, m2_px, m2_py);
     if (m_py <= 0) {
         cloud.draw(c_px, c_py, 450, 450);
-    }
+    }*/
 }
 
 void B_BedApp::drawStar(){
@@ -356,7 +370,12 @@ void B_BedApp::changeMission(){
             setupStar();
             break;
         case CONST::LOSE:
-           
+            break;
+        case CONST::MISSION2:
+            setupMission2();
+          
+            break;
+
         default:
             break;
     }

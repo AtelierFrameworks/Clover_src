@@ -102,7 +102,7 @@ private:
     bool dTree;
     bool rPampukin;
     bool hTower;
-    
+    int homePastTime = 0;
     //階層移動
     ofVec2f mPosition;
     ofVec2f mVelocity;
@@ -148,10 +148,12 @@ private:
     
     //Timer
     double sec = 0;
-    float timer= 180;
+    float timer= 181;
     float min = 3;
     
     ofxTrueTypeFontUC Timer;
     bool isTimer = true;
+    
+    ofSoundPlayer mSound;
 
 };

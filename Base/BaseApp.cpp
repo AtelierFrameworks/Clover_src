@@ -13,8 +13,8 @@ static std::vector<CONST::E_SENSOR> nowSensor;
 static bool isMoviePlaying;
 static int sensorIndex;
 static const std::array<CONST::E_SENSOR,5> ORDER_MISSION1 = {CONST::S9,CONST::S6,CONST::S7,CONST::S10,CONST::S8};
-static const std::array<CONST::E_SENSOR,6> ORDER_MISSION2 = {CONST::S4,CONST::S7,CONST::S9,CONST::S8,CONST::S10};
-static const std::array<CONST::E_SENSOR,6> ORDER_MISSION3 = {CONST::S1,CONST::S2,CONST::S3,CONST::S4,CONST::S5,CONST::S1};
+static const std::array<CONST::E_SENSOR,6> ORDER_MISSION2 = {CONST::S4,CONST::S7,CONST::S9,CONST::S8,CONST::S10,CONST::S3};
+static const std::array<CONST::E_SENSOR,5> ORDER_MISSION3 = {CONST::S1,CONST::S2,CONST::S3,CONST::S4,CONST::S5};
 
 void BaseApp::setup(){
     ofBackground(80);
